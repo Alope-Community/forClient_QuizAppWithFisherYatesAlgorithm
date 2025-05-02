@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".authActivities.RegisterActivity"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context=".authActivities.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,23 +43,9 @@
             android:layout_height="wrap_content"
             android:minHeight="48dp"
             android:padding="12dp"
-            android:hint="@string/hintName"
-            android:inputType="text"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:autofillHints="username"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:padding="12dp"
             android:hint="@string/hintUsername"
             android:inputType="text"
+            android:layout_marginTop="50dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
@@ -92,7 +77,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/rounded_button"
-            android:text="@string/buttonRegistrasi"
+            android:text="@string/buttonLogin"
             android:textColor="#FFFFFF" />
 
 
@@ -100,11 +85,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/accountLogin"
+            android:text="@string/accountRegistration"
             android:gravity="center"
             android:layout_marginTop="20sp"
             android:layout_marginBottom="20dp"
-            android:onClick="goToLogin"
+            android:onClick="goToRegister"
             android:textColor="@color/black"/>
     </LinearLayout>
 </ScrollView>
+

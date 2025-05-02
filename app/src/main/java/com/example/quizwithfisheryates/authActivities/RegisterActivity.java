@@ -1,4 +1,4 @@
-package com.example.quizwithfisheryates;
+package com.example.quizwithfisheryates.authActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Register extends AppCompatActivity {
+import com.example.quizwithfisheryates.R;
+
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class Register extends AppCompatActivity {
     }
 
     public void goToLogin(View view){
-        Intent intent = new Intent(Register.this, MainActivity.class);
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 }

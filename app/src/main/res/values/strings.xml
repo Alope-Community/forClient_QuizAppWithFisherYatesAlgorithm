@@ -1,16 +1,18 @@
 <resources>
+    <string name="app_name">QuizWithFisherYates</string>
+    <string name="title">ALOPE Quiz</string>
+
     <!--  Form Hint  -->
     <string name="hintName">Name</string>
     <string name="hintUsername">Username</string>
     <string name="hintPassword">Password</string>
 
     <!--  Login  -->
-    <string name="app_name">QuizWithFisherYates</string>
     <string name="buttonLogin">Login</string>
+    <string name="buttonRegistrasi">Registrasi</string>
     <string name="accountRegistration">Registrasi Akun</string>
-    <string name="title">ALOPE Quiz</string>
+    <string name="accountLogin">Login Akun</string>
 
     <!--  Register  -->
-    <string name="accountLogin">Login Akun</string>
-    <string name="buttonRegistrasi">Registrasi</string>
+    <string name="buttonStart">Start</string>
 </resources>
