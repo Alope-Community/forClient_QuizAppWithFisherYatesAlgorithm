@@ -13,6 +13,9 @@
     <string name="accountRegistration">Registrasi Akun</string>
     <string name="accountLogin">Login Akun</string>
 
-    <!--  Register  -->
+    <!--    -->
     <string name="buttonStart">Start</string>
+    <string name="buttonLeaderboard">Leaderboard</string>
+    <string name="copyright_by_alope">Copyright by ALOPE</string>
+    <string name="buttonBack">Kembali</string>
 </resources>

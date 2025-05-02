@@ -11,6 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -29,6 +30,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void goToLogin(View view){
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToMainMenu(View view){
+        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);
     }
 }

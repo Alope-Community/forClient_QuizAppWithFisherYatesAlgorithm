@@ -6,13 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".authActivities.LoginActivity">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/white">
+        android:orientation="vertical">
         <!-- Bagian Atas (50%) -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,12 +57,6 @@
                 android:text="@string/buttonStart"
                 android:textColor="#FFFFFF" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000000"
-                android:layout_margin="20dp"/>
-
             <Button
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="match_parent"
@@ -72,25 +65,50 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/rounded_button"
-                android:text="@string/buttonLogin"
-                android:textColor="#FFFFFF"
-                android:onClick="goToLogin"/>
+                android:text="@string/buttonLeaderboard"
+                android:textColor="#FFFFFF" />
 
-            <Button
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                android:layout_margin="20dp"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/rounded_button"
-                android:text="@string/buttonRegistrasi"
-                android:textColor="#FFFFFF"
-                android:onClick="goToRegister"/>
+                android:gravity="center">
+
+                <Button
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/rounded_button"
+                    android:text="@string/buttonLogin"
+                    android:textColor="#FFFFFF"
+                    android:onClick="goToLogin"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/rounded_button"
+                    android:text="@string/buttonRegistrasi"
+                    android:textColor="#FFFFFF"
+                    android:onClick="goToRegister"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Copyright by ALOPE"
+                android:text="@string/copyright_by_alope"
                 android:layout_marginTop="30sp"
                 android:textSize="13sp"
                 android:gravity="center"

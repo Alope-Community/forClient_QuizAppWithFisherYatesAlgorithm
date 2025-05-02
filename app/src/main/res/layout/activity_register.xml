@@ -106,5 +106,15 @@
             android:layout_marginBottom="20dp"
             android:onClick="goToLogin"
             android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonBack"
+            android:layout_marginTop="30sp"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            android:onClick="goToMainMenu"/>
     </LinearLayout>
 </ScrollView>
