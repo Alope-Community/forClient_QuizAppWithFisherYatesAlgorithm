@@ -17,12 +17,9 @@ import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.AuthResource;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -49,11 +46,30 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String response) {
                 Log.d("LOGIN_SUCCESS", response);
-                runOnUiThread(() -> {
-                    Toast.makeText(LoginActivity.this, "Login berhasil!", Toast.LENGTH_SHORT).show();
-                    // lanjut ke activity lain
-                    // startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                });
+
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String message = json.getString("message");
+                    JSONObject data = json.getJSONObject("data");
+                    String role = data.getString("role");
+
+                    Class<?> nextActivity = role.equals("admin")
+                            ? com.example.quizwithfisheryates.adminActivities.MainActivity.class
+                            : com.example.quizwithfisheryates.userActivities.MainActivity.class;
+
+                    runOnUiThread(() -> {
+                        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LoginActivity.this, nextActivity));
+                    });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    runOnUiThread(() -> Toast.makeText(
+                            LoginActivity.this,
+                            "Format response JSON salah",
+                            Toast.LENGTH_SHORT
+                    ).show());
+                }
             }
 
             @Override

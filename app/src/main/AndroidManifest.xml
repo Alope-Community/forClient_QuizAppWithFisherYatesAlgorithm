@@ -15,12 +15,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizWithFisherYates"
         tools:targetApi="31">
+
+        <!--    AUTH ACTIVITIES    -->
         <activity
             android:name=".authActivities.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".authActivities.LoginActivity"
             android:exported="false" />
+
+        <!--    ADMIN ACTIVITIES    -->
+        <activity
+            android:name=".adminActivities.MainActivity"
+            android:exported="false" />
+
+        <!--    USER ACTIVITIES    -->
+        <activity
+            android:name=".userActivities.MainActivity"
+            android:exported="false" />
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
