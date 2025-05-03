@@ -46,4 +46,38 @@ public class AuthResource {
             }
         }).start();
     }
+
+    public static void postRegister(String name, String username, String password, ApiCallback callback) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://192.168.247.225/quizAPI/register");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+
+                String postData = "name=" + name + "&username=" + username + "&password=" + password;
+                OutputStream os = conn.getOutputStream();
+                os.write(postData.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                reader.close();
+                is.close();
+                conn.disconnect();
+
+                callback.onSuccess(result.toString());
+
+            } catch (Exception e) {
+                callback.onError(e);
+            }
+        }).start();
+    }
 }
