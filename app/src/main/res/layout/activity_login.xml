@@ -72,6 +72,7 @@
 
 
         <Button
+            android:id="@+id/loginButton"
             style="@style/Widget.AppCompat.Button"
             android:onClick="onLogin"
             android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.example.quizwithfisheryates.authActivities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,8 @@ import org.json.JSONObject;
 
 
 public class LoginActivity extends AppCompatActivity {
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +54,30 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(response);
                     String message = json.getString("message");
                     JSONObject data = json.getJSONObject("data");
+
+                    String name = data.getString("username");
+                    String username = data.getString("username");
                     String role = data.getString("role");
 
                     Class<?> nextActivity = role.equals("admin")
                             ? com.example.quizwithfisheryates.adminActivities.MainActivity.class
-                            : com.example.quizwithfisheryates.userActivities.MainActivity.class;
+                            : MainActivity.class;
+
+
+                    sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("isLoggedIn", true);
+                    editor.putString("name", name);
+                    editor.putString("username", username);
+                    editor.putString("role", role);
+                    editor.apply();
 
                     runOnUiThread(() -> {
                         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, nextActivity));
                     });
+
+                    finish();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
