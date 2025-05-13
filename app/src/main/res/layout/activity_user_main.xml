@@ -22,7 +22,6 @@
             android:textSize="20sp"
             android:layout_marginTop="20dp"
             android:gravity="center"/>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_button"
-            android:text="A. Hello"
+            android:text="A"
             android:textColor="#FFFFFF" />
         <Button
             android:id="@+id/btnOptionB"
@@ -54,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_button"
-            android:text="A. Hello"
+            android:text="B"
             android:textColor="#FFFFFF" />
         <Button
             android:id="@+id/btnOptionC"
@@ -63,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_button"
-            android:text="A. Hello"
+            android:text="C"
             android:textColor="#FFFFFF" />
         <Button
             android:id="@+id/btnOptionD"
@@ -72,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_button"
-            android:text="A. Hello"
+            android:text="D"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 </ScrollView>

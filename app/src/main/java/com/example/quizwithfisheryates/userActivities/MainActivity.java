@@ -1,12 +1,9 @@
 package com.example.quizwithfisheryates.userActivities;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,10 +14,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.AuthResource;
-import com.example.quizwithfisheryates._apiResources.QuestionResource;
+import com.example.quizwithfisheryates._apiResources.QuizResource;
+import com.example.quizwithfisheryates._models.Option;
 import com.example.quizwithfisheryates._models.Question;
-import com.example.quizwithfisheryates.authActivities.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,8 +28,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     //
     TextView currentQuestionNumber;
+    Button btnA, btnB, btnC, btnD;
     private TextView textQuestion;
     private List<Question> questions = new ArrayList<>();
+    private List<Option> options = new ArrayList<>();
     private int currentIndex = 0;
 
     @Override
@@ -55,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
         textQuestion = findViewById(R.id.question);
 
         // Ambil soal dari database lewat resource
-        getQuestionResource();
+        getQuestions();
 
         // Untuk proses pilih jawaban
-        Button btnA = findViewById(R.id.btnOptionA);
-        Button btnB = findViewById(R.id.btnOptionB);
-        Button btnC = findViewById(R.id.btnOptionC);
-        Button btnD = findViewById(R.id.btnOptionD);
+        btnA = findViewById(R.id.btnOptionA);
+        btnB = findViewById(R.id.btnOptionB);
+        btnC = findViewById(R.id.btnOptionC);
+        btnD = findViewById(R.id.btnOptionD);
 
         View.OnClickListener optionClickListener = v -> {
             Button clickedButton = (Button) v;
@@ -85,6 +83,27 @@ public class MainActivity extends AppCompatActivity {
         Question question = questions.get(index);
 
         textQuestion.setText(question.getQuestion());
+
+        getOptions(question.getId());
+        showOption();
+
+        Log.d("OPTIONS_LIST", options.toString());
+    }
+
+    private void showOption() {
+        if (options.size() >= 4) {
+            btnA.setText("A. " + options.get(0).getValue());
+            btnA.setTag(options.get(0));
+
+            btnB.setText("B. " + options.get(1).getValue());
+            btnB.setTag(options.get(1));
+
+            btnC.setText("C. " + options.get(2).getValue());
+            btnC.setTag(options.get(2));
+
+            btnD.setText("D. " + options.get(3).getValue());
+            btnD.setTag(options.get(3));
+        }
     }
 
     private void nextQuestion() {
@@ -102,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
         currentQuestionNumber.setText("Soal No. " + (currentIndex + 1));
     }
 
-    public void getQuestionResource(){
-        QuestionResource.getQuestion("easy", new QuestionResource.ApiCallback() {
+    public void getQuestions(){
+        QuizResource.getQuestion("easy", new QuizResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -139,6 +158,59 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(() -> Toast.makeText(
                             MainActivity.this,
                             "Format data soal salah",
+                            Toast.LENGTH_SHORT
+                    ).show());
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> Toast.makeText(
+                        MainActivity.this,
+                        "Gagal terhubung ke server",
+                        Toast.LENGTH_SHORT
+                ).show());
+            }
+        });
+    }
+
+    public void getOptions(int question_id){
+        QuizResource.getOption(question_id, new QuizResource.ApiCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String status = json.getString("status");
+
+                    if (status.equals("success")) {
+                        JSONArray dataArray = json.getJSONArray("data");
+
+                        options.clear();
+
+                        for (int i = 0; i < dataArray.length(); i++) {
+                            JSONObject obj = dataArray.getJSONObject(i);
+                            int id = obj.getInt("id");
+                            String optionValue = obj.getString("value");
+                            int questionId = obj.getInt("question_id");
+
+                            options.add(new Option(id, questionId, optionValue));
+                        }
+
+                        showOption();
+                    } else {
+                        runOnUiThread(() -> Toast.makeText(
+                                MainActivity.this,
+                                "Gagal mengambil data opsi jawaban",
+                                Toast.LENGTH_SHORT
+                        ).show());
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    runOnUiThread(() -> Toast.makeText(
+                            MainActivity.this,
+                            "Format data opsi jawaban salah",
                             Toast.LENGTH_SHORT
                     ).show());
                 }
