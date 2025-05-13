@@ -14,9 +14,10 @@
         android:orientation="vertical"
         android:padding="20dp">
         <TextView
+            android:id="@+id/currentQuestionNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Soal No. 1"
+            android:text=""
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginTop="20dp"
@@ -30,13 +31,15 @@
             android:layout_marginBottom="100dp"
             android:gravity="center">
             <TextView
+                android:id="@+id/question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hello World"
+                android:text=""
                 android:gravity="center"/>
         </RelativeLayout>
 
         <Button
+            android:id="@+id/btnOptionA"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,6 +48,7 @@
             android:text="A. Hello"
             android:textColor="#FFFFFF" />
         <Button
+            android:id="@+id/btnOptionB"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,6 +57,7 @@
             android:text="A. Hello"
             android:textColor="#FFFFFF" />
         <Button
+            android:id="@+id/btnOptionC"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,6 +66,7 @@
             android:text="A. Hello"
             android:textColor="#FFFFFF" />
         <Button
+            android:id="@+id/btnOptionD"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
