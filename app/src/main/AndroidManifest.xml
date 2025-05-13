@@ -33,6 +33,9 @@
         <activity
             android:name=".userActivities.MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".userActivities.ScoreActivity"
+            android:exported="false" />
 
 
         <activity

@@ -1,5 +1,6 @@
 package com.example.quizwithfisheryates.userActivities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.QuizResource;
 import com.example.quizwithfisheryates._models.Option;
 import com.example.quizwithfisheryates._models.Question;
+import com.example.quizwithfisheryates.authActivities.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,7 +115,8 @@ public class MainActivity extends AppCompatActivity {
             updateQuestionNumber();
         } else {
             Toast.makeText(this, "Semua soal selesai!", Toast.LENGTH_SHORT).show();
-            // Bisa navigasi ke hasil, atau simpan total skor
+            // Lanjut ke activity score
+            startActivity(new Intent(MainActivity.this, ScoreActivity.class));
         }
     }
 
