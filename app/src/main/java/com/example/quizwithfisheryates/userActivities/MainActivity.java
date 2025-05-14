@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Option> options = new ArrayList<>();
     private int currentIndex = 0;
 
+    private int score= 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +73,13 @@ public class MainActivity extends AppCompatActivity {
             Button clickedButton = (Button) v;
             String selectedAnswer = clickedButton.getText().toString();
 
-            // Simpan ke database
-//            saveAnswerToDatabase(selectedAnswer);
+            Log.d("SELECTED ANSWER", selectedAnswer);
+            String cleanedAnswer= selectedAnswer.substring(3);
+
+            if(cleanedAnswer.equals(questions.get(currentIndex).getAnswer())){
+                score += 10;
+                Log.d("SCORE", Integer.toString(score));
+            }
 
             // Lanjut ke soal berikutnya
             nextQuestion();
@@ -120,7 +127,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Semua soal selesai!", Toast.LENGTH_SHORT).show();
             // Lanjut ke activity score
-            startActivity(new Intent(MainActivity.this, ScoreActivity.class));
+            // startActivity(new Intent(MainActivity.this, ScoreActivity.class));
+
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    ScoreActivity.class
+            );
+            intent.putExtra("SCORE", score);
+            startActivity(intent);
         }
     }
 
@@ -145,8 +159,9 @@ public class MainActivity extends AppCompatActivity {
                             String questionText = obj.getString("question");
                             String image = obj.isNull("image") ? null : obj.getString("image");
                             String difficulty = obj.getString("difficulty");
+                            String answer = obj.getString("answer");
 
-                            questions.add(new Question(id, questionText, image, difficulty));
+                            questions.add(new Question(id, questionText, image, difficulty, answer));
                         }
 
                         // Update UI di thread utama
