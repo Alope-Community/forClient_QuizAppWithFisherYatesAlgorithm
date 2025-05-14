@@ -1,5 +1,6 @@
 package com.example.quizwithfisheryates;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -46,21 +48,38 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToStart(View view){
+    public void goToStart(View view) {
+        // Tampilkan popup pilihan "difficulty"
+        String[] difficulties = {"Easy", "Medium", "Hard"};
 
-        if(isAuthenticated()) {
-            Intent intent = new Intent(
-                    MainActivity.this,
-                    com.example.quizwithfisheryates.userActivities.MainActivity.class
-            );
-            startActivity(intent);
-        } else {
-            Toast.makeText(
-                    MainActivity.this,
-                    "Silahkan Login Terlebih Dulu",
-                    Toast.LENGTH_SHORT
-            ).show();
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Pilih Difficulty");
+
+        builder.setItems(difficulties, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String selectedDifficulty = difficulties[which];
+
+                if (isAuthenticated()) {
+                    // Kirim nilai difficulty ke aktivitas berikutnya
+                    Intent intent = new Intent(
+                            MainActivity.this,
+                            com.example.quizwithfisheryates.userActivities.MainActivity.class
+                    );
+                    intent.putExtra("DIFFICULTY", selectedDifficulty);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(
+                            MainActivity.this,
+                            "Silahkan Login Terlebih Dulu",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+        });
+
+        builder.setCancelable(true);
+        builder.show();
     }
 
     public void onLogout(View view){

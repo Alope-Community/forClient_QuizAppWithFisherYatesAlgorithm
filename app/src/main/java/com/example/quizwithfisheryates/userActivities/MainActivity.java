@@ -29,6 +29,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     //
+    String difficulty;
     TextView currentQuestionNumber;
     Button btnA, btnB, btnC, btnD;
     private TextView textQuestion;
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // ambil pilihan difficulty
+        difficulty = getIntent().getStringExtra("DIFFICULTY");
 
         // Text untuk nomor soal
         currentQuestionNumber = findViewById(R.id.currentQuestionNumber);
@@ -125,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getQuestions(){
-        QuizResource.getQuestion("easy", new QuizResource.ApiCallback() {
+        QuizResource.getQuestion(difficulty, new QuizResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
