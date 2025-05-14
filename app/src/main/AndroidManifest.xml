@@ -28,6 +28,9 @@
         <activity
             android:name=".adminActivities.MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".adminActivities.CreateQuizActivity"
+            android:exported="false" />
 
         <!--    USER ACTIVITIES    -->
         <activity

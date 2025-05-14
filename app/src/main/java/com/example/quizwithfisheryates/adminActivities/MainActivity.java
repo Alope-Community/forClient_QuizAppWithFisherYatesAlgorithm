@@ -1,6 +1,8 @@
 package com.example.quizwithfisheryates.adminActivities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
+import com.example.quizwithfisheryates.authActivities.LoginActivity;
+import com.example.quizwithfisheryates.authActivities.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -21,5 +25,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void goToCreateQuestion(View v){
+        Intent intent = new Intent(MainActivity.this, CreateQuizActivity.class);
+        startActivity(intent);
     }
 }

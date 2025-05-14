@@ -3,6 +3,7 @@ package com.example.quizwithfisheryates._apiResources;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -58,6 +59,82 @@ public class QuizResource {
                 conn.setRequestMethod("GET");
 
                 // Baca respons
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                reader.close();
+                is.close();
+                conn.disconnect();
+
+                callback.onSuccess(result.toString());
+
+            } catch (Exception e) {
+                callback.onError(e);
+            }
+        }).start();
+    }
+
+    public static void postQuestion(String question, String image, String difficulty, String answer, ApiCallback callback) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://192.168.112.236/quizAPI/create-question");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+
+                String postData =
+                        "question=" + question +
+                        "&image=" + image +
+                        "&difficulty=" + difficulty +
+                        "&answer=" + answer;
+
+                OutputStream os = conn.getOutputStream();
+                os.write(postData.getBytes());
+                os.flush();
+                os.close();
+
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                reader.close();
+                is.close();
+                conn.disconnect();
+
+                callback.onSuccess(result.toString());
+
+            } catch (Exception e) {
+                callback.onError(e);
+            }
+        }).start();
+    }
+
+    public static void postOption(int question_id, String value, ApiCallback callback) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://192.168.112.236/quizAPI/create-option");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+
+                String postData =
+                        "question_id=" + question_id +
+                        "&value=" + value;
+
+                OutputStream os = conn.getOutputStream();
+                os.write(postData.getBytes());
+                os.flush();
+                os.close();
+
                 InputStream is = conn.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 StringBuilder result = new StringBuilder();
