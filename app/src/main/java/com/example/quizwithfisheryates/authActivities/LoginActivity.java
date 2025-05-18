@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                     String message = json.getString("message");
                     JSONObject data = json.getJSONObject("data");
 
+                    int id = data.getInt("id");
                     String name = data.getString("username");
                     String username = data.getString("username");
                     String role = data.getString("role");
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                     sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("isLoggedIn", true);
+                    editor.putInt("id", id);
                     editor.putString("name", name);
                     editor.putString("username", username);
                     editor.putString("role", role);

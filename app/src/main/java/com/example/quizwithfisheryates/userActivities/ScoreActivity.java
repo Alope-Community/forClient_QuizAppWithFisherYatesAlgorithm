@@ -1,9 +1,15 @@
 package com.example.quizwithfisheryates.userActivities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,10 +19,18 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
+import com.example.quizwithfisheryates._apiResources.QuizResource;
+import com.example.quizwithfisheryates._apiResources.ScoreResource;
+import com.example.quizwithfisheryates.adminActivities.CreateQuizActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ScoreActivity extends AppCompatActivity {
 
     int score;
+    String difficulty;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +45,37 @@ public class ScoreActivity extends AppCompatActivity {
             return insets;
         });
 
+        // ambil pilihan difficulty
+        difficulty = getIntent().getStringExtra("DIFFICULTY");
+
         // ambil hasil Score
         score = getIntent().getIntExtra("SCORE", 0);
 
         TextView scoreText = findViewById(R.id.score);
         scoreText.setText(Integer.toString(score));
+
+        // Get ID From Session
+        SharedPreferences sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+        int accountID = sharedPreferences.getInt("id", 1);
+
+        submitScore(accountID, score);
+    }
+
+    void submitScore(int accountID, int score){
+        ScoreResource.postScore(accountID, difficulty, score, new ScoreResource.ApiCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Log.d("CREATE_SUCCESS", response);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.e("CREATE_ERROR", "Tambah Gagal", e);
+                runOnUiThread(() -> {
+                    Toast.makeText(ScoreActivity.this, "Tambah gagal. Coba lagi.", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
 
     public void goToHome(View v){

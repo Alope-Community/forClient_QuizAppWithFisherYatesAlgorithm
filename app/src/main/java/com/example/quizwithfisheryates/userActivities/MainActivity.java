@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 // Waktu habis -> pindah ke ScoreActivity
                 Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
                 intent.putExtra("SCORE", score);
+                intent.putExtra("DIFFICULTY", difficulty);
                 startActivity(intent);
                 finish(); // agar activity ini tidak bisa kembali dengan tombol back
             }
@@ -174,14 +175,15 @@ public class MainActivity extends AppCompatActivity {
             updateQuestionNumber();
         } else {
             Toast.makeText(this, "Semua soal selesai!", Toast.LENGTH_SHORT).show();
-            // Lanjut ke activity score
-            // startActivity(new Intent(MainActivity.this, ScoreActivity.class));
+
+            countDownTimer.cancel();
 
             Intent intent = new Intent(
                     MainActivity.this,
                     ScoreActivity.class
             );
             intent.putExtra("SCORE", score);
+            intent.putExtra("DIFFICULTY", difficulty);
             startActivity(intent);
         }
     }
