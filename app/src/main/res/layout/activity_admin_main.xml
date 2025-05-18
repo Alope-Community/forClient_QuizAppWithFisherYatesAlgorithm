@@ -15,14 +15,27 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kamu Admin"
+            android:text="Selamat Datang Admin"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginTop="100dp"/>
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/viewQuestion"
+            style="@style/Widget.AppCompat.Button"
+            android:onClick="goToListQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_button"
+            android:text="Lihat Soal"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/createQuestion"
             style="@style/Widget.AppCompat.Button"
             android:onClick="goToCreateQuestion"
             android:layout_width="match_parent"

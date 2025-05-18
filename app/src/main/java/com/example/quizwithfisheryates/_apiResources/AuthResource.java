@@ -16,7 +16,7 @@ public class AuthResource {
     public static void postLogin(String username, String password, ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://192.168.112.236/quizAPI/login");
+                URL url = new URL("https://quiz.alope.id/login");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
@@ -50,7 +50,7 @@ public class AuthResource {
     public static void postRegister(String name, String username, String password, ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://192.168.247.225/quizAPI/register");
+                URL url = new URL("https://quiz.alope.id/register");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);

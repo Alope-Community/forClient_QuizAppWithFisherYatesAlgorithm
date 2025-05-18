@@ -19,7 +19,7 @@ public class QuizResource {
         new Thread(() -> {
             try {
                 // Buat URL dengan parameter GET
-                String baseUrl = "http://192.168.112.236/quizAPI/questions";
+                String baseUrl = "https://quiz.alope.id/questions";
                 String queryParams = "?difficulty=" + URLEncoder.encode(difficulty, "UTF-8");
 
                 URL url = new URL(baseUrl + queryParams);
@@ -51,7 +51,7 @@ public class QuizResource {
         new Thread(() -> {
             try {
                 // Buat URL dengan parameter GET
-                String baseUrl = "http://192.168.112.236/quizAPI/options";
+                String baseUrl = "https://quiz.alope.id/options";
                 String queryParams = "?question_id=" + URLEncoder.encode(Integer.toString(question_id), "UTF-8");
 
                 URL url = new URL(baseUrl + queryParams);
@@ -82,7 +82,7 @@ public class QuizResource {
     public static void postQuestion(String question, String image, String difficulty, String answer, ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://192.168.112.236/quizAPI/create-question");
+                URL url = new URL("https://quiz.alope.id/create-question");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
@@ -121,7 +121,7 @@ public class QuizResource {
     public static void postOption(int question_id, String value, ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://192.168.112.236/quizAPI/create-option");
+                URL url = new URL("https://quiz.alope.id/create-option");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
