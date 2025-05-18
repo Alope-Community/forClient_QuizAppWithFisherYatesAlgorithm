@@ -2,6 +2,7 @@ package com.example.quizwithfisheryates.userActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
     private int score= 0;
 
+
+    private CountDownTimer countDownTimer;
+    private TextView timerTextView;
+    private long timeLeftInMillis = 60000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +58,17 @@ public class MainActivity extends AppCompatActivity {
 
         // ambil pilihan difficulty
         difficulty = getIntent().getStringExtra("DIFFICULTY");
+
+        if(difficulty.equals("Easy")){
+            timeLeftInMillis = 60000;
+        } else if(difficulty.equals("Medium")){
+            timeLeftInMillis = 30000;
+        } else{
+            timeLeftInMillis = 10000;
+        }
+
+        timerTextView = findViewById(R.id.timerTextView);
+        startCountdown();
 
         // Text untuk nomor soal
         currentQuestionNumber = findViewById(R.id.currentQuestionNumber);
@@ -90,6 +107,37 @@ public class MainActivity extends AppCompatActivity {
         btnC.setOnClickListener(optionClickListener);
         btnD.setOnClickListener(optionClickListener);
 
+    }
+
+    private void startCountdown() {
+        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateTimerText();
+            }
+
+            @Override
+            public void onFinish() {
+                // Waktu habis -> pindah ke ScoreActivity
+                Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
+                intent.putExtra("SCORE", score);
+                startActivity(intent);
+                finish(); // agar activity ini tidak bisa kembali dengan tombol back
+            }
+        }.start();
+    }
+
+    private void updateTimerText() {
+        int seconds = (int) (timeLeftInMillis / 1000);
+        timerTextView.setText("Sisa waktu: " + seconds + " detik");
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 
     private void showQuestion(int index) {

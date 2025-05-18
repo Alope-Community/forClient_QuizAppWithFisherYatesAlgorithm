@@ -14,6 +14,16 @@
         android:orientation="vertical"
         android:padding="20dp">
         <TextView
+            android:id="@+id/timerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sisa waktu: 60 detik"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"/>
+
+        <TextView
             android:id="@+id/currentQuestionNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
