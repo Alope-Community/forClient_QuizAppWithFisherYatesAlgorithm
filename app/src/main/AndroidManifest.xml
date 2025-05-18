@@ -43,6 +43,9 @@
         <activity
             android:name=".userActivities.ScoreActivity"
             android:exported="false" />
+        <activity
+            android:name=".userActivities.LeaderboardActivity"
+            android:exported="false" />
 
 
         <activity
