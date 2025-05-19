@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.QuizResource;
 import com.example.quizwithfisheryates._models.Option;
@@ -106,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
         btnB.setOnClickListener(optionClickListener);
         btnC.setOnClickListener(optionClickListener);
         btnD.setOnClickListener(optionClickListener);
-
     }
 
     private void startCountdown() {
@@ -143,6 +144,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void showQuestion(int index) {
         Question question = questions.get(index);
+
+        //
+        ImageView imageView = findViewById(R.id.imageView);
+
+        if (question.getImage() != null && !question.getImage().isEmpty()) {
+            imageView.setVisibility(View.VISIBLE);
+
+            Glide.with(this)
+                    .load(question.getImage())
+                    .into(imageView);
+        } else {
+            imageView.setVisibility(View.GONE);
+            Glide.with(this).clear(imageView);
+        }
 
         textQuestion.setText(question.getQuestion());
 

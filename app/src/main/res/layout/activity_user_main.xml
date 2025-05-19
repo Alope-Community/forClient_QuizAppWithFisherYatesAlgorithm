@@ -36,15 +36,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="200dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="100dp"
-            android:gravity="center">
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="100dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
+
             <TextView
                 android:id="@+id/question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:gravity="center"/>
+                android:layout_marginTop="160dp"
+                android:gravity="center"
+                android:text="" />
         </RelativeLayout>
 
         <Button
