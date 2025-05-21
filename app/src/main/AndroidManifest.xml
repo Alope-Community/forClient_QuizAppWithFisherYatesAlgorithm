@@ -49,6 +49,9 @@
         <activity
             android:name=".userActivities.CourseIndexActivity"
             android:exported="false" />
+        <activity
+            android:name=".userActivities.CourseShowActivity"
+            android:exported="false" />
 
 
         <activity

@@ -1,5 +1,6 @@
 package com.example.quizwithfisheryates.userActivities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -68,7 +69,7 @@ public class CourseIndexActivity extends AppCompatActivity {
                             String created_at = obj.getString("created_at");
                             String account_name = obj.getString("account_name");
 
-                            courseList.add(new Course(title, description, body, created_at, account_id));
+                            courseList.add(new Course(id, title, description, body, created_at, account_id));
                         }
 
                         runOnUiThread(() -> renderListToView());
@@ -107,10 +108,13 @@ public class CourseIndexActivity extends AppCompatActivity {
     void renderListToView(){
         LinearLayout container = findViewById(R.id.container); // dari activity XML
         container.removeAllViews();
+
         for (Course item : courseList) {
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(20, 20, 20, 20);
+            layout.setClickable(true); // penting untuk bisa diklik
+            layout.setBackgroundResource(android.R.drawable.list_selector_background); // biar ada efek klik
 
             TextView tvName = new TextView(this);
             tvName.setText(item.getTitle());
@@ -123,7 +127,13 @@ public class CourseIndexActivity extends AppCompatActivity {
             layout.addView(tvName);
             layout.addView(tvDescription);
 
-            // Optional: separator
+            // Kirim ID ketika di klik
+            layout.setOnClickListener(v -> {
+                Intent intent = new Intent(this, CourseShowActivity.class);
+                intent.putExtra("course_id", item.getID()); // pastikan item.getId() return String atau int
+                startActivity(intent);
+            });
+
             View line = new View(this);
             line.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, 2));
@@ -133,4 +143,5 @@ public class CourseIndexActivity extends AppCompatActivity {
             container.addView(line);
         }
     }
+
 }
