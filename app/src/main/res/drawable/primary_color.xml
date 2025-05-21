@@ -1,0 +1,15 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Warna saat ditekan -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#644D9E"/>
+        </shape>
+    </item>
+
+    <!-- Warna default (tidak diklik) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF"/> <!-- Ganti ini kalau ingin warna latar berbeda -->
+        </shape>
+    </item>
+</selector>

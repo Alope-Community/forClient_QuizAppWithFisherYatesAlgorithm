@@ -114,7 +114,7 @@ public class CourseIndexActivity extends AppCompatActivity {
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(20, 20, 20, 20);
             layout.setClickable(true); // penting untuk bisa diklik
-            layout.setBackgroundResource(android.R.drawable.list_selector_background); // biar ada efek klik
+            layout.setBackgroundResource(R.drawable.primary_color);
 
             TextView tvName = new TextView(this);
             tvName.setText(item.getTitle());
