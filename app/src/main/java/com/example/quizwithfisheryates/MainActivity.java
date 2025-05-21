@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.authActivities.LoginActivity;
 import com.example.quizwithfisheryates.authActivities.RegisterActivity;
+import com.example.quizwithfisheryates.userActivities.CourseIndexActivity;
 import com.example.quizwithfisheryates.userActivities.LeaderboardActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToLeaderboard(View view){
         Intent intent = new Intent(MainActivity.this, LeaderboardActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToCourse(View view){
+        Intent intent = new Intent(MainActivity.this, CourseIndexActivity.class);
         startActivity(intent);
     }
 

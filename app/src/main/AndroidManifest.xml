@@ -46,6 +46,9 @@
         <activity
             android:name=".userActivities.LeaderboardActivity"
             android:exported="false" />
+        <activity
+            android:name=".userActivities.CourseIndexActivity"
+            android:exported="false" />
 
 
         <activity
