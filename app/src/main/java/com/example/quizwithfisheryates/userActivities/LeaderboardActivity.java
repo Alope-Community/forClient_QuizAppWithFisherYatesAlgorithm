@@ -45,12 +45,23 @@ public class LeaderboardActivity extends AppCompatActivity {
             return insets;
         });
 
-        getLeaderboard();
+        getLeaderboard("easy");
     }
 
-    private void getLeaderboard() {
+    public void getEasyScore(View v){
+        getLeaderboard("easy");
+    }
 
-        ScoreResource.getScore("", new ScoreResource.ApiCallback() {
+    public void getMediumScore(View v){
+        getLeaderboard("medium");
+    }
+
+    public void getHardScore(View v){
+        getLeaderboard("hard");
+    }
+
+    private void getLeaderboard(String difficulty) {
+        ScoreResource.getScore(difficulty, new ScoreResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("LEADERBOARD_RESPONSE", response); // <-- Cetak response di Logcat
@@ -111,6 +122,7 @@ public class LeaderboardActivity extends AppCompatActivity {
 
     void renderListToView(){
         LinearLayout container = findViewById(R.id.container); // dari activity XML
+        container.removeAllViews();
         for (Score item : scoreList) {
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.VERTICAL);
