@@ -21,6 +21,7 @@ import com.example.quizwithfisheryates.authActivities.LoginActivity;
 import com.example.quizwithfisheryates.authActivities.RegisterActivity;
 import com.example.quizwithfisheryates.userActivities.CourseIndexActivity;
 import com.example.quizwithfisheryates.userActivities.LeaderboardActivity;
+import com.example.quizwithfisheryates.userActivities.SelectDifficultyActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,37 +62,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToStart(View view) {
-        // Tampilkan popup pilihan "difficulty"
-        String[] difficulties = {"Easy", "Medium", "Hard"};
+//        // Tampilkan popup pilihan "difficulty"
+//        String[] difficulties = {"Easy", "Medium", "Hard"};
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//        builder.setTitle("Pilih Difficulty");
+//
+//        builder.setItems(difficulties, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                String selectedDifficulty = difficulties[which];
+//
+//                if (isAuthenticated()) {
+//                    // Kirim nilai difficulty ke aktivitas berikutnya
+//                    Intent intent = new Intent(
+//                            MainActivity.this,
+//                            com.example.quizwithfisheryates.userActivities.MainActivity.class
+//                    );
+//                    intent.putExtra("DIFFICULTY", selectedDifficulty);
+//                    startActivity(intent);
+//                } else {
+//                    Toast.makeText(
+//                            MainActivity.this,
+//                            "Silahkan Login Terlebih Dulu",
+//                            Toast.LENGTH_SHORT
+//                    ).show();
+//                }
+//            }
+//        });
+//
+//        builder.setCancelable(true);
+//        builder.show();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Pilih Difficulty");
-
-        builder.setItems(difficulties, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String selectedDifficulty = difficulties[which];
-
-                if (isAuthenticated()) {
-                    // Kirim nilai difficulty ke aktivitas berikutnya
-                    Intent intent = new Intent(
-                            MainActivity.this,
-                            com.example.quizwithfisheryates.userActivities.MainActivity.class
-                    );
-                    intent.putExtra("DIFFICULTY", selectedDifficulty);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(
-                            MainActivity.this,
-                            "Silahkan Login Terlebih Dulu",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
-            }
-        });
-
-        builder.setCancelable(true);
-        builder.show();
+        // Journey 2
+        Intent intent = new Intent(
+                MainActivity.this,
+                SelectDifficultyActivity.class
+        );
+        startActivity(intent);
     }
 
     public void onLogout(View view){

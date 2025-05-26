@@ -21,7 +21,6 @@ import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.QuizResource;
 import com.example.quizwithfisheryates._models.Option;
 import com.example.quizwithfisheryates._models.Question;
-import com.example.quizwithfisheryates.authActivities.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
