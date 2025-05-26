@@ -129,6 +129,12 @@ public class MainActivity extends AppCompatActivity {
         Button logoutButton = findViewById(R.id.logoutButton);
         TextView welcomeText = findViewById(R.id.welcomeText);
 
+        //
+        View border = findViewById(R.id.border);
+        Button playButton = findViewById(R.id.playButton);
+        Button leaderboardButton = findViewById(R.id.leaderboardButton);
+        Button courseButton = findViewById(R.id.courseButton);
+
         if (isAuthenticated()) {
             String authUsername = sharedPreferences.getString("username", "ALOPE");
             String authName = sharedPreferences.getString("username", "ALOPE");
@@ -138,9 +144,21 @@ public class MainActivity extends AppCompatActivity {
             registerButton.setVisibility(View.GONE);
 
             welcomeText.setText("Halo, " + authName);
+
+            //
+            playButton.setVisibility(View.VISIBLE);
+            leaderboardButton.setVisibility(View.VISIBLE);
+            courseButton.setVisibility(View.VISIBLE);
+            border.setVisibility(View.VISIBLE);
         } else{
             logoutButton.setVisibility(View.GONE);
             welcomeText.setVisibility(View.GONE);
+
+            //
+            playButton.setVisibility(View.GONE);
+            leaderboardButton.setVisibility(View.GONE);
+            courseButton.setVisibility(View.GONE);
+            border.setVisibility(View.GONE);
         }
     }
 }
