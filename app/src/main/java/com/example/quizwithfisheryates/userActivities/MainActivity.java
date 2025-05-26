@@ -1,5 +1,7 @@
 package com.example.quizwithfisheryates.userActivities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -108,6 +110,22 @@ public class MainActivity extends AppCompatActivity {
         btnC.setOnClickListener(optionClickListener);
         btnD.setOnClickListener(optionClickListener);
     }
+
+    @SuppressWarnings("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Konfirmasi")
+                .setMessage("Apakah Anda yakin ingin keluar?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton("Tidak", null)
+                .show();
+    }
+
 
     private void startCountdown() {
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
