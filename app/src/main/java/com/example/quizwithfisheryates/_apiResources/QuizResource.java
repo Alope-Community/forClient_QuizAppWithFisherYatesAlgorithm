@@ -15,12 +15,13 @@ public class QuizResource {
         void onError(Exception e);
     }
 
-    public static void getQuestion(String difficulty, ApiCallback callback) {
+    public static void getQuestion(String difficulty, String listFor, ApiCallback callback) {
         new Thread(() -> {
             try {
                 // Buat URL dengan parameter GET
                 String baseUrl = "https://quiz.alope.id/questions";
-                String queryParams = "?difficulty=" + URLEncoder.encode(difficulty, "UTF-8");
+                String queryParams = "?difficulty=" + URLEncoder.encode(difficulty, "UTF-8") +
+                        "&for=" + URLEncoder.encode(listFor, "UTF-8");
 
                 URL url = new URL(baseUrl + queryParams);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();

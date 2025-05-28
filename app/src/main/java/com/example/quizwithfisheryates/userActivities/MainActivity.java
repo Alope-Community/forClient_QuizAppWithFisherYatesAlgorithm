@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getQuestions(){
-        QuizResource.getQuestion(difficulty, new QuizResource.ApiCallback() {
+        QuizResource.getQuestion(difficulty, "user", new QuizResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {

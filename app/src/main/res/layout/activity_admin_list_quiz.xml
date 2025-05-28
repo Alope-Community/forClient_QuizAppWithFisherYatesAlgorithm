@@ -10,8 +10,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="15dp"
         android:id="@+id/quizContainer"
         >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/easyQuizButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/rounded_button"
+                android:text="Easy"
+                android:textColor="#FFFFFF"
+                android:onClick="getEasyScore"/>
+
+            <Button
+                android:id="@+id/mediumQuizButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/rounded_button"
+                android:text="Medium"
+                android:textColor="#FFFFFF"
+                android:onClick="getMediumScore" />
+
+            <Button
+                android:id="@+id/hardQuizButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/rounded_button"
+                android:text="Hard"
+                android:textColor="#FFFFFF"
+                android:onClick="getHardScore" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
