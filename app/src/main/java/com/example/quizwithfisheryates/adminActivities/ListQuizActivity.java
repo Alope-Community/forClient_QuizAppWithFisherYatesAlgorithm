@@ -1,10 +1,12 @@
 package com.example.quizwithfisheryates.adminActivities;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -136,6 +138,7 @@ public class ListQuizActivity extends AppCompatActivity {
             List<String> options = quiz.getValue();
             String imageUrl = quiz.getImage();
 
+            // Tambah pertanyaan
             TextView questionView = new TextView(this);
             questionView.setText(question);
             questionView.setTextSize(20);
@@ -147,10 +150,10 @@ public class ListQuizActivity extends AppCompatActivity {
             questionView.setPadding(0, 24, 0, 12);
             quizContainer.addView(questionView);
 
+            // Jika ada gambar, tampilkan
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 ImageView imageView = new ImageView(this);
 
-                // Convert 300dp ke pixel
                 int minHeightDp = 300;
                 float scale = getResources().getDisplayMetrics().density;
                 int minHeightPx = (int) (minHeightDp * scale + 0.5f);
@@ -162,6 +165,7 @@ public class ListQuizActivity extends AppCompatActivity {
                 params.setMargins(0, 0, 0, 16);
                 imageView.setLayoutParams(params);
                 imageView.setMinimumHeight(minHeightPx);
+                imageView.setMaxHeight(minHeightPx);
                 imageView.setAdjustViewBounds(true);
 
                 Glide.with(this)
@@ -188,6 +192,75 @@ public class ListQuizActivity extends AppCompatActivity {
                 label++;
             }
 
+            // Buat layout horizontal untuk tombol Update dan Delete
+            LinearLayout buttonLayout = new LinearLayout(this);
+            buttonLayout.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            buttonLayoutParams.setMargins(0, 16, 0, 16);
+            buttonLayout.setLayoutParams(buttonLayoutParams);
+
+            // Tombol Update
+            Button btnUpdate = new Button(this);
+            btnUpdate.setText("Update");
+            btnUpdate.setAllCaps(false);
+            btnUpdate.setBackgroundColor(Color.parseColor("#2196F3")); // biru
+            btnUpdate.setTextColor(Color.WHITE);
+            btnUpdate.setPadding(32, 16, 32, 16);
+
+            // Tombol Delete
+            Button btnDelete = new Button(this);
+            btnDelete.setText("Delete");
+            btnDelete.setAllCaps(false);
+            btnDelete.setBackgroundColor(Color.parseColor("#F44336")); // merah
+            btnDelete.setTextColor(Color.WHITE);
+            btnDelete.setPadding(32, 16, 32, 16);
+
+            // Tambahkan tombol ke layout horizontal
+            buttonLayout.addView(btnUpdate);
+            buttonLayout.addView(btnDelete);
+
+            quizContainer.addView(buttonLayout);
+
+            // Set listener tombol Update
+            btnUpdate.setOnClickListener(v -> {
+                // Logika update, misal tampilkan form edit, atau buka activity baru
+                // Contoh:
+                Toast.makeText(this, "Update quiz ID: " + quiz.getId(), Toast.LENGTH_SHORT).show();
+                // TODO: Implement update logic
+            });
+
+            btnDelete.setOnClickListener(v -> {
+                new AlertDialog.Builder(this)
+                        .setTitle("Hapus Soal")
+                        .setMessage("Apakah Anda yakin ingin menghapus soal ini?")
+                        .setPositiveButton("Ya", (dialog, which) -> {
+                            // Panggil API deleteQuestion
+                            QuizResource.deleteQuestion(quiz.getId(), new QuizResource.ApiCallback() {
+                                @Override
+                                public void onSuccess(String response) {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(ListQuizActivity.this, "Soal berhasil dihapus", Toast.LENGTH_SHORT).show();
+                                        // TODO: Refresh list quiz, misal panggil ulang showQuiz atau fetch ulang data
+                                        getQuestions(quiz.getDifficulty()); // contoh nama fungsi untuk refresh
+                                    });
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(ListQuizActivity.this, "Gagal hapus soal: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    });
+                                }
+                            });
+                        })
+                        .setNegativeButton("Batal", null)
+                        .show();
+            });
+
+            // Divider
             View divider = new View(this);
             LinearLayout.LayoutParams dividerParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, 1);

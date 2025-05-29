@@ -229,4 +229,82 @@ public class QuizResource {
             }
         }).start();
     }
+
+    public static void deleteQuestion(int id, ApiCallback callback) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("https://quiz.alope.id/delete-question");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");  // Biasanya DELETE tapi kadang API pakai POST untuk delete
+                conn.setDoOutput(true);
+
+                // Kirim parameter question_id sebagai x-www-form-urlencoded
+                String postData = "id=" + URLEncoder.encode(Integer.toString(id), "UTF-8");
+
+                OutputStream os = conn.getOutputStream();
+                os.write(postData.getBytes());
+                os.flush();
+                os.close();
+
+                int status = conn.getResponseCode();
+                InputStream is = (status == HttpURLConnection.HTTP_OK) ? conn.getInputStream() : conn.getErrorStream();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+                conn.disconnect();
+
+                if (status == HttpURLConnection.HTTP_OK) {
+                    callback.onSuccess(response.toString());
+                } else {
+                    callback.onError(new Exception("Server returned status: " + status + ", response: " + response.toString()));
+                }
+            } catch (Exception e) {
+                callback.onError(e);
+            }
+        }).start();
+    }
+
+    public static void deleteOption(int option_id, ApiCallback callback) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("https://quiz.alope.id/delete-option");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST"); // Sama seperti di atas, jika API mendukung DELETE, ganti saja
+                conn.setDoOutput(true);
+
+                // Kirim parameter option_id sebagai x-www-form-urlencoded
+                String postData = "option_id=" + URLEncoder.encode(Integer.toString(option_id), "UTF-8");
+
+                OutputStream os = conn.getOutputStream();
+                os.write(postData.getBytes());
+                os.flush();
+                os.close();
+
+                int status = conn.getResponseCode();
+                InputStream is = (status == HttpURLConnection.HTTP_OK) ? conn.getInputStream() : conn.getErrorStream();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+                conn.disconnect();
+
+                if (status == HttpURLConnection.HTTP_OK) {
+                    callback.onSuccess(response.toString());
+                } else {
+                    callback.onError(new Exception("Server returned status: " + status + ", response: " + response.toString()));
+                }
+            } catch (Exception e) {
+                callback.onError(e);
+            }
+        }).start();
+    }
 }
