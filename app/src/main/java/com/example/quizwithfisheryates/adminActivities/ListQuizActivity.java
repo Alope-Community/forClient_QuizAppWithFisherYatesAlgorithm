@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.QuizResource;
 import com.example.quizwithfisheryates._models.Question;
@@ -132,8 +134,8 @@ public class ListQuizActivity extends AppCompatActivity {
         for (Question quiz : quizList) {
             String question = quiz.getQuestion();
             List<String> options = quiz.getValue();
+            String imageUrl = quiz.getImage();
 
-            // Tambah pertanyaan
             TextView questionView = new TextView(this);
             questionView.setText(question);
             questionView.setTextSize(20);
@@ -145,17 +147,39 @@ public class ListQuizActivity extends AppCompatActivity {
             questionView.setPadding(0, 24, 0, 12);
             quizContainer.addView(questionView);
 
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                ImageView imageView = new ImageView(this);
+
+                // Convert 300dp ke pixel
+                int minHeightDp = 300;
+                float scale = getResources().getDisplayMetrics().density;
+                int minHeightPx = (int) (minHeightDp * scale + 0.5f);
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                params.setMargins(0, 0, 0, 16);
+                imageView.setLayoutParams(params);
+                imageView.setMinimumHeight(minHeightPx);
+                imageView.setAdjustViewBounds(true);
+
+                Glide.with(this)
+                        .load(imageUrl)
+                        .into(imageView);
+
+                quizContainer.addView(imageView);
+            }
+
             char label = 'A';
             for (int i = 0; i < options.size(); i++) {
                 String option = options.get(i);
 
                 TextView optionView = new TextView(this);
-
                 optionView.setText(label + ". " + option);
                 optionView.setTextSize(16);
                 optionView.setPadding(16, 4, 0, 4);
 
-                // Kalau option sama dengan answer, bikin bold
                 if (option.equals(quiz.getAnswer())) {
                     optionView.setTypeface(null, Typeface.BOLD);
                 }
