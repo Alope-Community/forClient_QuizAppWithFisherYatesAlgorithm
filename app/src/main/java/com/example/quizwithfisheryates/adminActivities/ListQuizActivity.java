@@ -46,11 +46,23 @@ public class ListQuizActivity extends AppCompatActivity {
         quizContainer = findViewById(R.id.quizContainer);
 
         // Ambil data soal
-        getQuestions();
+        getQuestions("easy");
     }
 
-    public void getQuestions() {
-        QuizResource.getQuestion("easy", "admin", new QuizResource.ApiCallback() {
+    public void getEasyQuiz(View v){
+        getQuestions("easy");
+    }
+
+    public void getMediumQuiz(View v){
+        getQuestions("medium");
+    }
+
+    public void getHardQuiz(View v){
+        getQuestions("hard");
+    }
+
+    public void getQuestions(String difficulty) {
+        QuizResource.getQuestion(difficulty, "admin", new QuizResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -61,6 +73,8 @@ public class ListQuizActivity extends AppCompatActivity {
 
                     if (status.equals("success")) {
                         JSONArray dataArray = json.getJSONArray("data");
+
+                        quizList.clear();
 
                         for (int i = 0; i < dataArray.length(); i++) {
                             JSONObject obj = dataArray.getJSONObject(i);
@@ -113,6 +127,8 @@ public class ListQuizActivity extends AppCompatActivity {
     }
 
     private void showQuiz() {
+        quizContainer.removeAllViews();
+
         for (Question quiz : quizList) {
             String question = quiz.getQuestion();
             List<String> options = quiz.getValue();

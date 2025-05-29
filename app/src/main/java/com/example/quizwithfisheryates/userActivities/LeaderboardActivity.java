@@ -121,7 +121,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
 
     void renderListToView(){
-        LinearLayout container = findViewById(R.id.container); // dari activity XML
+        LinearLayout container = findViewById(R.id.quizContainer);
         container.removeAllViews();
         for (Score item : scoreList) {
             LinearLayout layout = new LinearLayout(this);

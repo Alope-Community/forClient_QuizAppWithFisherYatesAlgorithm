@@ -9,11 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="15dp"
-        android:id="@+id/quizContainer"
-        >
-
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +23,7 @@
                 android:background="@drawable/rounded_button"
                 android:text="Easy"
                 android:textColor="#FFFFFF"
-                android:onClick="getEasyScore"/>
+                android:onClick="getEasyQuiz"/>
 
             <Button
                 android:id="@+id/mediumQuizButton"
@@ -38,7 +34,7 @@
                 android:background="@drawable/rounded_button"
                 android:text="Medium"
                 android:textColor="#FFFFFF"
-                android:onClick="getMediumScore" />
+                android:onClick="getMediumQuiz" />
 
             <Button
                 android:id="@+id/hardQuizButton"
@@ -49,39 +45,49 @@
                 android:background="@drawable/rounded_button"
                 android:text="Hard"
                 android:textColor="#FFFFFF"
-                android:onClick="getHardScore" />
+                android:onClick="getHardQuiz" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Question"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginBottom="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Option 1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Option 2"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Option 3"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Option 4"/>
-
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000"
-            android:layout_marginVertical="20dp"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:id="@+id/quizContainer"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Question"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Option 1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Option 2"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Option 3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Option 4"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                android:layout_marginVertical="20dp"/>
+        </LinearLayout>
     </LinearLayout>
+
+
 
 </ScrollView>
