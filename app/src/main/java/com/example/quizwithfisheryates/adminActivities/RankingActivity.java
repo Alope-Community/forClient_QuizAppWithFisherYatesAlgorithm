@@ -1,14 +1,11 @@
-package com.example.quizwithfisheryates.userActivities;
+package com.example.quizwithfisheryates.adminActivities;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,9 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.QuizResource;
 import com.example.quizwithfisheryates._apiResources.ScoreResource;
-import com.example.quizwithfisheryates._models.Question;
 import com.example.quizwithfisheryates._models.Score;
 
 import org.json.JSONArray;
@@ -31,15 +26,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeaderboardActivity extends AppCompatActivity {
+public class RankingActivity extends AppCompatActivity {
     List<Score> scoreList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_user_leaderboard);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.user_leaderboard), (v, insets) -> {
+        setContentView(R.layout.activity_admin_ranking);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.admin_ranking), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -91,7 +86,7 @@ public class LeaderboardActivity extends AppCompatActivity {
 
                     } else {
                         runOnUiThread(() -> Toast.makeText(
-                                LeaderboardActivity.this,
+                                RankingActivity.this,
                                 "Gagal mengambil data Leaderboard",
                                 Toast.LENGTH_SHORT
                         ).show());
@@ -100,7 +95,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     runOnUiThread(() -> Toast.makeText(
-                            LeaderboardActivity.this,
+                            RankingActivity.this,
                             "Format data soal salah",
                             Toast.LENGTH_SHORT
                     ).show());
@@ -112,7 +107,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                 Log.e("LEADERBOARD_ERROR", "Error saat mengambil leaderboard: " + e.getMessage());
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(
-                        LeaderboardActivity.this,
+                        RankingActivity.this,
                         "Gagal terhubung ke server",
                         Toast.LENGTH_SHORT
                 ).show());

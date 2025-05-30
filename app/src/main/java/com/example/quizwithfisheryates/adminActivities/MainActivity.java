@@ -33,4 +33,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, ListQuizActivity.class);
         startActivity(intent);
     }
+
+    public void goToRanking(View v){
+        Intent intent = new Intent(MainActivity.this, RankingActivity.class);
+        startActivity(intent);
+    }
 }

@@ -193,6 +193,118 @@ public class QuizResource {
         }).start();
     }
 
+    public static void updateQuestion(
+            String id,
+            String question,
+            Uri imageUri,
+            String difficulty,
+            String answer,
+            Context context,
+            ApiCallback callback
+    ) {
+        new Thread(() -> {
+            String boundary = "===" + System.currentTimeMillis() + "===";
+            String LINE_FEED = "\r\n";
+
+            try {
+                URL url = new URL("https://quiz.alope.id/update-question"); // Ganti sesuai endpoint update
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setUseCaches(false);
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+                conn.setRequestMethod("POST"); // Atau PUT jika backend pakai PUT
+                conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+
+                OutputStream outputStream = conn.getOutputStream();
+                PrintWriter writer = new PrintWriter(new OutputStreamWriter(outputStream, "UTF-8"), true);
+
+                // ID
+                writer.append("--").append(boundary).append(LINE_FEED);
+                writer.append("Content-Disposition: form-data; name=\"id\"").append(LINE_FEED);
+                writer.append("Content-Type: text/plain; charset=UTF-8").append(LINE_FEED);
+                writer.append(LINE_FEED);
+                writer.append(id).append(LINE_FEED);
+                writer.flush();
+
+                // Question
+                writer.append("--").append(boundary).append(LINE_FEED);
+                writer.append("Content-Disposition: form-data; name=\"question\"").append(LINE_FEED);
+                writer.append("Content-Type: text/plain; charset=UTF-8").append(LINE_FEED);
+                writer.append(LINE_FEED);
+                writer.append(question).append(LINE_FEED);
+                writer.flush();
+
+                // Difficulty
+                writer.append("--").append(boundary).append(LINE_FEED);
+                writer.append("Content-Disposition: form-data; name=\"difficulty\"").append(LINE_FEED);
+                writer.append("Content-Type: text/plain; charset=UTF-8").append(LINE_FEED);
+                writer.append(LINE_FEED);
+                writer.append(difficulty).append(LINE_FEED);
+                writer.flush();
+
+                // Answer
+                writer.append("--").append(boundary).append(LINE_FEED);
+                writer.append("Content-Disposition: form-data; name=\"answer\"").append(LINE_FEED);
+                writer.append("Content-Type: text/plain; charset=UTF-8").append(LINE_FEED);
+                writer.append(LINE_FEED);
+                writer.append(answer).append(LINE_FEED);
+                writer.flush();
+
+                // Optional: Image
+                if (imageUri != null) {
+                    String fileName = "image.jpg";
+
+                    writer.append("--").append(boundary).append(LINE_FEED);
+                    writer.append("Content-Disposition: form-data; name=\"image\"; filename=\"" + fileName + "\"").append(LINE_FEED);
+                    writer.append("Content-Type: image/jpeg").append(LINE_FEED);
+                    writer.append(LINE_FEED);
+                    writer.flush();
+
+                    InputStream inputStream = context.getContentResolver().openInputStream(imageUri);
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+                    outputStream.flush();
+                    inputStream.close();
+
+                    writer.append(LINE_FEED);
+                    writer.flush();
+                }
+
+                // Close multipart
+                writer.append("--").append(boundary).append("--").append(LINE_FEED);
+                writer.close();
+
+                // Read response
+                int status = conn.getResponseCode();
+                InputStream responseStream = (status == HttpURLConnection.HTTP_OK) ?
+                        conn.getInputStream() : conn.getErrorStream();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(responseStream));
+                StringBuilder responseStrBuilder = new StringBuilder();
+                String inputStr;
+                while ((inputStr = reader.readLine()) != null) {
+                    responseStrBuilder.append(inputStr);
+                }
+
+                reader.close();
+                conn.disconnect();
+
+                if (status == HttpURLConnection.HTTP_OK) {
+                    callback.onSuccess(responseStrBuilder.toString());
+                } else {
+                    callback.onError(new Exception("Server returned status: " + status + ", response: " + responseStrBuilder.toString()));
+                }
+
+            } catch (Exception e) {
+                callback.onError(e);
+            }
+        }).start();
+    }
+
+
     public static void postOption(int question_id, String value, ApiCallback callback) {
         new Thread(() -> {
             try {
