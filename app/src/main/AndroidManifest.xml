@@ -37,6 +37,9 @@
         <activity
             android:name=".adminActivities.CreateQuizActivity"
             android:exported="false" />
+        <activity
+            android:name=".adminActivities.UpdateQuizActivity"
+            android:exported="false"/>
 
 
         <!-- USER ACTIVITIES -->

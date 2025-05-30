@@ -1,6 +1,7 @@
 package com.example.quizwithfisheryates.adminActivities;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -226,10 +227,14 @@ public class ListQuizActivity extends AppCompatActivity {
 
             // Set listener tombol Update
             btnUpdate.setOnClickListener(v -> {
-                // Logika update, misal tampilkan form edit, atau buka activity baru
-                // Contoh:
-                Toast.makeText(this, "Update quiz ID: " + quiz.getId(), Toast.LENGTH_SHORT).show();
-                // TODO: Implement update logic
+                Intent intent = new Intent(ListQuizActivity.this, UpdateQuizActivity.class);
+                intent.putExtra("quiz_id", quiz.getId());
+                intent.putExtra("question", quiz.getQuestion());
+                intent.putStringArrayListExtra("options", new ArrayList<>(quiz.getValue()));
+                intent.putExtra("answer", quiz.getAnswer());
+                intent.putExtra("difficulty", quiz.getDifficulty());
+                intent.putExtra("image", quiz.getImage());
+                startActivity(intent);
             });
 
             btnDelete.setOnClickListener(v -> {

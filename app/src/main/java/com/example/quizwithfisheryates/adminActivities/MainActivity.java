@@ -11,8 +11,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates.authActivities.LoginActivity;
-import com.example.quizwithfisheryates.authActivities.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
     @Override
