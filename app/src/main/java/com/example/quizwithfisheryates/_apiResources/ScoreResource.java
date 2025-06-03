@@ -1,6 +1,11 @@
 package com.example.quizwithfisheryates._apiResources;
 
+import android.content.Context;
+import android.os.Environment;
+
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -12,6 +17,11 @@ public class ScoreResource {
 
     public interface ApiCallback {
         void onSuccess(String response);
+        void onError(Exception e);
+    }
+
+    public interface FileCallback {
+        void onSuccess(String filePath);
         void onError(Exception e);
     }
 
@@ -78,6 +88,39 @@ public class ScoreResource {
                 conn.disconnect();
 
                 callback.onSuccess(result.toString());
+
+            } catch (Exception e) {
+                callback.onError(e);
+            }
+        }).start();
+    }
+
+    public static void exportScore(Context context, ScoreResource.FileCallback callback) {
+        new Thread(() -> {
+            try {
+                String fileUrl = "https://quiz.alope.id/export-scores";
+                URL url = new URL(fileUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+
+                InputStream inputStream = conn.getInputStream();
+
+                File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File file = new File(downloadsDir, "scores.xlsx");
+
+                FileOutputStream outputStream = new FileOutputStream(file);
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+
+                outputStream.close();
+                inputStream.close();
+                conn.disconnect();
+
+                callback.onSuccess(file.getAbsolutePath());
 
             } catch (Exception e) {
                 callback.onError(e);
