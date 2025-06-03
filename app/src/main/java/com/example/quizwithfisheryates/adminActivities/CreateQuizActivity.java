@@ -138,9 +138,20 @@ public class CreateQuizActivity extends AppCompatActivity {
 
                     runOnUiThread(() -> {
                         Toast.makeText(CreateQuizActivity.this, message, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CreateQuizActivity.this, MainActivity.class));
+//                        startActivity(new Intent(CreateQuizActivity.this, MainActivity.class));
+
+                        editTextQuestion.setText("");
+                        editTextOptionA.setText("");
+                        editTextOptionB.setText("");
+                        editTextOptionC.setText("");
+                        editTextOptionD.setText("");
+
+                        radioGroupAnswer.clearCheck();
+                        radioGroupDifficulty.clearCheck();
+
+                         selectedImageUri = null;
                     });
-                    finish();
+//                    finish();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

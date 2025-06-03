@@ -1,33 +1,38 @@
 package com.example.quizwithfisheryates.adminActivities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.QuizResource;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class UpdateQuizActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE_PICK_IMAGE = 1001;
+
     private EditText editTextQuestion, editTextOptionA, editTextOptionB, editTextOptionC, editTextOptionD;
     private RadioGroup radioGroupAnswer, radioGroupDifficulty;
-    private Button buttonSave;
+    private Button buttonSave, buttonUploadImage;
     private ImageView imagePreview;
 
-    private Uri selectedImageUri = null; // untuk gambar baru (jika dipilih)
-    private String originalImageUrl = null; // untuk menyimpan gambar lama
+    private Uri selectedImageUri = null;
+    private String originalImageUrl = null;
+    private int quizId;
+    private ArrayList<String> options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,24 +49,22 @@ public class UpdateQuizActivity extends AppCompatActivity {
         radioGroupDifficulty = findViewById(R.id.radioGroupDifficulty);
         buttonSave = findViewById(R.id.loginButton);
         imagePreview = findViewById(R.id.imagePreview);
+        buttonUploadImage = findViewById(R.id.buttonUploadImage);
 
-        imagePreview.setOnClickListener(v -> {
-            Intent intentPick = new Intent(Intent.ACTION_PICK);
-            intentPick.setType("image/*");
-            startActivityForResult(intentPick, 100);
-        });
+        // Upload image handler
+        buttonUploadImage.setOnClickListener(v -> openImagePicker());
 
-        // Ambil data quiz dari intent
+        // Ambil data dari intent
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("quiz_id")) {
-            String quizId = intent.getStringExtra("quiz_id");
+            quizId = intent.getIntExtra("quiz_id", -1);
             String question = intent.getStringExtra("question");
-            ArrayList<String> options = intent.getStringArrayListExtra("options");
+            options = intent.getStringArrayListExtra("options");
             String correctAnswer = intent.getStringExtra("answer");
             String difficulty = intent.getStringExtra("difficulty");
             originalImageUrl = intent.getStringExtra("image");
 
-            // Isi data ke form
+            // Set data ke form
             editTextQuestion.setText(question);
             if (options != null && options.size() >= 4) {
                 editTextOptionA.setText(options.get(0));
@@ -72,85 +75,115 @@ public class UpdateQuizActivity extends AppCompatActivity {
 
             if (originalImageUrl != null && !originalImageUrl.isEmpty()) {
                 imagePreview.setVisibility(View.VISIBLE);
-                Glide.with(this)
-                        .load(originalImageUrl)
-                        .into(imagePreview);
+                Glide.with(this).load(originalImageUrl).into(imagePreview);
             }
 
-            // Pilih jawaban yang benar
+            // Jawaban benar
             int index = options.indexOf(correctAnswer);
-            switch (index) {
-                case 0: radioGroupAnswer.check(R.id.radioA); break;
-                case 1: radioGroupAnswer.check(R.id.radioB); break;
-                case 2: radioGroupAnswer.check(R.id.radioC); break;
-                case 3: radioGroupAnswer.check(R.id.radioD); break;
-            }
+            if (index == 0) radioGroupAnswer.check(R.id.radioA);
+            else if (index == 1) radioGroupAnswer.check(R.id.radioB);
+            else if (index == 2) radioGroupAnswer.check(R.id.radioC);
+            else if (index == 3) radioGroupAnswer.check(R.id.radioD);
 
-            // Pilih tingkat kesulitan
-            switch (difficulty.toLowerCase()) {
-                case "easy": radioGroupDifficulty.check(R.id.difficultEasy); break;
-                case "medium": radioGroupDifficulty.check(R.id.difficultMedium); break;
-                case "hard": radioGroupDifficulty.check(R.id.difficultHard); break;
-            }
-
-            // Handle tombol simpan
-            buttonSave.setText("Update");
-            buttonSave.setOnClickListener(v -> {
-                String editedQuestion = editTextQuestion.getText().toString();
-                int selectedAnswerId = radioGroupAnswer.getCheckedRadioButtonId();
-                int selectedDifficultyId = radioGroupDifficulty.getCheckedRadioButtonId();
-
-                if (editedQuestion.isEmpty() || selectedAnswerId == -1 || selectedDifficultyId == -1) {
-                    Toast.makeText(this, "Mohon isi semua field", Toast.LENGTH_SHORT).show();
-                    return;
+            // Difficulty
+            if (difficulty != null) {
+                switch (difficulty.toLowerCase()) {
+                    case "easy": radioGroupDifficulty.check(R.id.difficultEasy); break;
+                    case "medium": radioGroupDifficulty.check(R.id.difficultMedium); break;
+                    case "hard": radioGroupDifficulty.check(R.id.difficultHard); break;
                 }
-
-                RadioButton selectedAnswerRadio = findViewById(selectedAnswerId);
-                RadioButton selectedDifficultyRadio = findViewById(selectedDifficultyId);
-
-                String editedAnswer = selectedAnswerRadio.getText().toString();
-                String editedDifficulty = selectedDifficultyRadio.getText().toString();
-
-                buttonSave.setEnabled(false); // cegah klik ganda
-
-                // Gunakan gambar baru jika dipilih, jika tidak pakai gambar lama (URL string)
-                Uri imageToUpload = selectedImageUri != null ? selectedImageUri : null;
-
-                QuizResource.updateQuestion(
-                        quizId,
-                        editedQuestion,
-                        imageToUpload,
-                        editedDifficulty,
-                        editedAnswer,
-                        this,
-                        new QuizResource.ApiCallback() {
-                            @Override
-                            public void onSuccess(String response) {
-                                runOnUiThread(() -> {
-                                    Toast.makeText(UpdateQuizActivity.this, "Quiz berhasil diperbarui!", Toast.LENGTH_SHORT).show();
-                                    finish(); // Kembali ke list
-                                });
-                            }
-
-                            @Override
-                            public void onError(Exception e) {
-                                runOnUiThread(() -> {
-                                    Toast.makeText(UpdateQuizActivity.this, "Gagal update: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                    buttonSave.setEnabled(true); // aktifkan tombol lagi
-                                });
-                            }
-                        }
-                );
-            });
+            }
         }
+
+        buttonSave.setText("Update");
+        buttonSave.setOnClickListener(v -> onSubmitUpdate());
+    }
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == RESULT_OK && data != null) {
             selectedImageUri = data.getData();
-            imagePreview.setImageURI(selectedImageUri); // tampilkan preview gambar baru
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                imagePreview.setImageBitmap(bitmap);
+                imagePreview.setVisibility(View.VISIBLE);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Gagal memuat gambar", Toast.LENGTH_SHORT).show();
+            }
         }
+    }
+
+    private void onSubmitUpdate() {
+        String question = editTextQuestion.getText().toString().trim();
+        String optionA = editTextOptionA.getText().toString().trim();
+        String optionB = editTextOptionB.getText().toString().trim();
+        String optionC = editTextOptionC.getText().toString().trim();
+        String optionD = editTextOptionD.getText().toString().trim();
+
+        int selectedAnswerId = radioGroupAnswer.getCheckedRadioButtonId();
+        int selectedDifficultyId = radioGroupDifficulty.getCheckedRadioButtonId();
+
+        if (selectedAnswerId == -1 || selectedDifficultyId == -1 || question.isEmpty()
+                || optionA.isEmpty() || optionB.isEmpty() || optionC.isEmpty() || optionD.isEmpty()) {
+            Toast.makeText(this, "Harap isi semua data dengan lengkap", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        RadioButton selectedAnswer = findViewById(selectedAnswerId);
+        String answerLetter = selectedAnswer.getText().toString().trim();
+
+        String finalAnswer = optionA;
+        if (answerLetter.equals("B")) finalAnswer = optionB;
+        else if (answerLetter.equals("C")) finalAnswer = optionC;
+        else if (answerLetter.equals("D")) finalAnswer = optionD;
+
+        RadioButton selectedDifficulty = findViewById(selectedDifficultyId);
+        String finalDifficulty = selectedDifficulty.getText().toString().trim();
+
+        QuizResource.updateQuestion(quizId, question, selectedImageUri, finalDifficulty, finalAnswer, this, new QuizResource.ApiCallback() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    String message = json.getString("message");
+
+                    // Update semua opsi
+                    QuizResource.updateOptions(quizId, optionA, optionB, optionC, optionD, new QuizResource.ApiCallback() {
+                        @Override
+                        public void onSuccess(String response) {
+                            runOnUiThread(() -> {
+                                Toast.makeText(UpdateQuizActivity.this, "Update berhasil", Toast.LENGTH_SHORT).show();
+//                                finish();
+                                Intent intent = new Intent(UpdateQuizActivity.this, ListQuizActivity.class);
+                                startActivity(intent);
+                            });
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            runOnUiThread(() -> Toast.makeText(UpdateQuizActivity.this, "Gagal update opsi", Toast.LENGTH_SHORT).show());
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    runOnUiThread(() -> Toast.makeText(UpdateQuizActivity.this, "Kesalahan JSON", Toast.LENGTH_SHORT).show());
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                runOnUiThread(() -> Toast.makeText(UpdateQuizActivity.this, "Update gagal", Toast.LENGTH_SHORT).show());
+            }
+        });
     }
 }

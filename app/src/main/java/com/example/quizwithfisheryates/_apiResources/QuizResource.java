@@ -2,6 +2,7 @@ package com.example.quizwithfisheryates._apiResources;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -138,9 +139,6 @@ public class QuizResource {
                     // Ambil filename dari Uri
                     String fileName = "image.jpg";
 
-                    // Jika ingin dapat nama file asli bisa di-custom dengan ContentResolver, tapi ini sederhana:
-                    // Contoh ambil nama file bisa pakai helper (optional)
-
                     writer.append("--").append(boundary).append(LINE_FEED);
                     writer.append("Content-Disposition: form-data; name=\"image\"; filename=\"" + fileName + "\"").append(LINE_FEED);
                     writer.append("Content-Type: image/jpeg").append(LINE_FEED);
@@ -161,7 +159,6 @@ public class QuizResource {
                     writer.flush();
                 }
 
-                // Akhiri multipart/form-data
                 writer.append("--").append(boundary).append("--").append(LINE_FEED);
                 writer.close();
 
@@ -194,7 +191,7 @@ public class QuizResource {
     }
 
     public static void updateQuestion(
-            String id,
+            Integer id,
             String question,
             Uri imageUri,
             String difficulty,
@@ -207,7 +204,7 @@ public class QuizResource {
             String LINE_FEED = "\r\n";
 
             try {
-                URL url = new URL("https://quiz.alope.id/update-question"); // Ganti sesuai endpoint update
+                URL url = new URL("https://quiz.alope.id/update-question");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setUseCaches(false);
                 conn.setDoOutput(true);
@@ -223,7 +220,7 @@ public class QuizResource {
                 writer.append("Content-Disposition: form-data; name=\"id\"").append(LINE_FEED);
                 writer.append("Content-Type: text/plain; charset=UTF-8").append(LINE_FEED);
                 writer.append(LINE_FEED);
-                writer.append(id).append(LINE_FEED);
+                writer.append(Integer.toString(id)).append(LINE_FEED);
                 writer.flush();
 
                 // Question
@@ -303,6 +300,62 @@ public class QuizResource {
             }
         }).start();
     }
+
+    public static void updateOptions(int question_id, String optionA, String optionB, String optionC, String optionD, ApiCallback callback) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("https://quiz.alope.id/update-options");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                String postData =
+                        "question_id=" + question_id +
+                                "&option_a=" + Uri.encode(optionA) +
+                                "&option_b=" + Uri.encode(optionB) +
+                                "&option_c=" + Uri.encode(optionC) +
+                                "&option_d=" + Uri.encode(optionD);
+
+                OutputStream os = conn.getOutputStream();
+                os.write(postData.getBytes());
+                os.flush();
+                os.close();
+
+                int responseCode = conn.getResponseCode();
+                InputStream is;
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    is = conn.getInputStream();
+                } else {
+                    is = conn.getErrorStream();
+                }
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                reader.close();
+                is.close();
+                conn.disconnect();
+
+                Log.d("TAG", "updateOptions: " + url);
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    callback.onSuccess(result.toString());
+                } else {
+                    callback.onError(new Exception("HTTP " + responseCode + ": " + result.toString()));
+                }
+
+            } catch (Exception e) {
+                callback.onError(e);
+            }
+        }).start();
+    }
+
+
 
 
     public static void postOption(int question_id, String value, ApiCallback callback) {
@@ -386,7 +439,7 @@ public class QuizResource {
             try {
                 URL url = new URL("https://quiz.alope.id/delete-option");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST"); // Sama seperti di atas, jika API mendukung DELETE, ganti saja
+                conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
 
                 // Kirim parameter option_id sebagai x-www-form-urlencoded

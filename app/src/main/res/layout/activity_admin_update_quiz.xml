@@ -207,7 +207,6 @@
         <Button
             android:id="@+id/loginButton"
             style="@style/Widget.AppCompat.Button"
-            android:onClick="onSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
