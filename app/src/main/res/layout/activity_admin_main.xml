@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".adminActivities.MainActivity">
+    tools:context=".adminActivities.MainActivity"
+    android:background="@drawable/gradient_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
             android:textSize="20sp"
             android:layout_marginTop="100dp"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/viewQuestion"
             style="@style/Widget.AppCompat.Button"
             android:onClick="goToListQuestion"
@@ -32,9 +33,9 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/rounded_button"
             android:text="Lihat Soal"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/createQuestion"
             style="@style/Widget.AppCompat.Button"
             android:onClick="goToCreateQuestion"
@@ -43,11 +44,11 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/rounded_button"
+            android:background="@drawable/rounded_button_success"
             android:text="Buat Soal"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/viewLeaderboard"
             style="@style/Widget.AppCompat.Button"
             android:onClick="goToRanking"
@@ -56,11 +57,11 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/rounded_button"
-            android:text="Lihat Ranking"
-            android:textColor="#FFFFFF" />
+            android:background="@drawable/rounded_button_warning"
+            android:text="Lihat Nilai"
+            android:textColor="#000" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/exportRanking"
             style="@style/Widget.AppCompat.Button"
             android:onClick="exportRanking"
@@ -69,21 +70,30 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/rounded_button"
+            android:background="@drawable/rounded_button_danger"
             android:text="Export Nilai"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000" />
 
-        <Button
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:src="@drawable/logo"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/logoutAdmin"
             style="@style/Widget.AppCompat.Button"
             android:onClick="logoutAdmin"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="20dp"
+            android:layout_gravity="center"
             android:background="@drawable/rounded_button"
             android:text="Logout"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000" />
     </LinearLayout>
 </ScrollView>

@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".adminActivities.CreateQuizActivity">
+    tools:context=".adminActivities.CreateQuizActivity"
+    android:background="@drawable/gradient_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp"
-        android:background="#FFFFFF">
+        android:padding="20dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:text="Tambah Soal"
             android:gravity="center"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="30sp"
             android:layout_marginTop="20dp"/>
 
         <View
@@ -55,13 +55,13 @@
             android:contentDescription="Preview Gambar"
             android:visibility="gone" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonUploadImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pilih Gambar (Optional)"
             android:layout_marginTop="8dp"
-            android:background="#000000"
+            android:background="#f9a7a7"
             android:textColor="#FFFFFF"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -204,7 +204,7 @@
 
         </RadioGroup>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginButton"
             style="@style/Widget.AppCompat.Button"
             android:onClick="onSubmit"
@@ -214,6 +214,6 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_button"
             android:text="Save"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000" />
     </LinearLayout>
 </ScrollView>

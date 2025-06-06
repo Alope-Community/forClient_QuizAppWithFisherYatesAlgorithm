@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         TextView welcomeText = findViewById(R.id.welcomeText);
 
         //
-        View border = findViewById(R.id.border);
+//        View border = findViewById(R.id.border);
         Button playButton = findViewById(R.id.playButton);
         Button leaderboardButton = findViewById(R.id.leaderboardButton);
         Button courseButton = findViewById(R.id.courseButton);
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             playButton.setVisibility(View.VISIBLE);
             leaderboardButton.setVisibility(View.VISIBLE);
             courseButton.setVisibility(View.VISIBLE);
-            border.setVisibility(View.VISIBLE);
+//            border.setVisibility(View.VISIBLE);
         } else{
             logoutButton.setVisibility(View.GONE);
             welcomeText.setVisibility(View.GONE);
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             playButton.setVisibility(View.GONE);
             leaderboardButton.setVisibility(View.GONE);
             courseButton.setVisibility(View.GONE);
-            border.setVisibility(View.GONE);
+//            border.setVisibility(View.GONE);
         }
     }
 }

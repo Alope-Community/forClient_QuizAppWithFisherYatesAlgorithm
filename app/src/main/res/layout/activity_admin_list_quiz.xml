@@ -4,39 +4,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/gradient_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Soal - Soal"
+            android:layout_marginTop="20dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/easyQuizButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/rounded_button_success"
                 android:text="Easy"
-                android:textColor="#FFFFFF"
+                android:textColor="#000"
                 android:onClick="getEasyQuiz"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/mediumQuizButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/rounded_button_warning"
                 android:text="Medium"
-                android:textColor="#FFFFFF"
+                android:textColor="#000"
                 android:onClick="getMediumQuiz" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/hardQuizButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -44,7 +56,7 @@
                 android:layout_margin="4dp"
                 android:background="@drawable/rounded_button"
                 android:text="Hard"
-                android:textColor="#FFFFFF"
+                android:textColor="#000"
                 android:onClick="getHardQuiz" />
         </LinearLayout>
 

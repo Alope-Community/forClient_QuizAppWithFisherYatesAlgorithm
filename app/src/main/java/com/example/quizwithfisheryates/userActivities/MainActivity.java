@@ -63,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
         difficulty = getIntent().getStringExtra("DIFFICULTY");
 
         if(difficulty.equals("Easy")){
-            timeLeftInMillis = 60000;
+            timeLeftInMillis = 1800000;
         } else if(difficulty.equals("Medium")){
-            timeLeftInMillis = 30000;
+            timeLeftInMillis = 1200000;
         } else{
-            timeLeftInMillis = 10000;
+            timeLeftInMillis = 600000;
         }
 
         timerTextView = findViewById(R.id.timerTextView);

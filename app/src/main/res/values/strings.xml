@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Simple Quiz</string>
-    <string name="title">Simple Quiz</string>
+    <string name="title">Phytagoras</string>
 
     <!--  Form Hint  -->
     <string name="hintName">Name</string>
@@ -10,8 +10,8 @@
     <!--  Login  -->
     <string name="buttonLogin">Login</string>
     <string name="buttonRegistrasi">Registrasi</string>
-    <string name="accountRegistration">Registrasi Akun</string>
-    <string name="accountLogin">Login Akun</string>
+    <string name="accountRegistration">Register Here</string>
+    <string name="accountLogin">Login Here</string>
 
     <!--    -->
     <string name="buttonStart">Play</string>

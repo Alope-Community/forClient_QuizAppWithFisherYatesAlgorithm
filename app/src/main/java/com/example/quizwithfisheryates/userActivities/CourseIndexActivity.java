@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -105,16 +106,35 @@ public class CourseIndexActivity extends AppCompatActivity {
         });
     }
 
-    void renderListToView(){
-        LinearLayout container = findViewById(R.id.container); // dari activity XML
+    void renderListToView() {
+        LinearLayout container = findViewById(R.id.container);
         container.removeAllViews();
 
+        int materiCounter = 1;
+
         for (Course item : courseList) {
+            TextView tvMateri = new TextView(this);
+            tvMateri.setText("Materi " + materiCounter);
+            tvMateri.setTextSize(18);
+            tvMateri.setTypeface(null, Typeface.BOLD);
+            tvMateri.setTextColor(Color.BLACK);
+            tvMateri.setGravity(Gravity.CENTER);
+            tvMateri.setPadding(20, 20, 20, 20);
+            tvMateri.setBackgroundColor(Color.parseColor("#a4c9ff")); // Warna hex biru muda
+            container.addView(tvMateri);
+
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(20, 20, 20, 20);
-            layout.setClickable(true); // penting untuk bisa diklik
+            layout.setClickable(true);
             layout.setBackgroundResource(R.drawable.primary_color);
+
+            LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            cardParams.setMargins(0, 0, 0, 24); // bottom margin 24px
+            layout.setLayoutParams(cardParams);
 
             TextView tvName = new TextView(this);
             tvName.setText(item.getTitle());
@@ -127,21 +147,14 @@ public class CourseIndexActivity extends AppCompatActivity {
             layout.addView(tvName);
             layout.addView(tvDescription);
 
-            // Kirim ID ketika di klik
             layout.setOnClickListener(v -> {
                 Intent intent = new Intent(this, CourseShowActivity.class);
-                intent.putExtra("course_id", item.getID()); // pastikan item.getId() return String atau int
+                intent.putExtra("course_id", item.getID());
                 startActivity(intent);
             });
 
-            View line = new View(this);
-            line.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, 2));
-            line.setBackgroundColor(Color.LTGRAY);
-
             container.addView(layout);
-            container.addView(line);
+            materiCounter++;
         }
     }
-
 }

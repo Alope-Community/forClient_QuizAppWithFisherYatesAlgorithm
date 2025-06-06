@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/admin_ranking">
+    android:id="@+id/admin_ranking"
+    android:background="@drawable/gradient_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Leaderboard"
+            android:text="Nilai"
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginTop="10dp"
@@ -24,29 +25,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/easyScoreButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/rounded_button_success"
                 android:text="Easy"
-                android:textColor="#FFFFFF"
+                android:textColor="#000"
                 android:onClick="getEasyScore"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/mediumScoreButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
-                android:background="@drawable/rounded_button"
+                android:background="@drawable/rounded_button_warning"
                 android:text="Medium"
-                android:textColor="#FFFFFF"
+                android:textColor="#000"
                 android:onClick="getMediumScore" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/hardScoreButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -54,7 +55,7 @@
                 android:layout_margin="4dp"
                 android:background="@drawable/rounded_button"
                 android:text="Hard"
-                android:textColor="#FFFFFF"
+                android:textColor="#000"
                 android:onClick="getHardScore" />
         </LinearLayout>
 
