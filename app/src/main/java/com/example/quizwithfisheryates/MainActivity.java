@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.authActivities.LoginActivity;
 import com.example.quizwithfisheryates.authActivities.RegisterActivity;
+import com.example.quizwithfisheryates.userActivities.AboutActivity;
 import com.example.quizwithfisheryates.userActivities.CourseIndexActivity;
 import com.example.quizwithfisheryates.userActivities.LeaderboardActivity;
 import com.example.quizwithfisheryates.userActivities.SelectDifficultyActivity;
@@ -58,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToCourse(View view){
         Intent intent = new Intent(MainActivity.this, CourseIndexActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToAbout(View view){
+        Intent intent = new Intent(MainActivity.this, AboutActivity.class);
         startActivity(intent);
     }
 
@@ -131,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         //
 //        View border = findViewById(R.id.border);
+        ImageView aboutButton = findViewById(R.id.aboutButton);
         Button playButton = findViewById(R.id.playButton);
         Button leaderboardButton = findViewById(R.id.leaderboardButton);
         Button courseButton = findViewById(R.id.courseButton);
@@ -150,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
             leaderboardButton.setVisibility(View.VISIBLE);
             courseButton.setVisibility(View.VISIBLE);
 //            border.setVisibility(View.VISIBLE);
+            aboutButton.setVisibility(View.VISIBLE);
         } else{
             logoutButton.setVisibility(View.GONE);
             welcomeText.setVisibility(View.GONE);
@@ -159,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
             leaderboardButton.setVisibility(View.GONE);
             courseButton.setVisibility(View.GONE);
 //            border.setVisibility(View.GONE);
+            aboutButton.setVisibility(View.GONE);
         }
     }
 }

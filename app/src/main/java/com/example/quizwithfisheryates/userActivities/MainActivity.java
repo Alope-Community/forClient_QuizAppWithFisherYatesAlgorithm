@@ -63,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
         difficulty = getIntent().getStringExtra("DIFFICULTY");
 
         if(difficulty.equals("Easy")){
-            timeLeftInMillis = 1800000;
+            timeLeftInMillis = 1200000;
         } else if(difficulty.equals("Medium")){
             timeLeftInMillis = 1200000;
         } else{
-            timeLeftInMillis = 600000;
+            timeLeftInMillis = 1200000;
         }
 
         timerTextView = findViewById(R.id.timerTextView);
@@ -149,7 +149,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateTimerText() {
         int seconds = (int) (timeLeftInMillis / 1000);
-        timerTextView.setText("Sisa waktu: " + seconds + " detik");
+        int minutes = seconds / 60;
+        int remainingSeconds = seconds % 60;
+
+        if (seconds >= 60) {
+            timerTextView.setText("Sisa waktu: " + minutes + " menit " + String.format("%02d", remainingSeconds) + " detik");
+        } else {
+            timerTextView.setText("Sisa waktu: " + remainingSeconds + " detik");
+        }
     }
 
     protected void onDestroy() {
