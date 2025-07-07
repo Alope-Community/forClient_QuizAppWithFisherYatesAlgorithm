@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,9 +17,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.CourseResource;
 import com.example.quizwithfisheryates._models.Course;
+import com.example.quizwithfisheryates.authActivities.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +45,11 @@ public class IndexCourse extends AppCompatActivity {
         });
 
         getCourses();
+    }
+
+    public void goToCreateCourse(View view){
+        Intent intent = new Intent(IndexCourse.this, CreateCourse.class);
+        startActivity(intent);
     }
 
     private void getCourses() {

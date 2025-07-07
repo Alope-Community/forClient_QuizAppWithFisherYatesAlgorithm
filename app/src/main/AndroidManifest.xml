@@ -44,6 +44,9 @@
             android:name=".adminActivities.courses.ShowCourse"
             android:exported="false"/>
         <activity
+            android:name=".adminActivities.courses.CreateCourse"
+            android:exported="false"/>
+        <activity
             android:name=".adminActivities.quizzes.CreateQuiz"
             android:exported="false" />
         <activity
