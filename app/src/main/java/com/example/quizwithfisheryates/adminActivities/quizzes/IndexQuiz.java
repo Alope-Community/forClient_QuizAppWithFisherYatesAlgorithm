@@ -1,4 +1,4 @@
-package com.example.quizwithfisheryates.adminActivities;
+package com.example.quizwithfisheryates.adminActivities.quizzes;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -31,7 +31,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListQuizActivity extends AppCompatActivity {
+public class IndexQuiz extends AppCompatActivity {
 
     List<Question> quizList = new ArrayList<>();
     LinearLayout quizContainer;
@@ -103,7 +103,7 @@ public class ListQuizActivity extends AppCompatActivity {
 
                     } else {
                         runOnUiThread(() -> Toast.makeText(
-                                ListQuizActivity.this,
+                                IndexQuiz.this,
                                 "Gagal mengambil data soal",
                                 Toast.LENGTH_SHORT
                         ).show());
@@ -112,7 +112,7 @@ public class ListQuizActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     runOnUiThread(() -> Toast.makeText(
-                            ListQuizActivity.this,
+                            IndexQuiz.this,
                             "Format data soal salah",
                             Toast.LENGTH_SHORT
                     ).show());
@@ -123,7 +123,7 @@ public class ListQuizActivity extends AppCompatActivity {
             public void onError(Exception e) {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(
-                        ListQuizActivity.this,
+                        IndexQuiz.this,
                         "Gagal terhubung ke server",
                         Toast.LENGTH_SHORT
                 ).show());
@@ -227,7 +227,7 @@ public class ListQuizActivity extends AppCompatActivity {
 
             // Set listener tombol Update
             btnUpdate.setOnClickListener(v -> {
-                Intent intent = new Intent(ListQuizActivity.this, UpdateQuizActivity.class);
+                Intent intent = new Intent(IndexQuiz.this, UpdateQuiz.class);
                 intent.putExtra("quiz_id", quiz.getId());
                 intent.putExtra("question", quiz.getQuestion());
                 intent.putStringArrayListExtra("options", new ArrayList<>(quiz.getValue()));
@@ -247,7 +247,7 @@ public class ListQuizActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(String response) {
                                     runOnUiThread(() -> {
-                                        Toast.makeText(ListQuizActivity.this, "Soal berhasil dihapus", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(IndexQuiz.this, "Soal berhasil dihapus", Toast.LENGTH_SHORT).show();
                                         // TODO: Refresh list quiz, misal panggil ulang showQuiz atau fetch ulang data
                                         getQuestions(quiz.getDifficulty()); // contoh nama fungsi untuk refresh
                                     });
@@ -256,7 +256,7 @@ public class ListQuizActivity extends AppCompatActivity {
                                 @Override
                                 public void onError(Exception e) {
                                     runOnUiThread(() -> {
-                                        Toast.makeText(ListQuizActivity.this, "Gagal hapus soal: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(IndexQuiz.this, "Gagal hapus soal: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                     });
                                 }
                             });
@@ -277,7 +277,7 @@ public class ListQuizActivity extends AppCompatActivity {
     }
 
     public void goToCreateQuestion(View v){
-        Intent intent = new Intent(ListQuizActivity.this, CreateQuizActivity.class);
+        Intent intent = new Intent(IndexQuiz.this, CreateQuiz.class);
         startActivity(intent);
     }
 }

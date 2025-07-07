@@ -1,11 +1,10 @@
-package com.example.quizwithfisheryates.adminActivities;
+package com.example.quizwithfisheryates.adminActivities.quizzes;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +19,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class UpdateQuizActivity extends AppCompatActivity {
+public class UpdateQuiz extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PICK_IMAGE = 1001;
 
@@ -162,27 +161,27 @@ public class UpdateQuizActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String response) {
                             runOnUiThread(() -> {
-                                Toast.makeText(UpdateQuizActivity.this, "Update berhasil", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(UpdateQuiz.this, "Update berhasil", Toast.LENGTH_SHORT).show();
 //                                finish();
-                                Intent intent = new Intent(UpdateQuizActivity.this, ListQuizActivity.class);
+                                Intent intent = new Intent(UpdateQuiz.this, IndexQuiz.class);
                                 startActivity(intent);
                             });
                         }
 
                         @Override
                         public void onError(Exception e) {
-                            runOnUiThread(() -> Toast.makeText(UpdateQuizActivity.this, "Gagal update opsi", Toast.LENGTH_SHORT).show());
+                            runOnUiThread(() -> Toast.makeText(UpdateQuiz.this, "Gagal update opsi", Toast.LENGTH_SHORT).show());
                         }
                     });
 
                 } catch (JSONException e) {
-                    runOnUiThread(() -> Toast.makeText(UpdateQuizActivity.this, "Kesalahan JSON", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(UpdateQuiz.this, "Kesalahan JSON", Toast.LENGTH_SHORT).show());
                 }
             }
 
             @Override
             public void onError(Exception e) {
-                runOnUiThread(() -> Toast.makeText(UpdateQuizActivity.this, "Update gagal", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(UpdateQuiz.this, "Update gagal", Toast.LENGTH_SHORT).show());
             }
         });
     }

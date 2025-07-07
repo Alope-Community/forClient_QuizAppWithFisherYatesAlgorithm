@@ -35,19 +35,19 @@
             android:name=".adminActivities.ListUserActivity"
             android:exported="false" />
         <activity
-            android:name=".adminActivities.ListQuizActivity"
+            android:name=".adminActivities.quizzes.IndexQuiz"
             android:exported="false" />
         <activity
-            android:name=".adminActivities.ListCourseActivity"
+            android:name=".adminActivities.courses.IndexCourse"
             android:exported="false"/>
         <activity
-            android:name=".adminActivities.ShowCourseActivity"
+            android:name=".adminActivities.courses.ShowCourse"
             android:exported="false"/>
         <activity
-            android:name=".adminActivities.CreateQuizActivity"
+            android:name=".adminActivities.quizzes.CreateQuiz"
             android:exported="false" />
         <activity
-            android:name=".adminActivities.UpdateQuizActivity"
+            android:name=".adminActivities.quizzes.UpdateQuiz"
             android:exported="false"/>
         <activity
             android:name=".adminActivities.RankingActivity"

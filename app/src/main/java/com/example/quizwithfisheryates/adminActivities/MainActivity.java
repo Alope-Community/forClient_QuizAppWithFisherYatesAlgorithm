@@ -3,7 +3,6 @@ package com.example.quizwithfisheryates.adminActivities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,16 +13,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.QuizResource;
-import com.example.quizwithfisheryates._apiResources.ScoreResource;
-import com.example.quizwithfisheryates._models.Question;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.quizwithfisheryates.adminActivities.courses.IndexCourse;
+import com.example.quizwithfisheryates.adminActivities.quizzes.IndexQuiz;
 
 public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
@@ -46,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToListQuestion(View v){
-        Intent intent = new Intent(MainActivity.this, ListQuizActivity.class);
+        Intent intent = new Intent(MainActivity.this, IndexQuiz.class);
         startActivity(intent);
     }
 
     public void goToListCourse(View v){
-        Intent intent = new Intent(MainActivity.this, ListCourseActivity.class);
+        Intent intent = new Intent(MainActivity.this, IndexCourse.class);
         startActivity(intent);
     }
 

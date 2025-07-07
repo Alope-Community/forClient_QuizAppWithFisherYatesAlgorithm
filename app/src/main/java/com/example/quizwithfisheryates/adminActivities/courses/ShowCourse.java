@@ -1,12 +1,7 @@
-package com.example.quizwithfisheryates.adminActivities;
+package com.example.quizwithfisheryates.adminActivities.courses;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.webkit.WebView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,13 +13,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.CourseResource;
-import com.example.quizwithfisheryates._models.Course;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ShowCourseActivity extends AppCompatActivity {
+public class ShowCourse extends AppCompatActivity {
     TextView tvTitle, tvDescription;
     WebView webBody; // untuk menampilkan isi HTML
 
@@ -88,6 +81,6 @@ public class ShowCourseActivity extends AppCompatActivity {
     }
 
     private void showToast(String message) {
-        runOnUiThread(() -> Toast.makeText(ShowCourseActivity.this, message, Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> Toast.makeText(ShowCourse.this, message, Toast.LENGTH_SHORT).show());
     }
 }

@@ -1,7 +1,6 @@
-package com.example.quizwithfisheryates.adminActivities;
+package com.example.quizwithfisheryates.adminActivities.quizzes;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,7 +28,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class CreateQuizActivity extends AppCompatActivity {
+public class CreateQuiz extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PICK_IMAGE = 1001;
     private Uri selectedImageUri;
@@ -117,7 +116,7 @@ public class CreateQuizActivity extends AppCompatActivity {
         RadioButton selectedDifficulty = findViewById(selectedRadioDifficultyId);
         String finalDifficulty = selectedDifficulty.getText().toString().trim();
 
-        QuizResource.postQuestion(question, selectedImageUri, finalDifficulty, finalAnswer, CreateQuizActivity.this, new QuizResource.ApiCallback() {
+        QuizResource.postQuestion(question, selectedImageUri, finalDifficulty, finalAnswer, CreateQuiz.this, new QuizResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("CREATE_SUCCESS", response);
@@ -137,7 +136,7 @@ public class CreateQuizActivity extends AppCompatActivity {
                     insertOption(question_id, optionD);
 
                     runOnUiThread(() -> {
-                        Toast.makeText(CreateQuizActivity.this, message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateQuiz.this, message, Toast.LENGTH_SHORT).show();
 //                        startActivity(new Intent(CreateQuizActivity.this, MainActivity.class));
 
                         editTextQuestion.setText("");
@@ -156,7 +155,7 @@ public class CreateQuizActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     runOnUiThread(() -> Toast.makeText(
-                            CreateQuizActivity.this,
+                            CreateQuiz.this,
                             "Format response JSON salah",
                             Toast.LENGTH_SHORT
                     ).show());
@@ -167,7 +166,7 @@ public class CreateQuizActivity extends AppCompatActivity {
             public void onError(Exception e) {
                 Log.e("CREATE_ERROR", "Tambah Gagal", e);
                 runOnUiThread(() -> {
-                    Toast.makeText(CreateQuizActivity.this, "Tambah gagal. Coba lagi.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateQuiz.this, "Tambah gagal. Coba lagi.", Toast.LENGTH_SHORT).show();
                 });
             }
         });

@@ -1,4 +1,4 @@
-package com.example.quizwithfisheryates.adminActivities;
+package com.example.quizwithfisheryates.adminActivities.courses;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -6,7 +6,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListCourseActivity extends AppCompatActivity {
+public class IndexCourse extends AppCompatActivity {
 
     List<Course> courseList = new ArrayList<>();
 
@@ -77,7 +76,7 @@ public class ListCourseActivity extends AppCompatActivity {
 
                     } else {
                         runOnUiThread(() -> Toast.makeText(
-                                ListCourseActivity.this,
+                                IndexCourse.this,
                                 "Gagal mengambil data Materi",
                                 Toast.LENGTH_SHORT
                         ).show());
@@ -86,7 +85,7 @@ public class ListCourseActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     runOnUiThread(() -> Toast.makeText(
-                            ListCourseActivity.this,
+                            IndexCourse.this,
                             "Format data materi salah",
                             Toast.LENGTH_SHORT
                     ).show());
@@ -98,7 +97,7 @@ public class ListCourseActivity extends AppCompatActivity {
                 Log.e("LEADERBOARD_ERROR", "Error saat mengambil materi: " + e.getMessage());
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(
-                        ListCourseActivity.this,
+                        IndexCourse.this,
                         "Gagal terhubung ke server",
                         Toast.LENGTH_SHORT
                 ).show());
@@ -148,7 +147,7 @@ public class ListCourseActivity extends AppCompatActivity {
             layout.addView(tvDescription);
 
             layout.setOnClickListener(v -> {
-                Intent intent = new Intent(this, ShowCourseActivity.class);
+                Intent intent = new Intent(this, ShowCourse.class);
                 intent.putExtra("course_id", item.getID());
                 startActivity(intent);
             });

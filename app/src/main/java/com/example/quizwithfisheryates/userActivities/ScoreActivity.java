@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,12 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.QuizResource;
 import com.example.quizwithfisheryates._apiResources.ScoreResource;
-import com.example.quizwithfisheryates.adminActivities.CreateQuizActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ScoreActivity extends AppCompatActivity {
 
