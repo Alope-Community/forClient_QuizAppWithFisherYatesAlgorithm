@@ -275,4 +275,9 @@ public class ListQuizActivity extends AppCompatActivity {
             quizContainer.addView(divider);
         }
     }
+
+    public void goToCreateQuestion(View v){
+        Intent intent = new Intent(ListQuizActivity.this, CreateQuizActivity.class);
+        startActivity(intent);
+    }
 }

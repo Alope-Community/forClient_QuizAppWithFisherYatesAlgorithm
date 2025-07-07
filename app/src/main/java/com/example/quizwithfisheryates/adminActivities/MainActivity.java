@@ -45,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToCreateQuestion(View v){
-        Intent intent = new Intent(MainActivity.this, CreateQuizActivity.class);
-        startActivity(intent);
-    }
     public void goToListQuestion(View v){
         Intent intent = new Intent(MainActivity.this, ListQuizActivity.class);
         startActivity(intent);
