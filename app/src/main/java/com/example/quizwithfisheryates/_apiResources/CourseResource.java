@@ -48,7 +48,7 @@ public class CourseResource {
         new Thread(() -> {
             try {
                 // Buat URL dengan parameter GET
-                String baseUrl = "https://quiz.alope.id/show-courses";
+                String baseUrl = "https://quiz.alope.id/show-course";
                 String queryParams = "?id=" + URLEncoder.encode(Integer.toString(id), "UTF-8");
 
                 URL url = new URL(baseUrl + queryParams);

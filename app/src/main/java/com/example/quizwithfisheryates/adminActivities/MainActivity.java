@@ -50,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToListCourse(View v){
+        Intent intent = new Intent(MainActivity.this, ListCourseActivity.class);
+        startActivity(intent);
+    }
+
     public void goToRanking(View v){
         Intent intent = new Intent(MainActivity.this, RankingActivity.class);
         startActivity(intent);

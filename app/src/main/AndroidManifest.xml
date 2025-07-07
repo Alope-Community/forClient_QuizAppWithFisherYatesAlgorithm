@@ -38,6 +38,12 @@
             android:name=".adminActivities.ListQuizActivity"
             android:exported="false" />
         <activity
+            android:name=".adminActivities.ListCourseActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".adminActivities.ShowCourseActivity"
+            android:exported="false"/>
+        <activity
             android:name=".adminActivities.CreateQuizActivity"
             android:exported="false" />
         <activity

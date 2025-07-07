@@ -45,20 +45,20 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/rounded_button_success"
-            android:text="Lihat Soal"
+            android:text="Data Soal Quiz"
             android:textColor="#000" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/createQuestion"
             style="@style/Widget.AppCompat.Button"
-            android:onClick="goToCreateQuestion"
+            android:onClick="goToListCourse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/rounded_button_warning"
-            android:text="Buat Soal"
+            android:text="Data Materi"
             android:textColor="#000" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -71,7 +71,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/rounded_button_danger"
-            android:text="Lihat Nilai"
+            android:text="Data Nilai"
             android:textColor="#000" />
 
 <!--        <androidx.appcompat.widget.AppCompatButton-->
