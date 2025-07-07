@@ -148,4 +148,22 @@ public class RankingActivity extends AppCompatActivity {
             container.addView(line);
         }
     }
+
+    public void exportRanking(View v){
+        ScoreResource.exportScore(RankingActivity.this, new ScoreResource.FileCallback() {
+            public void onSuccess(String filePath) {
+                runOnUiThread(() -> Toast.makeText(RankingActivity.this,
+                        "Export berhasil disimpan: " + filePath,
+                        Toast.LENGTH_LONG).show());
+            }
+
+            @Override
+            public void onError(Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> Toast.makeText(RankingActivity.this,
+                        "Gagal mendownload file",
+                        Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
 }

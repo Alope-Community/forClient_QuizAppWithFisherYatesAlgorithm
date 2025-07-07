@@ -23,7 +23,7 @@
             android:layout_marginTop="100dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/viewQuestion"
+            android:id="@+id/userManagement"
             style="@style/Widget.AppCompat.Button"
             android:onClick="goToListQuestion"
             android:layout_width="match_parent"
@@ -32,6 +32,19 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/rounded_button"
+            android:text="Data User"
+            android:textColor="#000" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/viewQuestion"
+            style="@style/Widget.AppCompat.Button"
+            android:onClick="goToListQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_button_success"
             android:text="Lihat Soal"
             android:textColor="#000" />
 
@@ -44,7 +57,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/rounded_button_success"
+            android:background="@drawable/rounded_button_warning"
             android:text="Buat Soal"
             android:textColor="#000" />
 
@@ -57,22 +70,22 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/rounded_button_warning"
+            android:background="@drawable/rounded_button_danger"
             android:text="Lihat Nilai"
             android:textColor="#000" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/exportRanking"
-            style="@style/Widget.AppCompat.Button"
-            android:onClick="exportRanking"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/rounded_button_danger"
-            android:text="Export Nilai"
-            android:textColor="#000" />
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/exportRanking"-->
+<!--            style="@style/Widget.AppCompat.Button"-->
+<!--            android:onClick="exportRanking"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            android:background="@drawable/rounded_button_danger"-->
+<!--            android:text="Export Nilai"-->
+<!--            android:textColor="#000" />-->
 
         <ImageView
             android:id="@+id/logo"

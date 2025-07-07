@@ -147,17 +147,17 @@
                     android:textStyle="bold"
                     android:onClick="goToLogin" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/registerButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/rounded_button"
-                    android:text="@string/buttonRegistrasi"
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:onClick="goToRegister"/>
+<!--                <androidx.appcompat.widget.AppCompatButton-->
+<!--                    android:id="@+id/registerButton"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:layout_marginEnd="20dp"-->
+<!--                    android:background="@drawable/rounded_button"-->
+<!--                    android:text="@string/buttonRegistrasi"-->
+<!--                    android:textColor="#000"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:onClick="goToRegister"/>-->
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/logoutButton"

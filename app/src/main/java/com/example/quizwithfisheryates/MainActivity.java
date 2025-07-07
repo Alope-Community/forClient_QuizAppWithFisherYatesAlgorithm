@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkAuthenticate() {
         Button loginButton = findViewById(R.id.loginButton);
-        Button registerButton = findViewById(R.id.registerButton);
+//        Button registerButton = findViewById(R.id.registerButton);
         Button logoutButton = findViewById(R.id.logoutButton);
         TextView welcomeText = findViewById(R.id.welcomeText);
 
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("AUTH", authUsername);
 
             loginButton.setVisibility(View.GONE);
-            registerButton.setVisibility(View.GONE);
+//            registerButton.setVisibility(View.GONE);
 
             welcomeText.setText("Halo, " + authName);
 

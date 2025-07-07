@@ -54,23 +54,23 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void exportRanking(View v){
-        ScoreResource.exportScore(MainActivity.this, new ScoreResource.FileCallback() {
-            public void onSuccess(String filePath) {
-                runOnUiThread(() -> Toast.makeText(MainActivity.this,
-                        "Export berhasil disimpan: " + filePath,
-                        Toast.LENGTH_LONG).show());
-            }
-
-            @Override
-            public void onError(Exception e) {
-                e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(MainActivity.this,
-                        "Gagal mendownload file",
-                        Toast.LENGTH_SHORT).show());
-            }
-        });
-    }
+//    public void exportRanking(View v){
+//        ScoreResource.exportScore(MainActivity.this, new ScoreResource.FileCallback() {
+//            public void onSuccess(String filePath) {
+//                runOnUiThread(() -> Toast.makeText(MainActivity.this,
+//                        "Export berhasil disimpan: " + filePath,
+//                        Toast.LENGTH_LONG).show());
+//            }
+//
+//            @Override
+//            public void onError(Exception e) {
+//                e.printStackTrace();
+//                runOnUiThread(() -> Toast.makeText(MainActivity.this,
+//                        "Gagal mendownload file",
+//                        Toast.LENGTH_SHORT).show());
+//            }
+//        });
+//    }
 
     public void logoutAdmin(View v){
         sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);

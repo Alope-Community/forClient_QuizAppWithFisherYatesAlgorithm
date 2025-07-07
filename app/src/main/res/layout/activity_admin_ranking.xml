@@ -1,69 +1,87 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/admin_ranking"
-    android:background="@drawable/gradient_background">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nilai"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"
-            android:gravity="center"/>
+        android:id="@+id/admin_ranking"
+        android:background="@drawable/gradient_background">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/easyScoreButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:background="@drawable/rounded_button_success"
-                android:text="Easy"
-                android:textColor="#000"
-                android:onClick="getEasyScore"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/mediumScoreButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:background="@drawable/rounded_button_warning"
-                android:text="Medium"
-                android:textColor="#000"
-                android:onClick="getMediumScore" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/hardScoreButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:background="@drawable/rounded_button"
-                android:text="Hard"
-                android:textColor="#000"
-                android:onClick="getHardScore" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/container"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-</ScrollView>
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nilai"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/easyScoreButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/rounded_button_success"
+                    android:text="Easy"
+                    android:textColor="#000"
+                    android:onClick="getEasyScore"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/mediumScoreButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/rounded_button_warning"
+                    android:text="Medium"
+                    android:textColor="#000"
+                    android:onClick="getMediumScore" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/hardScoreButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/rounded_button"
+                    android:text="Hard"
+                    android:textColor="#000"
+                    android:onClick="getHardScore" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:onClick="exportRanking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="Tambah"
+        app:srcCompat="@drawable/ic_upload"
+        android:backgroundTint="#7ccad0"
+        app:tint="#fff" />
+</FrameLayout>
