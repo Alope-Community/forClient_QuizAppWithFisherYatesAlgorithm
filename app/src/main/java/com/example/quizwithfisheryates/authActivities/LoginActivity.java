@@ -174,13 +174,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    public void goToRegister(View view){
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
-    }
+//    public void goToRegister(View view){
+//        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+//        startActivity(intent);
+//    }
 
-    public void goToMainMenu(View view){
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
+//    public void goToMainMenu(View view){
+//        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//        startActivity(intent);
+//    }
 }

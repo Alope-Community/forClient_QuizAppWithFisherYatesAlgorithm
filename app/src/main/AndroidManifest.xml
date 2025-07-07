@@ -32,6 +32,9 @@
             android:name=".adminActivities.MainActivity"
             android:exported="false" />
         <activity
+            android:name=".adminActivities.ListUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".adminActivities.ListQuizActivity"
             android:exported="false" />
         <activity

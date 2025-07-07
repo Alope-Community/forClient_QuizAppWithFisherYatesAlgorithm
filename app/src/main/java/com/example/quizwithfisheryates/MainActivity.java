@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
         checkAuthenticate();
     }
 
-    public void goToRegister(View view){
-        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-        startActivity(intent);
-    }
+//    public void goToRegister(View view){
+//        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+//        startActivity(intent);
+//    }
 
     public void goToLogin(View view){
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);

@@ -25,7 +25,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/userManagement"
             style="@style/Widget.AppCompat.Button"
-            android:onClick="goToListQuestion"
+            android:onClick="goToListUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"

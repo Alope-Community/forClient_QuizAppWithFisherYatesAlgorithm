@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.AuthResource;
+import com.example.quizwithfisheryates.adminActivities.ListUserActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
                     // action success on UI
                     runOnUiThread(() -> {
                         Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                        startActivity(new Intent(RegisterActivity.this, ListUserActivity.class));
                     });
 
                 } catch (JSONException e) {
