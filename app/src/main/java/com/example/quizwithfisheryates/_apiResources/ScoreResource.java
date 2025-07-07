@@ -12,6 +12,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ScoreResource {
 
@@ -105,8 +108,12 @@ public class ScoreResource {
 
                 InputStream inputStream = conn.getInputStream();
 
+                // Format nama file dengan tanggal dan waktu
+                String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.getDefault()).format(new Date());
+                String fileName = "nilai_" + timestamp + ".xlsx";
+
                 File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                File file = new File(downloadsDir, "scores.xlsx");
+                File file = new File(downloadsDir, fileName);
 
                 FileOutputStream outputStream = new FileOutputStream(file);
                 byte[] buffer = new byte[4096];
