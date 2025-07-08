@@ -49,6 +49,11 @@ public class IndexCourse extends AppCompatActivity {
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
+    protected void onResume() {
+        super.onResume();
+        getCourses();
+    }
+
     public void goToCreateCourse(View view){
         Intent intent = new Intent(IndexCourse.this, CreateCourse.class);
         startActivity(intent);
