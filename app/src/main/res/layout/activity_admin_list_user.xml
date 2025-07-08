@@ -18,24 +18,44 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Data User"
-                android:layout_marginTop="20dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp" />
-
+            <!-- Header dengan tombol kembali -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp"
-                android:id="@+id/quizContainer">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="8dp">
 
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_back"
+                    android:contentDescription="Kembali"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data User"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:layout_marginStart="12dp" />
+            </LinearLayout>
+
+            <!-- Container daftar user -->
+            <LinearLayout
+                android:id="@+id/quizContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <!-- Contoh satu user, nanti bisa di-generate lewat Java -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -48,10 +68,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Username" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="password" />
+                    android:text="Password" />
+
+                <!-- Tombol aksi -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp">
+
+<!--                    <Button-->
+<!--                        android:id="@+id/btnUpdateUser"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Update"-->
+<!--                        android:textColor="#ffffff"-->
+<!--                        android:backgroundTint="#2196F3"-->
+<!--                        android:layout_marginEnd="12dp" />-->
+
+                    <ImageButton
+                        android:id="@+id/btnDeleteUser"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:backgroundTint="#F44336"
+                        android:background="#F44336"
+                        android:src="@drawable/ic_delete"
+                        android:contentDescription="Hapus User"
+                        android:scaleType="centerInside"
+                        app:tint="#FFFFFF" />
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -72,5 +121,5 @@
         android:onClick="goToRegister"
         android:backgroundTint="#7ccad0"
         app:srcCompat="@drawable/ic_add_user"
-    app:tint="@android:color/white" />
+        app:tint="@android:color/white" />
 </FrameLayout>

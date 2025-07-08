@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="20dp">
 
-    <!-- Toolbar Sederhana -->
+    <!-- Header dengan tombol kembali -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingBottom="16dp">
+        android:paddingBottom="8dp">
 
         <ImageView
             android:id="@+id/backButton"
@@ -24,24 +24,25 @@
             android:contentDescription="Kembali"
             android:clickable="true"
             android:focusable="true"
-            app:tint="@color/black"
-            android:padding="4dp" />
+            android:padding="4dp"
+            app:tint="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create Course"
-            android:textSize="20sp"
+            android:text="Tambah Materi"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginStart="12dp"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:layout_marginStart="12dp" />
     </LinearLayout>
 
     <!-- Konten ScrollView -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:layout_marginTop="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,7 +87,6 @@
                 android:layout_marginTop="8dp"
                 />
 
-            <!-- Toolbar untuk format -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,6 +100,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="B"
+                    android:textStyle="bold"
+                    android:background="#a4c9ff"
+                    app:backgroundTint="#a4c9ff"
+                    android:textColor="@color/black"
                     android:onClick="setBold" />
 
                 <Button
@@ -107,6 +111,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="I"
+                    android:textStyle="italic"
+                    android:background="#ffea92"
+                    app:backgroundTint="#ffea92"
+                    android:textColor="@color/black"
                     android:onClick="setItalic" />
 
                 <Button
@@ -114,6 +122,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="H1"
+                    android:background="#7ccad0"
+                    app:backgroundTint="#7ccad0"
                     android:onClick="setHeading1" />
 
                 <Button
@@ -121,20 +131,33 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="UL"
+                    android:background="#f9a7a7"
+                    app:backgroundTint="#f9a7a7"
                     android:onClick="setUnorderedList" />
             </LinearLayout>
 
 
             <!-- Submit Button -->
-            <Button
+<!--            <Button-->
+<!--                android:id="@+id/btnSubmitCourse"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Create Course"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:backgroundTint="#2196F3"-->
+<!--                android:textColor="#fff"/>-->
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSubmitCourse"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Create Course"
-                android:textAllCaps="false"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="#2196F3"
-                android:textColor="#fff"/>
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_button"
+                android:text="Save"
+                android:textColor="#000" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

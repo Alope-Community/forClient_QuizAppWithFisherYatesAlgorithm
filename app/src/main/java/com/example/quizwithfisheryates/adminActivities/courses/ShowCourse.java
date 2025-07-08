@@ -39,6 +39,8 @@ public class ShowCourse extends AppCompatActivity {
 
         int courseId = getIntent().getIntExtra("course_id", 1);
         showCourseDetail(courseId);
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     private void showCourseDetail(int id) {

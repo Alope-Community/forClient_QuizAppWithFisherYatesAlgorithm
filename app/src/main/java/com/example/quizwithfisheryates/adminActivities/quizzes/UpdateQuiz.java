@@ -36,7 +36,7 @@ public class UpdateQuiz extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_update_quiz);
+        setContentView(R.layout.activity_admin_quiz_update);
 
         // Inisialisasi komponen
         editTextQuestion = findViewById(R.id.editTextQuestion);
@@ -96,6 +96,8 @@ public class UpdateQuiz extends AppCompatActivity {
 
         buttonSave.setText("Update");
         buttonSave.setOnClickListener(v -> onSubmitUpdate());
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     private void openImagePicker() {

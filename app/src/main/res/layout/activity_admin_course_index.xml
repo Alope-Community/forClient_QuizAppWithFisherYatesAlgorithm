@@ -16,16 +16,34 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Header dengan tombol kembali -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Data Materi"
-                android:layout_marginTop="20dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="8dp">
+
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_back"
+                    android:contentDescription="Kembali"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data Materi"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:layout_marginStart="12dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/container"

@@ -40,7 +40,7 @@ public class IndexQuiz extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_admin_list_quiz);
+        setContentView(R.layout.activity_admin_quiz_index);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.admin_list_quiz), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -52,6 +52,8 @@ public class IndexQuiz extends AppCompatActivity {
 
         // Ambil data soal
         getQuestions("easy");
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     public void getEasyQuiz(View v){

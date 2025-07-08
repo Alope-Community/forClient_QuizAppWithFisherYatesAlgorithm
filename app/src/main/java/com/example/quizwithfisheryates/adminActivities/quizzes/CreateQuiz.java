@@ -39,7 +39,7 @@ public class CreateQuiz extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_admin_create_quiz);
+        setContentView(R.layout.activity_admin_quiz_create);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.admin_create_quiz), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -55,6 +55,8 @@ public class CreateQuiz extends AppCompatActivity {
                 openImagePicker();
             }
         });
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     private void openImagePicker() {

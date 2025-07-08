@@ -18,29 +18,47 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Header dengan tombol kembali -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Data Soal"
-                android:layout_marginTop="20dp"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="8dp">
+
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_back"
+                    android:contentDescription="Kembali"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data Soal"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:layout_marginStart="12dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/easyQuizButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_button_success"
+                    android:background="#7ccad0"
                     android:text="Easy"
                     android:textColor="#000"
                     android:onClick="getEasyQuiz"/>
@@ -50,8 +68,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_button_warning"
+                    android:background="#ffea92"
                     android:text="Medium"
                     android:textColor="#000"
                     android:onClick="getMediumQuiz" />
@@ -61,8 +78,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_button"
+                    android:background="#a4c9ff"
                     android:text="Hard"
                     android:textColor="#000"
                     android:onClick="getHardQuiz" />

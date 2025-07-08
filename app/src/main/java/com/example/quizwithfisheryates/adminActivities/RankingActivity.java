@@ -41,6 +41,8 @@ public class RankingActivity extends AppCompatActivity {
         });
 
         getLeaderboard("easy");
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     public void getEasyScore(View v){

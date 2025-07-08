@@ -42,6 +42,8 @@ public class ListUserActivity extends AppCompatActivity {
         quizContainer = findViewById(R.id.quizContainer);
 
         fetchUserList("user");
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     private void fetchUserList(String role) {

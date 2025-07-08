@@ -35,6 +35,8 @@ public class CreateCourse extends AppCompatActivity {
         editor.setPlaceholder("Write course content here...");
 
         btnSubmit.setOnClickListener(v -> submitCourse());
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     // Fungsi Toolbar Formatting

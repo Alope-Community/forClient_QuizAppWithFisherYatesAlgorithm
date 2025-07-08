@@ -45,6 +45,8 @@ public class IndexCourse extends AppCompatActivity {
         });
 
         getCourses();
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     public void goToCreateCourse(View view){
