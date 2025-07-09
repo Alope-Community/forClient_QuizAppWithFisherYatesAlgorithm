@@ -7,21 +7,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.CourseResource;
 import com.example.quizwithfisheryates._models.Course;
-import com.example.quizwithfisheryates.authActivities.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -134,20 +134,19 @@ public class IndexCourse extends AppCompatActivity {
             tvMateri.setTextColor(Color.BLACK);
             tvMateri.setGravity(Gravity.CENTER);
             tvMateri.setPadding(20, 20, 20, 20);
-            tvMateri.setBackgroundColor(Color.parseColor("#a4c9ff")); // Warna hex biru muda
+            tvMateri.setBackgroundColor(Color.parseColor("#a4c9ff"));
             container.addView(tvMateri);
 
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(20, 20, 20, 20);
-            layout.setClickable(true);
             layout.setBackgroundResource(R.drawable.primary_color);
 
             LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            cardParams.setMargins(0, 0, 0, 24); // bottom margin 24px
+            cardParams.setMargins(0, 0, 0, 24);
             layout.setLayoutParams(cardParams);
 
             TextView tvName = new TextView(this);
@@ -160,6 +159,55 @@ public class IndexCourse extends AppCompatActivity {
 
             layout.addView(tvName);
             layout.addView(tvDescription);
+
+            // Tombol edit dan hapus
+            LinearLayout buttonLayout = new LinearLayout(this);
+            buttonLayout.setOrientation(LinearLayout.HORIZONTAL);
+            buttonLayout.setPadding(0, 16, 0, 0);
+
+            ImageButton editButton = new ImageButton(this);
+            editButton.setLayoutParams(new LinearLayout.LayoutParams(80, 80));
+            editButton.setImageResource(R.drawable.ic_edit);
+            editButton.setBackgroundColor(Color.parseColor("#2196F3")); // Biru
+            editButton.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
+            editButton.setOnClickListener(v -> {
+                Intent intent = new Intent(this, CreateCourse.class);
+                intent.putExtra("course_id", item.getID());
+                startActivity(intent);
+            });
+
+            ImageButton deleteButton = new ImageButton(this);
+            deleteButton.setLayoutParams(new LinearLayout.LayoutParams(80, 80));
+            deleteButton.setImageResource(R.drawable.ic_delete);
+            deleteButton.setBackgroundColor(Color.parseColor("#F44336")); // Merah
+            deleteButton.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
+            deleteButton.setOnClickListener(v -> {
+                new AlertDialog.Builder(this)
+                        .setTitle("Konfirmasi Hapus")
+                        .setMessage("Yakin ingin menghapus materi ini?")
+                        .setPositiveButton("Hapus", (dialog, which) -> {
+                            CourseResource.deleteCourse(item.getID(), new CourseResource.ApiCallback() {
+                                @Override
+                                public void onSuccess(String response) {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(IndexCourse.this, "Materi berhasil dihapus", Toast.LENGTH_SHORT).show();
+                                        getCourses();
+                                    });
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    runOnUiThread(() -> Toast.makeText(IndexCourse.this, "Gagal menghapus materi", Toast.LENGTH_SHORT).show());
+                                }
+                            });
+                        })
+                        .setNegativeButton("Batal", null)
+                        .show();
+            });
+
+            buttonLayout.addView(editButton);
+            buttonLayout.addView(deleteButton);
+            layout.addView(buttonLayout);
 
             layout.setOnClickListener(v -> {
                 Intent intent = new Intent(this, ShowCourse.class);

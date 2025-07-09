@@ -121,4 +121,39 @@ public class CourseResource {
             }
         }).start();
     }
+
+    public static void deleteCourse(int id, ApiCallback callback) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("https://quiz.alope.id/delete-course");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                String postData = "id=" + id;
+
+                try (OutputStream os = conn.getOutputStream()) {
+                    os.write(postData.getBytes("UTF-8"));
+                    os.flush();
+                }
+
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                reader.close();
+                conn.disconnect();
+                callback.onSuccess(result.toString());
+
+            } catch (Exception e) {
+                callback.onError(e);
+            }
+        }).start();
+    }
 }
