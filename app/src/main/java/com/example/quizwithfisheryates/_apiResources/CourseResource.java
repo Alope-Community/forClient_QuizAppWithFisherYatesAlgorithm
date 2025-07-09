@@ -122,6 +122,47 @@ public class CourseResource {
         }).start();
     }
 
+    public static void updateCourse(int id, String title, String description, String body, int accountId, ApiCallback callback) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("https://quiz.alope.id/update-course");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                // Buat form body
+                String data = "id=" + URLEncoder.encode(String.valueOf(id), "UTF-8") +
+                        "&title=" + URLEncoder.encode(title, "UTF-8") +
+                        "&description=" + URLEncoder.encode(description, "UTF-8") +
+                        "&body=" + URLEncoder.encode(body, "UTF-8") +
+                        "&account_id=" + URLEncoder.encode(String.valueOf(accountId), "UTF-8");
+
+                // Kirim data ke server
+                OutputStream os = conn.getOutputStream();
+                os.write(data.getBytes());
+                os.flush();
+                os.close();
+
+                // Baca respon
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                reader.close();
+                conn.disconnect();
+                callback.onSuccess(result.toString());
+
+            } catch (Exception e) {
+                callback.onError(e);
+            }
+        }).start();
+    }
+
     public static void deleteCourse(int id, ApiCallback callback) {
         new Thread(() -> {
             try {

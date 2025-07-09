@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_course_activity"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Header dengan tombol kembali -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Kembali"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp"
+            app:tint="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Materi"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_marginStart="12dp" />
+    </LinearLayout>
+
+    <!-- Konten ScrollView -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginTop="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/etTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter course title"
+                android:maxLength="100"
+                android:inputType="text"/>
+
+            <!-- Description -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter short description"
+                android:maxLength="255"
+                android:inputType="text"/>
+
+            <!-- Body -->
+            <jp.wasabeef.richeditor.RichEditor
+                android:id="@+id/editor"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@android:color/white"
+                android:layout_marginTop="8dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp"
+                android:weightSum="4">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="B"
+                    android:textStyle="bold"
+                    android:background="#a4c9ff"
+                    app:backgroundTint="#a4c9ff"
+                    android:textColor="@color/black"
+                    android:onClick="setBold" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="I"
+                    android:textStyle="italic"
+                    android:background="#ffea92"
+                    app:backgroundTint="#ffea92"
+                    android:textColor="@color/black"
+                    android:onClick="setItalic" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="H1"
+                    android:background="#7ccad0"
+                    app:backgroundTint="#7ccad0"
+                    android:onClick="setHeading1" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="UL"
+                    android:background="#f9a7a7"
+                    app:backgroundTint="#f9a7a7"
+                    android:onClick="setUnorderedList" />
+            </LinearLayout>
+
+
+            <!-- Submit Button -->
+            <!--            <Button-->
+            <!--                android:id="@+id/btnSubmitCourse"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="Create Course"-->
+            <!--                android:textAllCaps="false"-->
+            <!--                android:layout_marginTop="24dp"-->
+            <!--                android:backgroundTint="#2196F3"-->
+            <!--                android:textColor="#fff"/>-->
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmitCourse"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_button"
+                android:text="Save"
+                android:textColor="#000" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

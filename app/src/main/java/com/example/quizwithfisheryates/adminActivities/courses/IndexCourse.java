@@ -171,7 +171,7 @@ public class IndexCourse extends AppCompatActivity {
             editButton.setBackgroundColor(Color.parseColor("#2196F3")); // Biru
             editButton.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
             editButton.setOnClickListener(v -> {
-                Intent intent = new Intent(this, CreateCourse.class);
+                Intent intent = new Intent(this, EditCourse.class);
                 intent.putExtra("course_id", item.getID());
                 startActivity(intent);
             });
