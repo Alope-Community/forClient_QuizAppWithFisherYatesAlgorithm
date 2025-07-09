@@ -1,10 +1,13 @@
 package com.example.quizwithfisheryates.adminActivities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,6 +82,7 @@ public class ListUserActivity extends AppCompatActivity {
             for (int i = 0; i < users.length(); i++) {
                 JSONObject user = users.getJSONObject(i);
 
+                Integer id = user.optInt("id", 1);
                 String name = user.optString("name", "Tanpa Nama");
                 String username = user.optString("username", "-");
                 String password = user.optString("password", "-");
@@ -101,6 +105,54 @@ public class ListUserActivity extends AppCompatActivity {
                 TextView passwordView = new TextView(this);
                 passwordView.setText("Password: " + password);
                 quizContainer.addView(passwordView);
+
+                // Tombol aksi (delete)
+                LinearLayout actionLayout = new LinearLayout(this);
+                actionLayout.setOrientation(LinearLayout.HORIZONTAL);
+                actionLayout.setPadding(0, 8, 0, 0);
+
+                ImageButton deleteButton = new ImageButton(this);
+                int sizeInDp = 40;
+                float scale = getResources().getDisplayMetrics().density;
+                int sizeInPx = (int) (sizeInDp * scale + 0.5f);
+                deleteButton.setLayoutParams(new LinearLayout.LayoutParams(sizeInPx, sizeInPx));
+                deleteButton.setImageResource(R.drawable.ic_delete);
+                deleteButton.setBackgroundColor(Color.parseColor("#F44336"));
+                deleteButton.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
+                deleteButton.setPadding(16, 16, 16, 16);
+                deleteButton.setColorFilter(Color.WHITE);
+                deleteButton.setContentDescription("Hapus User");
+
+                deleteButton.setOnClickListener(v -> {
+                    new AlertDialog.Builder(ListUserActivity.this)
+                            .setTitle("Konfirmasi Hapus")
+                            .setMessage("Apakah kamu yakin ingin menghapus user: " + name + "?")
+                            .setPositiveButton("Hapus", (dialog, which) -> {
+                                UserResource.deleteUser(id, new UserResource.ApiCallback() {
+                                    @Override
+                                    public void onSuccess(String response) {
+                                        runOnUiThread(() -> {
+                                            Toast.makeText(ListUserActivity.this, "User berhasil dihapus", Toast.LENGTH_SHORT).show();
+                                            fetchUserList("user"); // refresh daftar user
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onError(Exception e) {
+                                        runOnUiThread(() -> Toast.makeText(
+                                                ListUserActivity.this,
+                                                "Gagal menghapus user: " + e.getMessage(),
+                                                Toast.LENGTH_LONG
+                                        ).show());
+                                    }
+                                });
+                            })
+                            .setNegativeButton("Batal", null)
+                            .show();
+                });
+
+                actionLayout.addView(deleteButton);
+                quizContainer.addView(actionLayout);
 
                 // Divider
                 View divider = new View(this);
