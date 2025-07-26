@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject data = json.getJSONObject("data");
 
                     int id = data.getInt("id");
-                    String name = data.getString("username");
+                    String name = data.getString("name");
                     String username = data.getString("username");
                     String role = data.getString("role");
 

@@ -13,36 +13,82 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp">
 
-        <!-- Header dengan tombol kembali -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingBottom="30dp">
+            android:paddingBottom="10dp">
 
-            <ImageView
-                android:id="@+id/backButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_back"
-                android:contentDescription="Kembali"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="4dp"
-                app:tint="@color/black" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Tombol Kembali -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Tambah Soal"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:layout_marginStart="12dp" />
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="start|center_vertical"
+                android:paddingBottom="8dp"
+                android:id="@+id/backButton">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_back"
+                    android:contentDescription="Kembali"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:text="Kembali"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+
+            <!-- Tombol Home -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="end|center_vertical"
+                android:paddingBottom="8dp"
+                android:onClick="goToAdminMain">
+
+                <ImageView
+                    android:id="@+id/homeButton"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_home"
+                    android:contentDescription="Home"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:text="Home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tambah Soal"
+            android:textSize="24sp"
+            android:layout_marginBottom="24dp"
+            android:textStyle="bold"
+            android:textColor="#000" />
 
 
         <TextView

@@ -43,6 +43,8 @@ public class CourseIndexActivity extends AppCompatActivity {
         });
 
         getCourses();
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     private void getCourses() {

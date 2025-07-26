@@ -144,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
         Button courseButton = findViewById(R.id.courseButton);
 
         if (isAuthenticated()) {
-            String authUsername = sharedPreferences.getString("username", "ALOPE");
-            String authName = sharedPreferences.getString("username", "ALOPE");
-            Log.d("AUTH", authUsername);
+            String authName = sharedPreferences.getString("name", "ALOPE");
+
+            Log.d("AUTHNAME", authName);
 
             loginButton.setVisibility(View.GONE);
 //            registerButton.setVisibility(View.GONE);

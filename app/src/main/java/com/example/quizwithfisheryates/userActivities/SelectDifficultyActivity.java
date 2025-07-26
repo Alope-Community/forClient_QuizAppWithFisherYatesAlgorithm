@@ -24,6 +24,8 @@ public class SelectDifficultyActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     public void onStartQuiz(View v){

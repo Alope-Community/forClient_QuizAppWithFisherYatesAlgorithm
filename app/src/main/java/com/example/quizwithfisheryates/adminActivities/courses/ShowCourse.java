@@ -1,6 +1,8 @@
 package com.example.quizwithfisheryates.adminActivities.courses;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.CourseResource;
+import com.example.quizwithfisheryates.adminActivities.MainActivity;
+import com.example.quizwithfisheryates.authActivities.RegisterActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,5 +88,10 @@ public class ShowCourse extends AppCompatActivity {
 
     private void showToast(String message) {
         runOnUiThread(() -> Toast.makeText(ShowCourse.this, message, Toast.LENGTH_SHORT).show());
+    }
+
+    public void goToAdminMain(View view){
+        Intent intent = new Intent(ShowCourse.this, MainActivity.class);
+        startActivity(intent);
     }
 }

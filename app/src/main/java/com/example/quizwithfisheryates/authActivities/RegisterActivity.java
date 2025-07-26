@@ -13,10 +13,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.AuthResource;
 import com.example.quizwithfisheryates.adminActivities.ListUserActivity;
+import com.example.quizwithfisheryates.adminActivities.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     public void onRegister(View view){
@@ -85,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToMainMenu(View view){
+    public void goToAdminMain(View view){
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);
     }

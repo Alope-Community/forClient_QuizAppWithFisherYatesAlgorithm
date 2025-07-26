@@ -1,5 +1,6 @@
 package com.example.quizwithfisheryates.userActivities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,9 +17,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.CourseResource;
 import com.example.quizwithfisheryates._models.Course;
+import com.example.quizwithfisheryates.authActivities.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +49,8 @@ public class CourseShowActivity extends AppCompatActivity {
 
         int courseId = getIntent().getIntExtra("course_id", 1);
         showCourseDetail(courseId);
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     private void showCourseDetail(int id) {
@@ -59,7 +64,6 @@ public class CourseShowActivity extends AppCompatActivity {
                     if (status.equals("success")) {
                         JSONObject obj = json.getJSONObject("data");
 
-                        int courseId = obj.getInt("id");
                         String title = obj.getString("title");
                         String description = obj.getString("description");
                         String body = obj.getString("body");
@@ -89,5 +93,10 @@ public class CourseShowActivity extends AppCompatActivity {
 
     private void showToast(String message) {
         runOnUiThread(() -> Toast.makeText(CourseShowActivity.this, message, Toast.LENGTH_SHORT).show());
+    }
+
+    public void goToUserMain(View view){
+        Intent intent = new Intent(CourseShowActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 }

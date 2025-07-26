@@ -1,5 +1,6 @@
 package com.example.quizwithfisheryates.userActivities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.QuizResource;
 import com.example.quizwithfisheryates._apiResources.ScoreResource;
@@ -46,6 +48,8 @@ public class LeaderboardActivity extends AppCompatActivity {
         });
 
         getLeaderboard("easy");
+
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     public void getEasyScore(View v){
@@ -152,5 +156,10 @@ public class LeaderboardActivity extends AppCompatActivity {
             container.addView(layout);
             container.addView(line);
         }
+    }
+
+    public void goToUserMain(View view){
+        Intent intent = new Intent(LeaderboardActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 }

@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setTitle("Konfirmasi")
-                .setMessage("Apakah Anda yakin ingin keluar?")
+                .setMessage("Anda belum menyelesaikan Soal!")
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.super.onBackPressed();

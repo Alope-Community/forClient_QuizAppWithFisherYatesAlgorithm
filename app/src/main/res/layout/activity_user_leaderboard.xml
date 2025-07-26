@@ -10,24 +10,78 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
-<!--        <com.google.android.material.tabs.TabLayout-->
-<!--            android:id="@+id/tabLayout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:tabIndicatorColor="@android:color/holo_blue_light"/>-->
 
-<!--        <androidx.viewpager2.widget.ViewPager2-->
-<!--            android:id="@+id/viewPager"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_weight="1"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp">
+
+            <!-- Tombol Kembali -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="start|center_vertical"
+                android:paddingBottom="8dp"
+                android:id="@+id/backButton">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_back"
+                    android:contentDescription="Kembali"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:text="Kembali"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+
+            <!-- Tombol Home -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="end|center_vertical"
+                android:paddingBottom="8dp"
+                android:onClick="goToUserMain">
+
+                <ImageView
+                    android:id="@+id/homeButton"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_home"
+                    android:contentDescription="Home"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:text="Home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Leaderboard"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:gravity="center"/>

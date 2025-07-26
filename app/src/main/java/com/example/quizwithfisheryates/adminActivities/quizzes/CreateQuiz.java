@@ -22,6 +22,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.QuizResource;
+import com.example.quizwithfisheryates.adminActivities.MainActivity;
+import com.example.quizwithfisheryates.adminActivities.courses.ShowCourse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -191,5 +193,10 @@ public class CreateQuiz extends AppCompatActivity {
 //                });
             }
         });
+    }
+
+    public void goToAdminMain(View view){
+        Intent intent = new Intent(CreateQuiz.this, MainActivity.class);
+        startActivity(intent);
     }
 }
