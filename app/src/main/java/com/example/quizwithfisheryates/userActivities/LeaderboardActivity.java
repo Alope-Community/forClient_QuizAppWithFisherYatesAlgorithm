@@ -1,6 +1,7 @@
 package com.example.quizwithfisheryates.userActivities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,10 @@ import java.util.List;
 public class LeaderboardActivity extends AppCompatActivity {
     List<Score> scoreList = new ArrayList<>();
 
+    SharedPreferences sharedPreferences;
+
+    String scoreType = "leaderboard";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,25 +53,33 @@ public class LeaderboardActivity extends AppCompatActivity {
             return insets;
         });
 
-        getLeaderboard("easy");
+        // check user atau admin
+        sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+        String role = sharedPreferences.getString("role", "admin");
+
+        if(role.equals("admin")){
+            scoreType= "score";
+        }
+
+        getLeaderboard("easy", scoreType);
 
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     public void getEasyScore(View v){
-        getLeaderboard("easy");
+        getLeaderboard("easy", scoreType);
     }
 
     public void getMediumScore(View v){
-        getLeaderboard("medium");
+        getLeaderboard("medium", scoreType);
     }
 
     public void getHardScore(View v){
-        getLeaderboard("hard");
+        getLeaderboard("hard", scoreType);
     }
 
-    private void getLeaderboard(String difficulty) {
-        ScoreResource.getScore(difficulty, new ScoreResource.ApiCallback() {
+    private void getLeaderboard(String difficulty, String scoreType) {
+        ScoreResource.getScore(difficulty, scoreType, new ScoreResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("LEADERBOARD_RESPONSE", response); // <-- Cetak response di Logcat
@@ -88,7 +102,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                             String created_at = obj.getString("created_at");
                             String account_name = obj.getString("account_name");
 
-                            scoreList.add(new Score(account_name, difficulty, score));
+                            scoreList.add(new Score(account_name, difficulty, created_at, score));
                         }
 
                         runOnUiThread(() -> renderListToView());
@@ -124,30 +138,62 @@ public class LeaderboardActivity extends AppCompatActivity {
         });
     }
 
-    void renderListToView(){
+    void renderListToView() {
         LinearLayout container = findViewById(R.id.container);
         container.removeAllViews();
+
         for (Score item : scoreList) {
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(20, 20, 20, 20);
 
+            // Buat RelativeLayout untuk menampung nama & tanggal di baris atas
+            RelativeLayout topRow = new RelativeLayout(this);
+            topRow.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+
+            // TextView untuk Nama
             TextView tvName = new TextView(this);
             tvName.setText(item.getName());
             tvName.setTextSize(16);
             tvName.setTypeface(null, Typeface.BOLD);
+            tvName.setId(View.generateViewId());
 
+            RelativeLayout.LayoutParams nameParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            nameParams.addRule(RelativeLayout.ALIGN_PARENT_START);
+            topRow.addView(tvName, nameParams);
+
+            // TextView untuk Tanggal di pojok kanan
+            TextView tvDate = new TextView(this);
+            tvDate.setText(item.getCreatedAt());
+            tvDate.setTextSize(12);
+            tvDate.setTextColor(Color.GRAY);
+
+            RelativeLayout.LayoutParams dateParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            dateParams.addRule(RelativeLayout.ALIGN_PARENT_END);
+            topRow.addView(tvDate, dateParams);
+
+            // TextView untuk Difficulty dan Score
             TextView tvDifficulty = new TextView(this);
             tvDifficulty.setText("Difficulty: " + item.getDifficulty());
 
             TextView tvScore = new TextView(this);
             tvScore.setText("Score: " + item.getScore());
 
-            layout.addView(tvName);
+            // Tambahkan semua view ke layout utama
+            layout.addView(topRow);
             layout.addView(tvDifficulty);
             layout.addView(tvScore);
 
-            // Optional: separator
+            // Optional: garis pemisah antar item
             View line = new View(this);
             line.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, 2));

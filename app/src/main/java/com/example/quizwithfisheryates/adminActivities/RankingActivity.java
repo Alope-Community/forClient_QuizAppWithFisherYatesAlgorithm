@@ -1,11 +1,13 @@
 package com.example.quizwithfisheryates.adminActivities;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,10 @@ import java.util.List;
 public class RankingActivity extends AppCompatActivity {
     List<Score> scoreList = new ArrayList<>();
 
+    SharedPreferences sharedPreferences;
+
+    String scoreType = "leaderboard";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,28 +46,35 @@ public class RankingActivity extends AppCompatActivity {
             return insets;
         });
 
-        getLeaderboard("easy");
+        // check user atau admin
+        sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+        String role = sharedPreferences.getString("role", "admin");
+
+        if(role.equals("admin")){
+            scoreType= "score";
+        }
+
+        getLeaderboard("easy", scoreType);
 
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
     public void getEasyScore(View v){
-        getLeaderboard("easy");
+        getLeaderboard("easy", scoreType);
     }
 
     public void getMediumScore(View v){
-        getLeaderboard("medium");
+        getLeaderboard("medium", scoreType);
     }
-
     public void getHardScore(View v){
-        getLeaderboard("hard");
+        getLeaderboard("hard", scoreType);
     }
 
-    private void getLeaderboard(String difficulty) {
-        ScoreResource.getScore(difficulty, new ScoreResource.ApiCallback() {
+    private void getLeaderboard(String difficulty, String scoreType) {
+        ScoreResource.getScore(difficulty, scoreType, new ScoreResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
-                Log.d("LEADERBOARD_RESPONSE", response); // <-- Cetak response di Logcat
+                Log.d("LEADERBOARD_RESPONSE", response);
                 try {
                     JSONObject json = new JSONObject(response);
                     String status = json.getString("status");
@@ -81,7 +94,7 @@ public class RankingActivity extends AppCompatActivity {
                             String created_at = obj.getString("created_at");
                             String account_name = obj.getString("account_name");
 
-                            scoreList.add(new Score(account_name, difficulty, score));
+                            scoreList.add(new Score(account_name, difficulty, created_at, score));
                         }
 
                         runOnUiThread(() -> renderListToView());
@@ -117,18 +130,41 @@ public class RankingActivity extends AppCompatActivity {
         });
     }
 
-    void renderListToView(){
+    void renderListToView() {
         LinearLayout container = findViewById(R.id.container);
         container.removeAllViews();
+
         for (Score item : scoreList) {
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(20, 20, 20, 20);
 
+            RelativeLayout topLayout = new RelativeLayout(this);
+
             TextView tvName = new TextView(this);
             tvName.setText(item.getName());
             tvName.setTextSize(16);
             tvName.setTypeface(null, Typeface.BOLD);
+            tvName.setId(View.generateViewId());
+
+            RelativeLayout.LayoutParams nameParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            nameParams.addRule(RelativeLayout.ALIGN_PARENT_START);
+            topLayout.addView(tvName, nameParams);
+
+            TextView tvDate = new TextView(this);
+            tvDate.setText(item.getCreatedAt());
+            tvDate.setTextSize(12);
+            tvDate.setTextColor(Color.GRAY);
+
+            RelativeLayout.LayoutParams dateParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            dateParams.addRule(RelativeLayout.ALIGN_PARENT_END);
+            topLayout.addView(tvDate, dateParams);
 
             TextView tvDifficulty = new TextView(this);
             tvDifficulty.setText("Difficulty: " + item.getDifficulty());
@@ -136,11 +172,10 @@ public class RankingActivity extends AppCompatActivity {
             TextView tvScore = new TextView(this);
             tvScore.setText("Score: " + item.getScore());
 
-            layout.addView(tvName);
+            layout.addView(topLayout);
             layout.addView(tvDifficulty);
             layout.addView(tvScore);
 
-            // Optional: separator
             View line = new View(this);
             line.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, 2));

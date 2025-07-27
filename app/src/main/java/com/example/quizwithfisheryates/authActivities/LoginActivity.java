@@ -39,69 +39,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-//    public void onLogin(View view){
-//        EditText username = findViewById(R.id.username);
-//        EditText password = findViewById(R.id.password);
-//
-//        String user = username.getText().toString();
-//        String pass = password.getText().toString();
-//
-//        AuthResource.postLogin(user, pass, new AuthResource.ApiCallback() {
-//            @Override
-//            public void onSuccess(String response) {
-//                Log.d("LOGIN_SUCCESS", response);
-//
-//                try {
-//                    JSONObject json = new JSONObject(response);
-//                    String message = json.getString("message");
-//                    JSONObject data = json.getJSONObject("data");
-//
-//                    int id = data.getInt("id");
-//                    String name = data.getString("username");
-//                    String username = data.getString("username");
-//                    String role = data.getString("role");
-//
-//                    Class<?> nextActivity = role.equals("admin")
-//                            ? com.example.quizwithfisheryates.adminActivities.MainActivity.class
-//                            : MainActivity.class;
-//
-//
-//                    sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    editor.putBoolean("isLoggedIn", true);
-//                    editor.putInt("id", id);
-//                    editor.putString("name", name);
-//                    editor.putString("username", username);
-//                    editor.putString("role", role);
-//                    editor.apply();
-//
-//                    runOnUiThread(() -> {
-//                        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(LoginActivity.this, nextActivity));
-//                    });
-//
-//                    finish();
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    runOnUiThread(() -> Toast.makeText(
-//                            LoginActivity.this,
-//                            "Format response JSON salah",
-//                            Toast.LENGTH_SHORT
-//                    ).show());
-//                }
-//            }
-//
-//            @Override
-//            public void onError(Exception e) {
-//                Log.e("LOGIN_ERROR", "Gagal login", e);
-//                runOnUiThread(() -> {
-//                    Toast.makeText(LoginActivity.this, "Login gagal. Coba lagi.", Toast.LENGTH_SHORT).show();
-//                });
-//            }
-//        });
-//    }
-
     public void onLogin(View view) {
         EditText username = findViewById(R.id.username);
         EditText password = findViewById(R.id.password);
