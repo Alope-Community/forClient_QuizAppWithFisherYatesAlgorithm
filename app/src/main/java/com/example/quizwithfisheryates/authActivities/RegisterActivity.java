@@ -59,7 +59,11 @@ public class RegisterActivity extends AppCompatActivity {
                     // action success on UI
                     runOnUiThread(() -> {
                         Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this, ListUserActivity.class));
+//                        startActivity(new Intent(RegisterActivity.this, ListUserActivity.class));
+
+                        Ename.setText("");
+                        Eusername.setText("");
+                        Epassword.setText("");
                     });
 
                 } catch (JSONException e) {

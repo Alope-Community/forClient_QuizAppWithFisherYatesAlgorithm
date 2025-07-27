@@ -228,7 +228,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateQuestionNumber(){
-        currentQuestionNumber.setText("Soal No. " + (currentIndex + 1));
+//        currentQuestionNumber.setText("Soal No. " + (currentIndex + 1));
+
+        int questionCountDown = questions.toArray().length - currentIndex;
+
+        Log.d("SOAL", String.valueOf(questionCountDown));
+
+        if(questionCountDown <= 0) {
+            currentQuestionNumber.setText("");
+        } else {
+            currentQuestionNumber.setText("Sisa Soal " + questionCountDown);
+        }
     }
 
     public void getQuestions(){
