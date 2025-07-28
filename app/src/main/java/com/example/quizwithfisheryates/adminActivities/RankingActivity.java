@@ -71,7 +71,7 @@ public class RankingActivity extends AppCompatActivity {
     }
 
     private void getLeaderboard(String difficulty, String scoreType) {
-        ScoreResource.getScore(difficulty, scoreType, new ScoreResource.ApiCallback() {
+        ScoreResource.getScore(difficulty, scoreType, "admin", 1, new ScoreResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("LEADERBOARD_RESPONSE", response);

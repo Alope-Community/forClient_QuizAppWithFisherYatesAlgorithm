@@ -153,9 +153,9 @@ public class MainActivity extends AppCompatActivity {
         int remainingSeconds = seconds % 60;
 
         if (seconds >= 60) {
-            timerTextView.setText("Sisa waktu: " + minutes + " menit " + String.format("%02d", remainingSeconds) + " detik");
+            timerTextView.setText("Waktu: " + minutes + " menit " + String.format("%02d", remainingSeconds) + " detik");
         } else {
-            timerTextView.setText("Sisa waktu: " + remainingSeconds + " detik");
+            timerTextView.setText("Waktu: " + remainingSeconds + " detik");
         }
     }
 
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("SOAL", String.valueOf(questionCountDown));
 
         if(questionCountDown <= 0) {
-            currentQuestionNumber.setText("");
+            currentQuestionNumber.setText("Sisa Soal 10");
         } else {
             currentQuestionNumber.setText("Sisa Soal " + questionCountDown);
         }

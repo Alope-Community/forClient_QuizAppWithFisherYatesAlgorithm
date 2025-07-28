@@ -28,13 +28,15 @@ public class ScoreResource {
         void onError(Exception e);
     }
 
-    public static void getScore(String difficulty, String scoreType, ScoreResource.ApiCallback callback) {
+    public static void getScore(String difficulty, String scoreType, String forRole, int accountId, ScoreResource.ApiCallback callback) {
         new Thread(() -> {
             try {
                 // Buat URL dengan parameter GET
                 String baseUrl = "https://quiz.alope.id/scores";
                 String queryParams = "?difficulty=" + URLEncoder.encode(difficulty, "UTF-8") +
-                        "&type=" + URLEncoder.encode(scoreType, "UTF-8");
+                        "&type=" + URLEncoder.encode(scoreType, "UTF-8") +
+                        "&forRole=" + URLEncoder.encode(forRole, "UTF-8") +
+                        "&accountId=" + URLEncoder.encode(String.valueOf(accountId), "UTF-8");
 
                 URL url = new URL(baseUrl + queryParams);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();

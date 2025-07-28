@@ -40,7 +40,7 @@ public class LeaderboardActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-    String scoreType = "leaderboard";
+    String scoreType = "score";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +52,6 @@ public class LeaderboardActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        // check user atau admin
-        sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
-        String role = sharedPreferences.getString("role", "admin");
-
-        if(role.equals("admin")){
-            scoreType= "score";
-        }
 
         getLeaderboard("easy", scoreType);
 
@@ -79,10 +71,14 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
 
     private void getLeaderboard(String difficulty, String scoreType) {
-        ScoreResource.getScore(difficulty, scoreType, new ScoreResource.ApiCallback() {
+        // check ID di SESSION
+        sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+        int accountId = sharedPreferences.getInt("id", 1);
+
+        ScoreResource.getScore(difficulty, scoreType, "user", accountId, new ScoreResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
-                Log.d("LEADERBOARD_RESPONSE", response); // <-- Cetak response di Logcat
+                Log.d("LEADERBOARD_RESPONSE", response);
                 try {
                     JSONObject json = new JSONObject(response);
                     String status = json.getString("status");
