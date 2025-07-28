@@ -34,7 +34,7 @@ public class ListUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_admin_list_user);
+        setContentView(R.layout.activity_admin_user_index);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.admin_list_user), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -85,7 +85,6 @@ public class ListUserActivity extends AppCompatActivity {
                 Integer id = user.optInt("id", 1);
                 String name = user.optString("name", "Tanpa Nama");
                 String username = user.optString("username", "-");
-                String password = user.optString("password", "-");
 
                 // Nama
                 TextView nameView = new TextView(this);
@@ -101,20 +100,37 @@ public class ListUserActivity extends AppCompatActivity {
                 usernameView.setPadding(0, 0, 0, 4);
                 quizContainer.addView(usernameView);
 
-                // Password
-                TextView passwordView = new TextView(this);
-                passwordView.setText("Password: " + password);
-                quizContainer.addView(passwordView);
-
-                // Tombol aksi (delete)
+                // Tombol aksi (edit + delete)
                 LinearLayout actionLayout = new LinearLayout(this);
                 actionLayout.setOrientation(LinearLayout.HORIZONTAL);
                 actionLayout.setPadding(0, 8, 0, 0);
 
-                ImageButton deleteButton = new ImageButton(this);
                 int sizeInDp = 40;
                 float scale = getResources().getDisplayMetrics().density;
                 int sizeInPx = (int) (sizeInDp * scale + 0.5f);
+
+                // Tombol Edit
+                ImageButton editButton = new ImageButton(this);
+                editButton.setLayoutParams(new LinearLayout.LayoutParams(sizeInPx, sizeInPx));
+                editButton.setImageResource(R.drawable.ic_edit);
+                editButton.setBackgroundColor(Color.parseColor("#1f94f0"));
+                editButton.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
+                editButton.setPadding(16, 16, 16, 16);
+                editButton.setColorFilter(Color.WHITE);
+                editButton.setContentDescription("Edit User");
+
+                editButton.setOnClickListener(v -> {
+                    Intent intent = new Intent(ListUserActivity.this, UpdateUserActivity.class);
+                    intent.putExtra("id", String.valueOf(id));
+                    intent.putExtra("name", name);
+                    intent.putExtra("username", username);
+                    startActivity(intent);
+                });
+
+                actionLayout.addView(editButton);
+
+                // Tombol Delete
+                ImageButton deleteButton = new ImageButton(this);
                 deleteButton.setLayoutParams(new LinearLayout.LayoutParams(sizeInPx, sizeInPx));
                 deleteButton.setImageResource(R.drawable.ic_delete);
                 deleteButton.setBackgroundColor(Color.parseColor("#F44336"));
@@ -133,7 +149,7 @@ public class ListUserActivity extends AppCompatActivity {
                                     public void onSuccess(String response) {
                                         runOnUiThread(() -> {
                                             Toast.makeText(ListUserActivity.this, "User berhasil dihapus", Toast.LENGTH_SHORT).show();
-                                            fetchUserList("user"); // refresh daftar user
+                                            fetchUserList("user");
                                         });
                                     }
 
@@ -171,6 +187,8 @@ public class ListUserActivity extends AppCompatActivity {
             Toast.makeText(this, "Format JSON tidak valid", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
     public void goToRegister(View view){
         Intent intent = new Intent(ListUserActivity.this, RegisterActivity.class);

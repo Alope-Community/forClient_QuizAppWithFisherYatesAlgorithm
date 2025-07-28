@@ -46,6 +46,53 @@ public class UserResource {
         }).start();
     }
 
+    public static void updateUser(String id, String name, String username, String password, UserResource.ApiCallback callback) {
+        new Thread(() -> {
+            try {
+                String baseUrl = "https://quiz.alope.id/update-user";
+                URL url = new URL(baseUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                // Bangun body form data (tanpa role, dengan username & password opsional)
+                StringBuilder postData = new StringBuilder();
+                postData.append("id=").append(URLEncoder.encode(String.valueOf(id), "UTF-8"));
+                postData.append("&name=").append(URLEncoder.encode(name, "UTF-8"));
+                postData.append("&username=").append(URLEncoder.encode(username, "UTF-8"));
+                if (password != null && !password.isEmpty()) {
+                    postData.append("&password=").append(URLEncoder.encode(password, "UTF-8"));
+                }
+
+                // Kirim data ke server
+                OutputStream os = conn.getOutputStream();
+                os.write(postData.toString().getBytes());
+                os.flush();
+                os.close();
+
+                // Baca respons
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+                reader.close();
+                is.close();
+                conn.disconnect();
+
+                callback.onSuccess(result.toString());
+
+            } catch (Exception e) {
+                callback.onError(e);
+            }
+        }).start();
+    }
+
+
     public static void deleteUser(int userId, UserResource.ApiCallback callback) {
         new Thread(() -> {
             try {
