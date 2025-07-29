@@ -56,6 +56,10 @@ public class CreateCourse extends AppCompatActivity {
         editor.setBullets();
     }
 
+//    public void insertImage(View v){
+//        editor.insertImage("https://raw.githubusercontent.com/wasabeef/art/master/twitter.png","twitter");
+//    }
+
     // Submit Course
     public void submitCourse() {
         String title = etTitle.getText().toString().trim();

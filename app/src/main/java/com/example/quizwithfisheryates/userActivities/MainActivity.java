@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView timerTextView;
     private long timeLeftInMillis = 60000;
 
+    Button btnNext, btnPrev;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("SCORE", Integer.toString(score));
             }
 
-            // Lanjut ke soal berikutnya
             nextQuestion();
         };
 
@@ -109,6 +110,18 @@ public class MainActivity extends AppCompatActivity {
         btnB.setOnClickListener(optionClickListener);
         btnC.setOnClickListener(optionClickListener);
         btnD.setOnClickListener(optionClickListener);
+
+
+        btnNext = findViewById(R.id.btnNext);
+        btnPrev = findViewById(R.id.btnPrevious);
+
+        btnNext.setOnClickListener(v -> {
+            nextQuestion();
+        });
+
+        btnPrev.setOnClickListener(v -> {
+            prevQuestion();
+        });
     }
 
     @SuppressWarnings("MissingSuperCall")
@@ -137,12 +150,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                // Waktu habis -> pindah ke ScoreActivity
                 Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
                 intent.putExtra("SCORE", score);
                 intent.putExtra("DIFFICULTY", difficulty);
                 startActivity(intent);
-                finish(); // agar activity ini tidak bisa kembali dengan tombol back
+                finish();
             }
         }.start();
     }
@@ -210,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
     private void nextQuestion() {
         currentIndex++;
         if (currentIndex < questions.size()) {
-            showQuestion(currentIndex); // update UI untuk soal baru
+            showQuestion(currentIndex);
             updateQuestionNumber();
         } else {
             Toast.makeText(this, "Semua soal selesai!", Toast.LENGTH_SHORT).show();
@@ -224,6 +236,14 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("SCORE", score);
             intent.putExtra("DIFFICULTY", difficulty);
             startActivity(intent);
+        }
+    }
+
+    private void prevQuestion() {
+        currentIndex--;
+        if (currentIndex < 0) {
+            showQuestion(currentIndex);
+            updateQuestionNumber();
         }
     }
 

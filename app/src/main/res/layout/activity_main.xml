@@ -36,7 +36,7 @@
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="280dp"
                 android:src="@drawable/logo"
                 android:layout_centerInParent="true" />
 
@@ -138,6 +138,7 @@
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
@@ -173,12 +174,15 @@
                     android:textStyle="bold"
                     android:onClick="onLogout" />
             </LinearLayout>
-        </LinearLayout>
 
-<!--        <ImageView-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:src="@drawable/bottom_shape"-->
-<!--            android:layout_gravity="bottom|end" />-->
+            <ImageView
+                android:id="@+id/footer"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/footer"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"/>
+        </LinearLayout>
     </FrameLayout>
 </ScrollView>

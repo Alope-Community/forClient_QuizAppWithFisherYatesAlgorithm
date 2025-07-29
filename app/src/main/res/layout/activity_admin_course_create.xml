@@ -134,6 +134,15 @@
                     android:background="#f9a7a7"
                     app:backgroundTint="#f9a7a7"
                     android:onClick="setUnorderedList" />
+
+<!--                <Button-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="IMG"-->
+<!--                    android:background="#F9A7F5"-->
+<!--                    app:backgroundTint="#F9A7F5"-->
+<!--                    android:onClick="insertImage" />-->
             </LinearLayout>
 
 

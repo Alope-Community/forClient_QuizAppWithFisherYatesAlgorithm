@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,43 +95,49 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkAuthenticate() {
         Button loginButton = findViewById(R.id.loginButton);
-//        Button registerButton = findViewById(R.id.registerButton);
         Button logoutButton = findViewById(R.id.logoutButton);
         TextView welcomeText = findViewById(R.id.welcomeText);
 
-        //
-//        View border = findViewById(R.id.border);
         ImageView aboutButton = findViewById(R.id.aboutButton);
+        ImageView footerImage = findViewById(R.id.footer);
         Button playButton = findViewById(R.id.playButton);
         Button leaderboardButton = findViewById(R.id.leaderboardButton);
         Button courseButton = findViewById(R.id.courseButton);
 
+        ScrollView mainScrollView = findViewById(R.id.main);
+
         if (isAuthenticated()) {
             String authName = sharedPreferences.getString("name", "ALOPE");
-
             Log.d("AUTHNAME", authName);
 
             loginButton.setVisibility(View.GONE);
-//            registerButton.setVisibility(View.GONE);
-
             welcomeText.setText("Halo, " + authName);
+            welcomeText.setVisibility(View.VISIBLE);
+            logoutButton.setVisibility(View.VISIBLE);
 
-            //
             playButton.setVisibility(View.VISIBLE);
             leaderboardButton.setVisibility(View.VISIBLE);
             courseButton.setVisibility(View.VISIBLE);
-//            border.setVisibility(View.VISIBLE);
             aboutButton.setVisibility(View.VISIBLE);
-        } else{
-            logoutButton.setVisibility(View.GONE);
-            welcomeText.setVisibility(View.GONE);
 
-            //
+            // Ganti background ke gradient
+            mainScrollView.setBackgroundResource(R.drawable.gradient_background);
+
+            footerImage.setVisibility(View.GONE);
+        } else {
+            loginButton.setVisibility(View.VISIBLE);
+            welcomeText.setVisibility(View.GONE);
+            logoutButton.setVisibility(View.GONE);
+
             playButton.setVisibility(View.GONE);
             leaderboardButton.setVisibility(View.GONE);
             courseButton.setVisibility(View.GONE);
-//            border.setVisibility(View.GONE);
             aboutButton.setVisibility(View.GONE);
+
+            // Ganti background ke gambar
+            mainScrollView.setBackgroundResource(R.drawable.bg_main_gradient);
+
+            footerImage.setVisibility(View.VISIBLE);
         }
     }
 }

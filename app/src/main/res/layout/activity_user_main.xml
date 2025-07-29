@@ -103,5 +103,27 @@
             android:background="@drawable/rounded_button_danger"
             android:text="D"
             android:textColor="#FFFFFF" />
+
+        <LinearLayout
+            android:id="@+id/navButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/btnPrevious"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Previous" />
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
