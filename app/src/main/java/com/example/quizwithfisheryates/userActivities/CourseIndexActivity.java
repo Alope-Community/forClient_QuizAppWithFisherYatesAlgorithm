@@ -66,13 +66,14 @@ public class CourseIndexActivity extends AppCompatActivity {
 
                             int id = obj.getInt("id");
                             String title = obj.getString("title");
+                            String cover = obj.getString("cover");
                             String description = obj.getString("description");
                             String body = obj.getString("body");
                             int account_id = obj.getInt("account_id");
                             String created_at = obj.getString("created_at");
                             String account_name = obj.getString("account_name");
 
-                            courseList.add(new Course(id, title, description, body, created_at, account_id));
+                            courseList.add(new Course(id, title, cover, description, body, created_at, account_id));
                         }
 
                         runOnUiThread(() -> renderListToView());

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,17 +14,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.CourseResource;
 import com.example.quizwithfisheryates.adminActivities.MainActivity;
-import com.example.quizwithfisheryates.authActivities.RegisterActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ShowCourse extends AppCompatActivity {
     TextView tvTitle, tvDescription;
-    WebView webBody; // untuk menampilkan isi HTML
+    WebView webBody;
+    ImageView ivCover; // ⬅️ Tambahkan imageView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class ShowCourse extends AppCompatActivity {
         tvTitle = findViewById(R.id.tvTitle);
         tvDescription = findViewById(R.id.tvDescription);
         webBody = findViewById(R.id.webBody);
+        ivCover = findViewById(R.id.ivCover);
 
         int courseId = getIntent().getIntExtra("course_id", 1);
         showCourseDetail(courseId);
@@ -62,11 +65,20 @@ public class ShowCourse extends AppCompatActivity {
                         String title = obj.getString("title");
                         String description = obj.getString("description");
                         String body = obj.getString("body");
+                        String cover = obj.optString("cover", null);
 
                         runOnUiThread(() -> {
                             tvTitle.setText(title);
                             tvDescription.setText(description);
                             webBody.loadDataWithBaseURL(null, body, "text/html", "UTF-8", null);
+
+                            if (cover != null && !cover.isEmpty()) {
+                                Glide.with(ShowCourse.this)
+                                        .load(cover)
+                                        .into(ivCover);
+                            } else {
+                                ivCover.setVisibility(View.GONE); // Sembunyikan jika tidak ada gambar
+                            }
                         });
 
                     } else {

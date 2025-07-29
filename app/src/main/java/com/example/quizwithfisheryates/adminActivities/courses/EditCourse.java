@@ -1,9 +1,14 @@
 package com.example.quizwithfisheryates.adminActivities.courses;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -16,6 +21,8 @@ import com.example.quizwithfisheryates._models.Course;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import jp.wasabeef.richeditor.RichEditor;
 
 public class EditCourse extends AppCompatActivity {
@@ -23,6 +30,11 @@ public class EditCourse extends AppCompatActivity {
     private EditText etTitle, etDescription;
     private RichEditor editor;
     private int courseId;
+
+    private static final int REQUEST_CODE_PICK_IMAGE = 1001;
+    private Uri selectedImageUri;
+    private ImageView imagePreview;
+    private Button buttonUploadImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +53,36 @@ public class EditCourse extends AppCompatActivity {
         loadCourse();
 
         findViewById(R.id.btnSubmitCourse).setOnClickListener(this::submitEdit);
+
+        imagePreview = findViewById(R.id.imagePreview);
+        buttonUploadImage = findViewById(R.id.buttonUploadImage);
+
+        buttonUploadImage.setOnClickListener(v -> openImagePicker());
+        buttonUploadImage.setOnClickListener(v -> openImagePicker());
+    }
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == RESULT_OK && data != null) {
+            selectedImageUri = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                imagePreview.setImageBitmap(bitmap);
+                imagePreview.setVisibility(View.VISIBLE);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Gagal memuat gambar", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void loadCourse() {
@@ -91,12 +133,12 @@ public class EditCourse extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
         int accountID = sharedPreferences.getInt("id", 1);
 
-        CourseResource.updateCourse(courseId, title, description, body, accountID, new CourseResource.ApiCallback() {
+        CourseResource.updateCourse(courseId, title, description, body, accountID, selectedImageUri, this, new CourseResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 runOnUiThread(() -> {
                     Toast.makeText(EditCourse.this, "Materi berhasil diperbarui", Toast.LENGTH_SHORT).show();
-                    finish();
+//                    finish();
                 });
             }
 

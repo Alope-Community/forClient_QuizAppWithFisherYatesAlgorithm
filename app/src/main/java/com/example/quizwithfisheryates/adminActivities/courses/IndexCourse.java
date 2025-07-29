@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.CourseResource;
 import com.example.quizwithfisheryates._models.Course;
@@ -78,13 +80,14 @@ public class IndexCourse extends AppCompatActivity {
 
                             int id = obj.getInt("id");
                             String title = obj.getString("title");
+                            String cover = obj.getString("cover");
                             String description = obj.getString("description");
                             String body = obj.getString("body");
                             int account_id = obj.getInt("account_id");
                             String created_at = obj.getString("created_at");
                             String account_name = obj.getString("account_name");
 
-                            courseList.add(new Course(id, title, description, body, created_at, account_id));
+                            courseList.add(new Course(id, title, cover, description, body, created_at, account_id));
                         }
 
                         runOnUiThread(() -> renderListToView());
@@ -137,6 +140,25 @@ public class IndexCourse extends AppCompatActivity {
             tvMateri.setBackgroundColor(Color.parseColor("#a4c9ff"));
             container.addView(tvMateri);
 
+            // Tambahkan cover image
+            if (item.getCover() != null && !item.getCover().trim().isEmpty()) {
+                ImageView ivCover = new ImageView(this);
+                LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        500
+                );
+                imageParams.setMargins(0, 0, 0, 0);
+                ivCover.setLayoutParams(imageParams);
+                ivCover.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                container.addView(ivCover);
+
+                Glide.with(this)
+                        .load(item.getCover())
+                        .into(ivCover);
+            }
+
+            // Card layout
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(20, 20, 20, 20);

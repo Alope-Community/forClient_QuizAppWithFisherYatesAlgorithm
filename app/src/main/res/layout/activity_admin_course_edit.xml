@@ -63,6 +63,33 @@
                 android:maxLength="100"
                 android:inputType="text"/>
 
+            <!--    Image   -->
+            <ImageView
+                android:id="@+id/imagePreview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:background="#EEEEEE"
+                android:contentDescription="Preview Gambar"
+                android:visibility="gone" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonUploadImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pilih Cover (Optional)"
+                android:layout_marginTop="8dp"
+                android:background="#f9a7a7"
+                android:textColor="#FFFFFF"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginBottom="20dp"
+                android:stateListAnimator="@null"
+                android:layout_gravity="center"/>
+
             <!-- Description -->
             <TextView
                 android:layout_width="wrap_content"
