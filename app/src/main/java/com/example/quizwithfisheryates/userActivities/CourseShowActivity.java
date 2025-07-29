@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,10 +18,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.CourseResource;
 import com.example.quizwithfisheryates._models.Course;
+import com.example.quizwithfisheryates.adminActivities.courses.ShowCourse;
 import com.example.quizwithfisheryates.authActivities.LoginActivity;
 
 import org.json.JSONArray;
@@ -29,7 +32,9 @@ import org.json.JSONObject;
 
 public class CourseShowActivity extends AppCompatActivity {
     TextView tvTitle, tvDescription;
-    WebView webBody; // untuk menampilkan isi HTML
+    WebView webBody;
+
+    ImageView ivCover;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class CourseShowActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.tvTitle);
         tvDescription = findViewById(R.id.tvDescription);
         webBody = findViewById(R.id.webBody);
+        ivCover = findViewById(R.id.ivCover);
 
         int courseId = getIntent().getIntExtra("course_id", 1);
         showCourseDetail(courseId);
@@ -67,11 +73,20 @@ public class CourseShowActivity extends AppCompatActivity {
                         String title = obj.getString("title");
                         String description = obj.getString("description");
                         String body = obj.getString("body");
+                        String cover = obj.optString("cover", null);
 
                         runOnUiThread(() -> {
                             tvTitle.setText(title);
                             tvDescription.setText(description);
                             webBody.loadDataWithBaseURL(null, body, "text/html", "UTF-8", null);
+
+                            if (cover != null && !cover.isEmpty()) {
+                                Glide.with(CourseShowActivity.this)
+                                        .load(cover)
+                                        .into(ivCover);
+                            } else {
+                                ivCover.setVisibility(View.GONE); // Sembunyikan jika tidak ada gambar
+                            }
                         });
 
                     } else {

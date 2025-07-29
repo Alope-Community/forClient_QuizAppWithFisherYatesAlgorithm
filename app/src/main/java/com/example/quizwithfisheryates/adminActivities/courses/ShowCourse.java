@@ -25,7 +25,7 @@ import org.json.JSONObject;
 public class ShowCourse extends AppCompatActivity {
     TextView tvTitle, tvDescription;
     WebView webBody;
-    ImageView ivCover; // ⬅️ Tambahkan imageView
+    ImageView ivCover;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

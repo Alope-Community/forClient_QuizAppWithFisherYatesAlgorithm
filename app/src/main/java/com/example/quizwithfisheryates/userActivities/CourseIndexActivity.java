@@ -7,19 +7,26 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.CourseResource;
 import com.example.quizwithfisheryates._models.Course;
+import com.example.quizwithfisheryates.adminActivities.courses.EditCourse;
+import com.example.quizwithfisheryates.adminActivities.courses.IndexCourse;
+import com.example.quizwithfisheryates.adminActivities.courses.ShowCourse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,20 +130,38 @@ public class CourseIndexActivity extends AppCompatActivity {
             tvMateri.setTextColor(Color.BLACK);
             tvMateri.setGravity(Gravity.CENTER);
             tvMateri.setPadding(20, 20, 20, 20);
-            tvMateri.setBackgroundColor(Color.parseColor("#a4c9ff")); // Warna hex biru muda
+            tvMateri.setBackgroundColor(Color.parseColor("#a4c9ff"));
             container.addView(tvMateri);
 
+            // Tambahkan cover image
+            if (item.getCover() != null && !item.getCover().trim().isEmpty()) {
+                ImageView ivCover = new ImageView(this);
+                LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        500
+                );
+                imageParams.setMargins(0, 0, 0, 0);
+                ivCover.setLayoutParams(imageParams);
+                ivCover.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                container.addView(ivCover);
+
+                Glide.with(this)
+                        .load(item.getCover())
+                        .into(ivCover);
+            }
+
+            // Card layout
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(20, 20, 20, 20);
-            layout.setClickable(true);
             layout.setBackgroundResource(R.drawable.primary_color);
 
             LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            cardParams.setMargins(0, 0, 0, 24); // bottom margin 24px
+            cardParams.setMargins(0, 0, 0, 24);
             layout.setLayoutParams(cardParams);
 
             TextView tvName = new TextView(this);

@@ -87,6 +87,14 @@
             android:textColor="#000000"
             android:paddingBottom="8dp"/>
 
+        <ImageView
+            android:id="@+id/ivCover"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp"
+            />
+
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
