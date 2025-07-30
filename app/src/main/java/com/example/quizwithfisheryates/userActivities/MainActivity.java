@@ -203,6 +203,8 @@ public class MainActivity extends AppCompatActivity {
         //
         ImageView imageView = findViewById(R.id.imageView);
 
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
         if (question.getImage() != null && !question.getImage().isEmpty()) {
             imageView.setVisibility(View.VISIBLE);
 
