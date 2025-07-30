@@ -3,6 +3,7 @@ package com.example.quizwithfisheryates.userActivities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -48,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView timerTextView;
     private long timeLeftInMillis = 60000;
 
-    Button btnNext, btnPrev;
+    Button btnNext;
+
+    private boolean hasAnswered = false;
+    private String selectedAnswer = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,17 +97,14 @@ public class MainActivity extends AppCompatActivity {
 
         View.OnClickListener optionClickListener = v -> {
             Button clickedButton = (Button) v;
-            String selectedAnswer = clickedButton.getText().toString();
+            selectedAnswer = clickedButton.getText().toString().substring(3);
 
-            Log.d("SELECTED ANSWER", selectedAnswer);
-            String cleanedAnswer= selectedAnswer.substring(3);
+            hasAnswered = true;
 
-            if(cleanedAnswer.equals(questions.get(currentIndex).getAnswer())){
-                score += 10;
-                Log.d("SCORE", Integer.toString(score));
-            }
+            resetButtonBackground();
+            clickedButton.setBackgroundColor(Color.parseColor("#FF9800"));
 
-            nextQuestion();
+            btnNext.setEnabled(true);
         };
 
         btnA.setOnClickListener(optionClickListener);
@@ -113,16 +114,34 @@ public class MainActivity extends AppCompatActivity {
 
 
         btnNext = findViewById(R.id.btnNext);
-        btnPrev = findViewById(R.id.btnPrevious);
 
         btnNext.setOnClickListener(v -> {
-            nextQuestion();
+            if (hasAnswered) {
+                // Periksa jawaban
+                if (selectedAnswer.equals(questions.get(currentIndex).getAnswer())) {
+                    score += 10;
+                    Log.d("SCORE", Integer.toString(score));
+                }
+
+                hasAnswered = false;
+                selectedAnswer = "";
+                resetButtonBackground();
+                btnNext.setEnabled(false);
+
+                nextQuestion();
+            }
         });
 
-        btnPrev.setOnClickListener(v -> {
-            prevQuestion();
-        });
+        btnNext.setEnabled(false);
     }
+
+    private void resetButtonBackground() {
+        btnA.setBackgroundResource(R.drawable.rounded_button);
+        btnB.setBackgroundResource(R.drawable.rounded_button_success);
+        btnC.setBackgroundResource(R.drawable.rounded_button_warning);
+        btnD.setBackgroundResource(R.drawable.rounded_button_danger);
+    }
+
 
     @SuppressWarnings("MissingSuperCall")
     @Override
@@ -239,17 +258,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void prevQuestion() {
-        currentIndex--;
-        if (currentIndex < 0) {
-            showQuestion(currentIndex);
-            updateQuestionNumber();
-        }
-    }
-
     private void updateQuestionNumber(){
-//        currentQuestionNumber.setText("Soal No. " + (currentIndex + 1));
-
         int questionCountDown = questions.toArray().length - currentIndex;
 
         Log.d("SOAL", String.valueOf(questionCountDown));
