@@ -165,8 +165,8 @@ public class UpdateQuiz extends AppCompatActivity {
                             runOnUiThread(() -> {
                                 Toast.makeText(UpdateQuiz.this, "Update berhasil", Toast.LENGTH_SHORT).show();
 //                                finish();
-                                Intent intent = new Intent(UpdateQuiz.this, IndexQuiz.class);
-                                startActivity(intent);
+//                                Intent intent = new Intent(UpdateQuiz.this, UpdateQuiz.class);
+//                                startActivity(intent);
                             });
                         }
 
