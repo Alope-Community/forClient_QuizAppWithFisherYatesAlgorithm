@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("SOAL", String.valueOf(questionCountDown));
 
         if(questionCountDown <= 0) {
-            currentQuestionNumber.setText("Sisa Soal 10");
+            currentQuestionNumber.setText("Sisa Soal 20");
         } else {
             currentQuestionNumber.setText("Sisa Soal " + questionCountDown);
         }
