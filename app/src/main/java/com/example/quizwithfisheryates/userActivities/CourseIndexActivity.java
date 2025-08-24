@@ -120,15 +120,13 @@ public class CourseIndexActivity extends AppCompatActivity {
         LinearLayout container = findViewById(R.id.container);
         container.removeAllViews();
 
-        int materiCounter = 1;
-
         for (Course item : courseList) {
             TextView tvMateri = new TextView(this);
-            tvMateri.setText("Materi " + materiCounter);
+            tvMateri.setText(item.getTitle());
             tvMateri.setTextSize(18);
             tvMateri.setTypeface(null, Typeface.BOLD);
             tvMateri.setTextColor(Color.BLACK);
-            tvMateri.setGravity(Gravity.CENTER);
+//            tvMateri.setGravity(Gravity.CENTER);
             tvMateri.setPadding(20, 20, 20, 20);
             tvMateri.setBackgroundColor(Color.parseColor("#a4c9ff"));
             container.addView(tvMateri);
@@ -164,25 +162,24 @@ public class CourseIndexActivity extends AppCompatActivity {
             cardParams.setMargins(0, 0, 0, 24);
             layout.setLayoutParams(cardParams);
 
-            TextView tvName = new TextView(this);
-            tvName.setText(item.getTitle());
-            tvName.setTextSize(16);
-            tvName.setTypeface(null, Typeface.BOLD);
-
+            //
             TextView tvDescription = new TextView(this);
             tvDescription.setText(item.getDescription());
 
-            layout.addView(tvName);
             layout.addView(tvDescription);
 
-            layout.setOnClickListener(v -> {
+//            layout.setOnClickListener(v -> {
+//                Intent intent = new Intent(this, CourseShowActivity.class);
+//                intent.putExtra("course_id", item.getID());
+//                startActivity(intent);
+//            });
+
+            container.addView(layout);
+            container.setOnClickListener(v -> {
                 Intent intent = new Intent(this, CourseShowActivity.class);
                 intent.putExtra("course_id", item.getID());
                 startActivity(intent);
             });
-
-            container.addView(layout);
-            materiCounter++;
         }
     }
 }
