@@ -122,6 +122,6 @@
         android:contentDescription="Tambah User"
         android:onClick="goToRegister"
         android:backgroundTint="#7ccad0"
-        app:srcCompat="@drawable/ic_add_user"
+        app:srcCompat="@drawable/ic_add"
         app:tint="@android:color/white" />
 </FrameLayout>

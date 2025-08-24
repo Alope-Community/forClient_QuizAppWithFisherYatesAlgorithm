@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
-                android:background="@drawable/rounded_button_success"
+                android:background="@drawable/rounded_button"
                 android:text="Easy"
                 android:textColor="#000"
                 android:onClick="getEasyScore"/>
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
-                android:background="@drawable/rounded_button_warning"
+                android:background="@drawable/rounded_button"
                 android:text="Medium"
                 android:textColor="#000"
                 android:onClick="getMediumScore" />
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
-                android:background="@drawable/rounded_button_danger"
+                android:background="@drawable/rounded_button"
                 android:text="Hard"
                 android:textColor="#000"
                 android:onClick="getHardScore" />

@@ -137,9 +137,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void resetButtonBackground() {
         btnA.setBackgroundResource(R.drawable.rounded_button);
-        btnB.setBackgroundResource(R.drawable.rounded_button_success);
-        btnC.setBackgroundResource(R.drawable.rounded_button_warning);
-        btnD.setBackgroundResource(R.drawable.rounded_button_danger);
+        btnB.setBackgroundResource(R.drawable.rounded_button);
+        btnC.setBackgroundResource(R.drawable.rounded_button);
+        btnD.setBackgroundResource(R.drawable.rounded_button);
     }
 
 

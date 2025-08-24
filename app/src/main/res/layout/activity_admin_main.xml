@@ -14,6 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/welcomeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Selamat Datang Admin"
@@ -32,20 +33,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/rounded_button"
-            android:text="Data User"
-            android:textColor="#000" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/viewQuestion"
-            style="@style/Widget.AppCompat.Button"
-            android:onClick="goToListQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/rounded_button_success"
-            android:text="Data Soal Quiz"
+            android:text="Siswa"
             android:textColor="#000" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -57,8 +45,21 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/rounded_button_warning"
-            android:text="Data Materi"
+            android:background="@drawable/rounded_button"
+            android:text="Materi"
+            android:textColor="#000" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/viewQuestion"
+            style="@style/Widget.AppCompat.Button"
+            android:onClick="goToListQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_button"
+            android:text="Quiz"
             android:textColor="#000" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -70,8 +71,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/rounded_button_danger"
-            android:text="Data Nilai"
+            android:background="@drawable/rounded_button"
+            android:text="Nilai"
             android:textColor="#000" />
 
 <!--        <androidx.appcompat.widget.AppCompatButton-->

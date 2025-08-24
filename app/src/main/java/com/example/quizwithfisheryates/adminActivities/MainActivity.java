@@ -3,7 +3,9 @@ package com.example.quizwithfisheryates.adminActivities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -29,6 +31,15 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Ambil TextView
+        TextView welcomeText = findViewById(R.id.welcomeText);
+
+
+        sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+        String adminName = sharedPreferences.getString("name", "Admin");
+
+        welcomeText.setText("Selamat datang " + adminName);
     }
 
     public void goToListUser(View v){
@@ -50,24 +61,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, RankingActivity.class);
         startActivity(intent);
     }
-
-//    public void exportRanking(View v){
-//        ScoreResource.exportScore(MainActivity.this, new ScoreResource.FileCallback() {
-//            public void onSuccess(String filePath) {
-//                runOnUiThread(() -> Toast.makeText(MainActivity.this,
-//                        "Export berhasil disimpan: " + filePath,
-//                        Toast.LENGTH_LONG).show());
-//            }
-//
-//            @Override
-//            public void onError(Exception e) {
-//                e.printStackTrace();
-//                runOnUiThread(() -> Toast.makeText(MainActivity.this,
-//                        "Gagal mendownload file",
-//                        Toast.LENGTH_SHORT).show());
-//            }
-//        });
-//    }
 
     public void logoutAdmin(View v){
         sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);

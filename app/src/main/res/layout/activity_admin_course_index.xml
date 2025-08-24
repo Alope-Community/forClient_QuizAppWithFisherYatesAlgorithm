@@ -64,6 +64,6 @@
         android:contentDescription="Tambah Soal"
         android:onClick="goToCreateCourse"
         android:backgroundTint="#7ccad0"
-        app:srcCompat="@drawable/ic_add_quiz"
+        app:srcCompat="@drawable/ic_add"
         app:tint="@android:color/white" />
 </FrameLayout>

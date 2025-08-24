@@ -187,13 +187,23 @@ public class IndexQuiz extends AppCompatActivity {
                 optionView.setTextSize(16);
                 optionView.setPadding(16, 4, 0, 4);
 
-                if (option.equals(quiz.getAnswer())) {
-                    optionView.setTypeface(null, Typeface.BOLD);
-                }
-
                 quizContainer.addView(optionView);
+
                 label++;
             }
+
+            // Tambahkan TextView untuk Jawaban Benar
+            int correctIndex = options.indexOf(quiz.getAnswer());
+            char correctLabel = (char) ('A' + correctIndex);
+
+            TextView answerView = new TextView(this);
+//            answerView.setText("Jawaban Benar: " + correctLabel + ". " + quiz.getAnswer());
+            answerView.setText("Jawaban Benar: " + correctLabel);
+            answerView.setTextSize(16);
+            answerView.setTypeface(null, Typeface.BOLD);
+            answerView.setPadding(16, 16, 0, 0);
+
+            quizContainer.addView(answerView);
 
             // Buat layout horizontal untuk tombol Update dan Delete
             LinearLayout buttonLayout = new LinearLayout(this);
@@ -209,17 +219,15 @@ public class IndexQuiz extends AppCompatActivity {
             Button btnUpdate = new Button(this);
             btnUpdate.setText("Update");
             btnUpdate.setAllCaps(false);
-            btnUpdate.setBackgroundColor(Color.parseColor("#2196F3")); // biru
+            btnUpdate.setBackgroundColor(Color.parseColor("#2196F3"));
             btnUpdate.setTextColor(Color.WHITE);
-            btnUpdate.setPadding(32, 16, 32, 16);
 
             // Tombol Delete
             Button btnDelete = new Button(this);
             btnDelete.setText("Delete");
             btnDelete.setAllCaps(false);
-            btnDelete.setBackgroundColor(Color.parseColor("#F44336")); // merah
+            btnDelete.setBackgroundColor(Color.parseColor("#F44336"));
             btnDelete.setTextColor(Color.WHITE);
-            btnDelete.setPadding(32, 16, 32, 16);
 
             // Tambahkan tombol ke layout horizontal
             buttonLayout.addView(btnUpdate);

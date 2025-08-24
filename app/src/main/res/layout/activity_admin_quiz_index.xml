@@ -116,6 +116,12 @@
                     android:layout_height="wrap_content"
                     android:text="Option 4"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Jawaban Benar: "/>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -135,6 +141,6 @@
         android:contentDescription="Tambah Soal"
         android:onClick="goToCreateQuestion"
         android:backgroundTint="#7ccad0"
-        app:srcCompat="@drawable/ic_add_quiz"
+        app:srcCompat="@drawable/ic_add"
         app:tint="@android:color/white" />
 </FrameLayout>

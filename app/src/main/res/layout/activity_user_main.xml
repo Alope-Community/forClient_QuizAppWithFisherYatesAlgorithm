@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_button_success"
+            android:background="@drawable/rounded_button"
             android:text="B"
             android:textColor="#FFFFFF" />
         <androidx.appcompat.widget.AppCompatButton
@@ -91,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_button_warning"
+            android:background="@drawable/rounded_button"
             android:text="C"
             android:textColor="#FFFFFF" />
         <androidx.appcompat.widget.AppCompatButton
@@ -100,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_button_danger"
+            android:background="@drawable/rounded_button"
             android:text="D"
             android:textColor="#FFFFFF" />
 
