@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private CountDownTimer countDownTimer;
-    private TextView timerTextView;
+    private TextView timerTextView, difficultTextView;
     private long timeLeftInMillis = 60000;
 
     Button btnNext;
@@ -68,12 +68,20 @@ public class MainActivity extends AppCompatActivity {
         // ambil pilihan difficulty
         difficulty = getIntent().getStringExtra("DIFFICULTY");
 
+        difficultTextView = findViewById(R.id.difficultTextView);
+
         if(difficulty.equals("Easy")){
             timeLeftInMillis = 1200000;
+
+            difficultTextView.setText("Tingkat Soal: Mudah");
         } else if(difficulty.equals("Medium")){
             timeLeftInMillis = 1200000;
+
+            difficultTextView.setText("Tingkat Soal: Sedang");
         } else{
             timeLeftInMillis = 1200000;
+
+            difficultTextView.setText("Tingkat Soal: Sulit");
         }
 
         timerTextView = findViewById(R.id.timerTextView);

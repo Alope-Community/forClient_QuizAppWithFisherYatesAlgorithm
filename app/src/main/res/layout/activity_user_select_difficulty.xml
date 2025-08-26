@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rounded_button"
-                android:text="Easy"
+                android:text="Mudah"
                 android:textColor="#000"
                 android:onClick="onStartQuiz" />
 
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rounded_button"
-                android:text="Medium"
+                android:text="Sedang"
                 android:textColor="#000"
                 android:onClick="onStartQuiz" />
 
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rounded_button"
-                android:text="Hard"
+                android:text="Sulit"
                 android:textColor="#000"
                 android:onClick="onStartQuiz" />
 
