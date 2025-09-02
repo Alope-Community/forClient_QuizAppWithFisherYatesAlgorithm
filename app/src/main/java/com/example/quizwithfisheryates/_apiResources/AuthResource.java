@@ -2,6 +2,8 @@ package com.example.quizwithfisheryates._apiResources;
 
 import android.util.Log;
 
+import com.example.quizwithfisheryates._utils.StringUtils;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -47,13 +49,15 @@ public class AuthResource {
         }).start();
     }
 
-    public static void postRegister(String name, String username, String password, ApiCallback callback) {
+    public static void postRegister(String name, String password, ApiCallback callback) {
         new Thread(() -> {
             try {
                 URL url = new URL("https://quiz.alope.id/register");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
+
+                String username = StringUtils.toSlug(name);
 
                 String postData = "name=" + name + "&username=" + username + "&password=" + password;
                 OutputStream os = conn.getOutputStream();

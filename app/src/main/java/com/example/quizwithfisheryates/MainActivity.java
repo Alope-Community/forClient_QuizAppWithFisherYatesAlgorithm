@@ -23,6 +23,7 @@ import com.example.quizwithfisheryates.authActivities.LoginActivity;
 import com.example.quizwithfisheryates.authActivities.RegisterActivity;
 import com.example.quizwithfisheryates.userActivities.AboutActivity;
 import com.example.quizwithfisheryates.userActivities.CourseIndexActivity;
+import com.example.quizwithfisheryates.userActivities.CourseShowActivity;
 import com.example.quizwithfisheryates.userActivities.LeaderboardActivity;
 import com.example.quizwithfisheryates.userActivities.SelectDifficultyActivity;
 
@@ -110,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
             String authName = sharedPreferences.getString("name", "ALOPE");
             Log.d("AUTHNAME", authName);
 
+            String authRole = sharedPreferences.getString("role", "user");
+
             loginButton.setVisibility(View.GONE);
             welcomeText.setText("Halo, " + authName);
             welcomeText.setVisibility(View.VISIBLE);
@@ -124,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
             mainScrollView.setBackgroundResource(R.drawable.gradient_background);
 
             footerImage.setVisibility(View.GONE);
+
+            if (authRole.equals("admin")) {
+                Intent intent = new Intent(this, com.example.quizwithfisheryates.adminActivities.MainActivity.class);
+                startActivity(intent);
+            }
         } else {
             loginButton.setVisibility(View.VISIBLE);
             welcomeText.setVisibility(View.GONE);

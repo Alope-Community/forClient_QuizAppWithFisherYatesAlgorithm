@@ -97,8 +97,9 @@ public class LeaderboardActivity extends AppCompatActivity {
                             String difficulty = obj.getString("difficulty");
                             String created_at = obj.getString("created_at");
                             String account_name = obj.getString("account_name");
+                            String account_nisn = obj.getString("account_nisn");
 
-                            scoreList.add(new Score(account_name, difficulty, created_at, score));
+                            scoreList.add(new Score(account_name, account_nisn, difficulty, created_at, score));
                         }
 
                         runOnUiThread(() -> renderListToView());
@@ -177,15 +178,27 @@ public class LeaderboardActivity extends AppCompatActivity {
             dateParams.addRule(RelativeLayout.ALIGN_PARENT_END);
             topRow.addView(tvDate, dateParams);
 
+            //
+            String difficulty = "Mudah";
+            if (item.getDifficulty().equals("medium")) {
+                difficulty = "Sedang";
+            } else if (item.getDifficulty().equals("hard")) {
+                difficulty = "Sulit";
+            }
+
             // TextView untuk Difficulty dan Score
+            TextView tvNISN = new TextView(this);
+            tvNISN.setText("NISN: " + item.getNisn());
+
             TextView tvDifficulty = new TextView(this);
-            tvDifficulty.setText("Difficulty: " + item.getDifficulty());
+            tvDifficulty.setText("Tingkat Soal: " + difficulty);
 
             TextView tvScore = new TextView(this);
-            tvScore.setText("Score: " + item.getScore());
+            tvScore.setText("Skor: " + item.getScore());
 
             // Tambahkan semua view ke layout utama
             layout.addView(topRow);
+            layout.addView(tvNISN);
             layout.addView(tvDifficulty);
             layout.addView(tvScore);
 

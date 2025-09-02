@@ -3,7 +3,7 @@
     <string name="title">Phytagoras</string>
 
     <!--  Form Hint  -->
-    <string name="hintName">Name</string>
+    <string name="hintName">Nama</string>
     <string name="hintUsername">Username</string>
     <string name="hintPassword">Password</string>
 

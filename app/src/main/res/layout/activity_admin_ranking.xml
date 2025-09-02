@@ -35,9 +35,10 @@
                     app:tint="@color/black" />
 
                 <TextView
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Data Nilai"
+                    android:text="Data Nilai Mudah"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="#000"
@@ -55,8 +56,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#7ccad0"
-                    android:text="Easy"
+                    android:background="#a4c9ff"
+                    android:text="Mudah"
                     android:textColor="#000"
                     android:onClick="getEasyScore" />
 
@@ -65,8 +66,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#ffea92"
-                    android:text="Medium"
+                    android:background="#a4c9ff"
+                    android:text="Sedang"
                     android:textColor="#000"
                     android:onClick="getMediumScore" />
 
@@ -75,8 +76,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#f9a7a7"
-                    android:text="Hard"
+                    android:background="#a4c9ff"
+                    android:text="Sulit"
                     android:textColor="#000"
                     android:onClick="getHardScore" />
             </LinearLayout>

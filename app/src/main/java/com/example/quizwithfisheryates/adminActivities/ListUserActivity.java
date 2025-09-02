@@ -85,6 +85,7 @@ public class ListUserActivity extends AppCompatActivity {
                 Integer id = user.optInt("id", 1);
                 String name = user.optString("name", "Tanpa Nama");
                 String username = user.optString("username", "-");
+                String password = user.optString("password", "-");
 
                 // Nama
                 TextView nameView = new TextView(this);
@@ -96,7 +97,7 @@ public class ListUserActivity extends AppCompatActivity {
 
                 // Username
                 TextView usernameView = new TextView(this);
-                usernameView.setText("Username: " + username);
+                usernameView.setText("NISN: " + password);
                 usernameView.setPadding(0, 0, 0, 4);
                 quizContainer.addView(usernameView);
 
@@ -124,6 +125,7 @@ public class ListUserActivity extends AppCompatActivity {
                     intent.putExtra("id", String.valueOf(id));
                     intent.putExtra("name", name);
                     intent.putExtra("username", username);
+                    intent.putExtra("password", password);
                     startActivity(intent);
                 });
 

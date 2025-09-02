@@ -40,7 +40,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         });
 
         Ename = findViewById(R.id.name);
-        Eusername = findViewById(R.id.username);
+//        Eusername = findViewById(R.id.username);
         Epassword = findViewById(R.id.password);
 
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
@@ -51,15 +51,18 @@ public class UpdateUserActivity extends AppCompatActivity {
             userId = intent.getStringExtra("id");
             String name = intent.getStringExtra("name");
             String username = intent.getStringExtra("username");
+            String NISN = intent.getStringExtra("password");
 
             Ename.setText(name);
-            Eusername.setText(username);
+//            Eusername.setText(username);
+
+            Epassword.setText(NISN);
         }
     }
 
     public void onUpdate(View view) {
         String name = Ename.getText().toString();
-        String username = Eusername.getText().toString();
+//        String username = Eusername.getText().toString();
         String password = Epassword.getText().toString();
 
         if (userId == "") {
@@ -67,7 +70,7 @@ public class UpdateUserActivity extends AppCompatActivity {
             return;
         }
 
-        UserResource.updateUser(userId, name, username, password, new UserResource.ApiCallback() {
+        UserResource.updateUser(userId, name, password, new UserResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("UPDATE SUCCESS", response);

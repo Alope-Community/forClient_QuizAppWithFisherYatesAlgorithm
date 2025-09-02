@@ -1,5 +1,7 @@
 package com.example.quizwithfisheryates._apiResources;
 
+import com.example.quizwithfisheryates._utils.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -46,7 +48,7 @@ public class UserResource {
         }).start();
     }
 
-    public static void updateUser(String id, String name, String username, String password, UserResource.ApiCallback callback) {
+    public static void updateUser(String id, String name, String password, UserResource.ApiCallback callback) {
         new Thread(() -> {
             try {
                 String baseUrl = "https://quiz.alope.id/update-user";
@@ -55,6 +57,8 @@ public class UserResource {
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                String username = StringUtils.toSlug(name);
 
                 // Bangun body form data (tanpa role, dengan username & password opsional)
                 StringBuilder postData = new StringBuilder();

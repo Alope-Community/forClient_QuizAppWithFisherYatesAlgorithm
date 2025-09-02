@@ -39,14 +39,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void onRegister(View view){
         EditText Ename       = findViewById(R.id.name);
-        EditText Eusername   = findViewById(R.id.username);
+//        EditText Eusername   = findViewById(R.id.username);
         EditText Epassword   = findViewById(R.id.password);
 
         String name = Ename.getText().toString();
-        String user = Eusername.getText().toString();
+//        String user = Eusername.getText().toString();
         String pass = Epassword.getText().toString();
 
-        AuthResource.postRegister(name, user, pass, new AuthResource.ApiCallback() {
+        AuthResource.postRegister(name, pass, new AuthResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("REGISTER SUCCESS", response);
@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                        startActivity(new Intent(RegisterActivity.this, ListUserActivity.class));
 
                         Ename.setText("");
-                        Eusername.setText("");
+//                        Eusername.setText("");
                         Epassword.setText("");
                     });
 

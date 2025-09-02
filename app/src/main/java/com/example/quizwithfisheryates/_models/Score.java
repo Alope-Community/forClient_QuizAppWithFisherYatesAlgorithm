@@ -10,12 +10,15 @@ import java.util.TimeZone;
 
 public class Score {
     private String name;
+
+    private String nisn;
     private String difficulty;
     private String createdAt;
     private int score;
 
-    public Score(String name, String difficulty, String createdAt, int score) {
+    public Score(String name, String nisn, String difficulty, String createdAt, int score) {
         this.name = name;
+        this.nisn = nisn;
         this.difficulty = difficulty;
         this.createdAt = createdAt;
         this.score = score;
@@ -23,6 +26,10 @@ public class Score {
 
     public String getName() {
         return name;
+    }
+
+    public String getNisn() {
+        return nisn;
     }
 
     public String getDifficulty() {

@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.QuizResource;
 import com.example.quizwithfisheryates._models.Question;
+import com.example.quizwithfisheryates._utils.StringUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +70,17 @@ public class IndexQuiz extends AppCompatActivity {
     }
 
     public void getQuestions(String difficulty) {
+
+        String diff = "Mudah";
+        if (difficulty.equals("medium")) {
+            diff = "Sedang";
+        } else if (difficulty.equals("hard")) {
+            diff = "Sulit";
+        }
+
+        TextView tvTitle = findViewById(R.id.title);
+        tvTitle.setText("Data Nilai " + StringUtils.capitalize(diff));
+
         QuizResource.getQuestion(difficulty, "admin", new QuizResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {

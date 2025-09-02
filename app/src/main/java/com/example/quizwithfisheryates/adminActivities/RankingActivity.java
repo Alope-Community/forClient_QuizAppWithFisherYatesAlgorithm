@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.ScoreResource;
 import com.example.quizwithfisheryates._models.Score;
+import com.example.quizwithfisheryates._utils.StringUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,6 +72,17 @@ public class RankingActivity extends AppCompatActivity {
     }
 
     private void getLeaderboard(String difficulty, String scoreType) {
+
+        String diff = "Mudah";
+        if (difficulty.equals("medium")) {
+            diff = "Sedang";
+        } else if (difficulty.equals("hard")) {
+            diff = "Sulit";
+        }
+
+        TextView tvTitle = findViewById(R.id.title);
+        tvTitle.setText("Data Nilai " + StringUtils.capitalize(diff));
+
         ScoreResource.getScore(difficulty, scoreType, "admin", 1, new ScoreResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
@@ -93,8 +105,9 @@ public class RankingActivity extends AppCompatActivity {
                             String difficulty = obj.getString("difficulty");
                             String created_at = obj.getString("created_at");
                             String account_name = obj.getString("account_name");
+                            String account_nisn = obj.getString("account_nisn");
 
-                            scoreList.add(new Score(account_name, difficulty, created_at, score));
+                            scoreList.add(new Score(account_name, account_nisn, difficulty, created_at, score));
                         }
 
                         runOnUiThread(() -> renderListToView());
@@ -166,11 +179,19 @@ public class RankingActivity extends AppCompatActivity {
             dateParams.addRule(RelativeLayout.ALIGN_PARENT_END);
             topLayout.addView(tvDate, dateParams);
 
+            //
+            String difficulty = "Mudah";
+            if (item.getDifficulty().equals("medium")) {
+                difficulty = "Sedang";
+            } else if (item.getDifficulty().equals("hard")) {
+                difficulty = "Sulit";
+            }
+
             TextView tvDifficulty = new TextView(this);
-            tvDifficulty.setText("Difficulty: " + item.getDifficulty());
+            tvDifficulty.setText("Tingkat Soal: " + difficulty);
 
             TextView tvScore = new TextView(this);
-            tvScore.setText("Score: " + item.getScore());
+            tvScore.setText("Skor: " + item.getScore());
 
             layout.addView(topLayout);
             layout.addView(tvDifficulty);

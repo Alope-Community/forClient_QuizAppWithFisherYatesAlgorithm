@@ -126,20 +126,20 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"/>
 
-                <EditText
-                    android:id="@+id/username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:padding="12dp"
-                    android:hint="@string/hintUsername"
-                    android:inputType="text"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:autofillHints="username"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray"/>
+<!--                <EditText-->
+<!--                    android:id="@+id/username"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:minHeight="48dp"-->
+<!--                    android:padding="12dp"-->
+<!--                    android:hint="@string/hintUsername"-->
+<!--                    android:inputType="text"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:layout_marginEnd="20dp"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    android:autofillHints="username"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textColorHint="@color/gray"/>-->
 
 
                 <EditText
@@ -148,8 +148,8 @@
                     android:layout_height="wrap_content"
                     android:minHeight="48dp"
                     android:padding="12dp"
-                    android:hint="@string/hintPassword"
-                    android:inputType="textPassword"
+                    android:hint="NISN"
+                    android:inputType="text"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="10dp"
