@@ -150,6 +150,12 @@ public class IndexCourse extends AppCompatActivity {
 
                 container.addView(ivCover);
 
+                ivCover.setOnClickListener(v -> {
+                    Intent intent = new Intent(this, ShowCourse.class);
+                    intent.putExtra("course_id", item.getID());
+                    startActivity(intent);
+                });
+
                 Glide.with(this)
                         .load(item.getCover())
                         .into(ivCover);
@@ -224,7 +230,7 @@ public class IndexCourse extends AppCompatActivity {
 
             container.addView(layout);
 
-            container.setOnClickListener(v -> {
+            layout.setOnClickListener(v -> {
                 Intent intent = new Intent(this, ShowCourse.class);
                 intent.putExtra("course_id", item.getID());
                 startActivity(intent);

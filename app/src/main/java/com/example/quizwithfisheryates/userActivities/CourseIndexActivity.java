@@ -34,10 +34,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CourseIndexActivity extends AppCompatActivity {
 
-    List<Course> courseList = new ArrayList<>();
+    List<Course> courseList = new CopyOnWriteArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +59,6 @@ public class CourseIndexActivity extends AppCompatActivity {
         CourseResource.getCourse(new CourseResource.ApiCallback() {
             @Override
             public void onSuccess(String response) {
-                Log.d("LEADERBOARD_RESPONSE", response); // <-- Cetak response di Logcat
                 try {
                     JSONObject json = new JSONObject(response);
                     String status = json.getString("status");
@@ -66,7 +66,8 @@ public class CourseIndexActivity extends AppCompatActivity {
                     if (status.equals("success")) {
                         JSONArray dataArray = json.getJSONArray("data");
 
-                        courseList.clear();
+                        // buat list sementara, bukan langsung ke courseList
+                        List<Course> tempList = new ArrayList<>();
 
                         for (int i = 0; i < dataArray.length(); i++) {
                             JSONObject obj = dataArray.getJSONObject(i);
@@ -78,12 +79,16 @@ public class CourseIndexActivity extends AppCompatActivity {
                             String body = obj.getString("body");
                             int account_id = obj.getInt("account_id");
                             String created_at = obj.getString("created_at");
-                            String account_name = obj.getString("account_name");
 
-                            courseList.add(new Course(id, title, cover, description, body, created_at, account_id));
+                            tempList.add(new Course(id, title, cover, description, body, created_at, account_id));
                         }
 
-                        runOnUiThread(() -> renderListToView());
+                        // update courseList hanya di UI thread
+                        runOnUiThread(() -> {
+                            courseList.clear();
+                            courseList.addAll(tempList);
+                            renderListToView();
+                        });
 
                     } else {
                         runOnUiThread(() -> Toast.makeText(
@@ -102,6 +107,7 @@ public class CourseIndexActivity extends AppCompatActivity {
                     ).show());
                 }
             }
+
 
             @Override
             public void onError(Exception e) {
@@ -168,6 +174,12 @@ public class CourseIndexActivity extends AppCompatActivity {
 
             layout.addView(tvDescription);
 
+            layout.setOnClickListener(v -> {
+                Intent intent = new Intent(this, CourseShowActivity.class);
+                intent.putExtra("course_id", item.getID());
+                startActivity(intent);
+            });
+
 //            layout.setOnClickListener(v -> {
 //                Intent intent = new Intent(this, CourseShowActivity.class);
 //                intent.putExtra("course_id", item.getID());
@@ -175,11 +187,6 @@ public class CourseIndexActivity extends AppCompatActivity {
 //            });
 
             container.addView(layout);
-            container.setOnClickListener(v -> {
-                Intent intent = new Intent(this, CourseShowActivity.class);
-                intent.putExtra("course_id", item.getID());
-                startActivity(intent);
-            });
         }
     }
 }
