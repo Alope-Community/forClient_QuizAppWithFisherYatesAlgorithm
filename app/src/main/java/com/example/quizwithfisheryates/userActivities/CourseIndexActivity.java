@@ -153,6 +153,12 @@ public class CourseIndexActivity extends AppCompatActivity {
                 Glide.with(this)
                         .load(item.getCover())
                         .into(ivCover);
+
+                ivCover.setOnClickListener(v -> {
+                    Intent intent = new Intent(this, CourseShowActivity.class);
+                    intent.putExtra("course_id", item.getID());
+                    startActivity(intent);
+                });
             }
 
             // Card layout
