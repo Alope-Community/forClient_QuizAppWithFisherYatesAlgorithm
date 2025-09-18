@@ -17,6 +17,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import android.database.Cursor;
+import android.provider.OpenableColumns;
 
 public class CourseResource {
     public interface ApiCallback {
@@ -168,6 +170,7 @@ public class CourseResource {
             String body,
             int account_id,
             Uri coverUri,
+            Uri audioUri,
             Context context,
             CourseResource.ApiCallback callback
     ) {
@@ -238,6 +241,30 @@ public class CourseResource {
                     writer.flush();
                 }
 
+                // --- Upload audio file
+                if (audioUri != null) {
+                    // Get file extension from URI
+                    String audioFileName = getAudioFileName(context, audioUri);
+
+                    writer.append("--").append(boundary).append(LINE_FEED);
+                    writer.append("Content-Disposition: form-data; name=\"audio\"; filename=\"").append(audioFileName).append("\"").append(LINE_FEED);
+                    writer.append("Content-Type: ").append(getMimeType(context, audioUri)).append(LINE_FEED);
+                    writer.append(LINE_FEED);
+                    writer.flush();
+
+                    InputStream audioInputStream = context.getContentResolver().openInputStream(audioUri);
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = audioInputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+                    outputStream.flush();
+                    audioInputStream.close();
+
+                    writer.append(LINE_FEED);
+                    writer.flush();
+                }
+
                 // --- End boundary
                 writer.append("--").append(boundary).append("--").append(LINE_FEED);
                 writer.close();
@@ -276,6 +303,7 @@ public class CourseResource {
             String body,
             int account_id,
             Uri coverUri,
+            Uri audioUri,
             Context context,
             CourseResource.ApiCallback callback
     ) {
@@ -353,6 +381,30 @@ public class CourseResource {
                     writer.flush();
                 }
 
+                // --- Upload audio file (jika ada)
+                if (audioUri != null) {
+                    // Get file extension from URI
+                    String audioFileName = getAudioFileName(context, audioUri);
+
+                    writer.append("--").append(boundary).append(LINE_FEED);
+                    writer.append("Content-Disposition: form-data; name=\"audio\"; filename=\"").append(audioFileName).append("\"").append(LINE_FEED);
+                    writer.append("Content-Type: ").append(getMimeType(context, audioUri)).append(LINE_FEED);
+                    writer.append(LINE_FEED);
+                    writer.flush();
+
+                    InputStream audioInputStream = context.getContentResolver().openInputStream(audioUri);
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = audioInputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+                    outputStream.flush();
+                    audioInputStream.close();
+
+                    writer.append(LINE_FEED);
+                    writer.flush();
+                }
+
                 // --- End of multipart
                 writer.append("--").append(boundary).append("--").append(LINE_FEED);
                 writer.close();
@@ -418,5 +470,37 @@ public class CourseResource {
                 callback.onError(e);
             }
         }).start();
+    }
+
+    // Helper method untuk mendapatkan nama file audio
+    private static String getAudioFileName(Context context, Uri audioUri) {
+        String fileName = "audio.mp3"; // default
+
+        try {
+            Cursor cursor = context.getContentResolver().query(audioUri, null, null, null, null);
+            if (cursor != null) {
+                int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                if (nameIndex >= 0 && cursor.moveToFirst()) {
+                    String displayName = cursor.getString(nameIndex);
+                    if (displayName != null && !displayName.isEmpty()) {
+                        fileName = displayName;
+                    }
+                }
+                cursor.close();
+            }
+        } catch (Exception e) {
+            Log.w("AUDIO_FILENAME", "Could not get audio filename", e);
+        }
+
+        return fileName;
+    }
+
+    // Helper method untuk mendapatkan MIME type
+    private static String getMimeType(Context context, Uri uri) {
+        String mimeType = context.getContentResolver().getType(uri);
+        if (mimeType == null) {
+            mimeType = "audio/mpeg"; // default to mp3
+        }
+        return mimeType;
     }
 }

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         Button courseButton = findViewById(R.id.courseButton);
 
         ScrollView mainScrollView = findViewById(R.id.main);
+        LinearLayout container = findViewById(R.id.mainContainer);
 
         if (isAuthenticated()) {
             String authName = sharedPreferences.getString("name", "ALOPE");
@@ -143,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             aboutButton.setVisibility(View.GONE);
 
             // Ganti background ke gambar
-            mainScrollView.setBackgroundResource(R.drawable.bg_main_gradient);
+            container.setBackgroundResource(R.drawable.bg_main_transprent_cut);
 
             footerImage.setVisibility(View.VISIBLE);
         }

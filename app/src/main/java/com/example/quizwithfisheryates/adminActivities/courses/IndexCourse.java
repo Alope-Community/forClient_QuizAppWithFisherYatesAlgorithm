@@ -138,7 +138,7 @@ public class IndexCourse extends AppCompatActivity {
             container.addView(tvMateri);
 
             // Tambahkan cover image
-            if (item.getCover() != null && !item.getCover().trim().isEmpty()) {
+            if (item.getCover() != null || !item.getCover().trim().isEmpty()) {
                 ImageView ivCover = new ImageView(this);
                 LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,

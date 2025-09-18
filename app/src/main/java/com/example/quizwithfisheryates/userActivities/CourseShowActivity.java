@@ -1,8 +1,8 @@
 package com.example.quizwithfisheryates.userActivities;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.Html;
@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +25,7 @@ import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.CourseResource;
-import com.example.quizwithfisheryates._models.Course;
-import com.example.quizwithfisheryates.adminActivities.courses.ShowCourse;
-import com.example.quizwithfisheryates.authActivities.LoginActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,10 +38,12 @@ public class CourseShowActivity extends AppCompatActivity {
     ImageView ivCover;
 
     String bodyText;
+    String audioUrl; // <== simpan audio dari API
 
     AppCompatButton playTextToSpeech, stopTextToSpeech;
 
     private TextToSpeech tts;
+    private MediaPlayer mediaPlayer; // <== MediaPlayer
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +71,15 @@ public class CourseShowActivity extends AppCompatActivity {
         showCourseDetail(courseId);
 
         findViewById(R.id.backButton).setOnClickListener(v -> {
-            tts.stop();
+            if (tts != null) tts.stop();
+            if (mediaPlayer != null) mediaPlayer.stop();
             finish();
         });
 
         // Inisialisasi TTS
         tts = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
-                // Set bahasa
                 int result = tts.setLanguage(new Locale("id", "ID")); // bahasa Indonesia
-
                 if (result == TextToSpeech.LANG_MISSING_DATA ||
                         result == TextToSpeech.LANG_NOT_SUPPORTED) {
                     Log.e("TTS", "Bahasa tidak didukung");
@@ -93,18 +89,54 @@ public class CourseShowActivity extends AppCompatActivity {
             }
         });
     }
+
     public void playTextToSpeech(View view) {
         playTextToSpeech.setVisibility(View.GONE);
         stopTextToSpeech.setVisibility(View.VISIBLE);
-        tts.speak(bodyText, TextToSpeech.QUEUE_FLUSH, null, null);
+
+        if (audioUrl == null || audioUrl.isEmpty() || audioUrl.equals("null")) {
+            // Play TTS
+            tts.speak(bodyText, TextToSpeech.QUEUE_FLUSH, null, null);
+        } else {
+            // Play audio dari URL
+            try {
+                if (mediaPlayer == null) {
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setAudioAttributes(
+                            new AudioAttributes.Builder()
+                                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                                    .build()
+                    );
+                    mediaPlayer.setDataSource(audioUrl);
+                    mediaPlayer.prepareAsync();
+                    mediaPlayer.setOnPreparedListener(MediaPlayer::start);
+                } else {
+                    mediaPlayer.start();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Gagal memutar audio", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void stopTextToSpeech(View view) {
         playTextToSpeech.setVisibility(View.VISIBLE);
         stopTextToSpeech.setVisibility(View.GONE);
-        tts.stop();
-    }
 
+        if (audioUrl == null || audioUrl.isEmpty() || audioUrl.equals("null")) {
+            // Stop TTS
+            if (tts != null) {
+                tts.stop();
+            }
+        } else {
+            // Stop MediaPlayer
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+            }
+        }
+    }
 
     private void showCourseDetail(int id) {
         CourseResource.showCourse(id, new CourseResource.ApiCallback() {
@@ -121,12 +153,13 @@ public class CourseShowActivity extends AppCompatActivity {
                         String description = obj.getString("description");
                         String body = obj.getString("body");
                         String cover = obj.optString("cover", null);
+                        String audio = obj.optString("audio", null);
+
+                        audioUrl = audio; // simpan audio dari API
 
                         // ubah HTML jadi plain text
                         Spanned spanned = Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY);
                         String plainText = spanned.toString();
-
-                        // pakai plainText untuk TTS
                         bodyText = plainText;
 
                         runOnUiThread(() -> {
@@ -139,7 +172,7 @@ public class CourseShowActivity extends AppCompatActivity {
                                         .load(cover)
                                         .into(ivCover);
                             } else {
-                                ivCover.setVisibility(View.GONE); // Sembunyikan jika tidak ada gambar
+                                ivCover.setVisibility(View.GONE);
                             }
                         });
 
@@ -165,8 +198,22 @@ public class CourseShowActivity extends AppCompatActivity {
     }
 
     public void goToUserMain(View view){
-        tts.stop();
+        if (tts != null) tts.stop();
+        if (mediaPlayer != null) mediaPlayer.stop();
         Intent intent = new Intent(CourseShowActivity.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 }

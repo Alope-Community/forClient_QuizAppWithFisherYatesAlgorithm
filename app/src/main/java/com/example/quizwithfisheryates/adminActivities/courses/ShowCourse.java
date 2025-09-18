@@ -1,6 +1,8 @@
 package com.example.quizwithfisheryates.adminActivities.courses;
 
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.Html;
@@ -35,6 +37,9 @@ public class ShowCourse extends AppCompatActivity {
     ImageView ivCover;
 
     String bodyText;
+
+    private String audioUrl;
+    private MediaPlayer mediaPlayer;
 
     AppCompatButton playTextToSpeech, stopTextToSpeech;
 
@@ -89,14 +94,50 @@ public class ShowCourse extends AppCompatActivity {
     public void playTextToSpeech(View view) {
         playTextToSpeech.setVisibility(View.GONE);
         stopTextToSpeech.setVisibility(View.VISIBLE);
-        tts.speak(bodyText, TextToSpeech.QUEUE_FLUSH, null, null);
+
+        if (audioUrl == null || audioUrl.isEmpty() || audioUrl.equals("null")) {
+            tts.speak(bodyText, TextToSpeech.QUEUE_FLUSH, null, null);
+        } else {
+            // Jika audio dari API ada → pakai MediaPlayer
+            try {
+                if (mediaPlayer == null) {
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setAudioAttributes(
+                            new AudioAttributes.Builder()
+                                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                                    .build()
+                    );
+                    mediaPlayer.setDataSource(audioUrl);
+                    mediaPlayer.prepareAsync();
+                    mediaPlayer.setOnPreparedListener(MediaPlayer::start);
+                } else {
+                    mediaPlayer.start();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Gagal memutar audio", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void stopTextToSpeech(View view) {
         playTextToSpeech.setVisibility(View.VISIBLE);
         stopTextToSpeech.setVisibility(View.GONE);
-        tts.stop();
+
+        if (audioUrl == null || audioUrl.isEmpty() || audioUrl.equals("null")) {
+            // Stop TTS
+            if (tts != null) {
+                tts.stop();
+            }
+        } else {
+            // Stop MediaPlayer
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+            }
+        }
     }
+
 
     private void showCourseDetail(int id) {
         CourseResource.showCourse(id, new CourseResource.ApiCallback() {
@@ -114,6 +155,8 @@ public class ShowCourse extends AppCompatActivity {
                         String description = obj.getString("description");
                         String body = obj.getString("body");
                         String cover = obj.optString("cover", null);
+                        String audio = obj.optString("audio", null);
+                        audioUrl = audio;
 
                         // ubah HTML jadi plain text
                         Spanned spanned = Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY);
@@ -161,5 +204,14 @@ public class ShowCourse extends AppCompatActivity {
         tts.stop();
         Intent intent = new Intent(ShowCourse.this, MainActivity.class);
         startActivity(intent);
+
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 }
