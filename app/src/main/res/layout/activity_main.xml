@@ -24,9 +24,10 @@
                 android:text="PHYTAGORAS"
                 android:textColor="@color/black"
                 android:textSize="30sp"
+                android:layout_marginBottom="10dp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginTop="50dp"/>
+                android:layout_marginTop="30dp"/>
 
             <LinearLayout
                 android:id="@+id/mainContainer"
