@@ -87,7 +87,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_button"
             android:text="A"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000" />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnOptionB"
             style="@style/Widget.AppCompat.Button"
@@ -96,7 +96,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_button"
             android:text="B"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000" />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnOptionC"
             style="@style/Widget.AppCompat.Button"
@@ -105,7 +105,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_button"
             android:text="C"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000" />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnOptionD"
             style="@style/Widget.AppCompat.Button"
@@ -114,7 +114,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_button"
             android:text="D"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000" />
 
         <LinearLayout
             android:id="@+id/navButtons"

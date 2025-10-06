@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -42,6 +43,8 @@ public class LeaderboardActivity extends AppCompatActivity {
 
     String scoreType = "score";
 
+    String difficulty = "easy";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,33 @@ public class LeaderboardActivity extends AppCompatActivity {
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
+
+
+    public void changeButtonColor(){
+        // Ambil tombol
+        AppCompatButton easyButton = findViewById(R.id.easyScoreButton);
+        AppCompatButton mediumButton = findViewById(R.id.mediumScoreButton);
+        AppCompatButton hardButton = findViewById(R.id.hardScoreButton);
+
+        // Reset semua tombol ke warna default
+        easyButton.setBackgroundColor(Color.parseColor("#a4c9ff"));
+        mediumButton.setBackgroundColor(Color.parseColor("#a4c9ff"));
+        hardButton.setBackgroundColor(Color.parseColor("#a4c9ff"));
+
+        // Set tombol aktif sesuai difficulty
+        switch (difficulty) {
+            case "easy":
+                easyButton.setBackgroundColor(Color.parseColor("#2196F3"));
+                break;
+            case "medium":
+                mediumButton.setBackgroundColor(Color.parseColor("#2196F3"));
+                break;
+            case "hard":
+                hardButton.setBackgroundColor(Color.parseColor("#2196F3"));
+                break;
+        }
+    }
+
     public void getEasyScore(View v){
         getLeaderboard("easy", scoreType);
     }
@@ -71,6 +101,9 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
 
     private void getLeaderboard(String difficulty, String scoreType) {
+        this.difficulty = difficulty;
+        this.changeButtonColor();
+
         // check ID di SESSION
         sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
         int accountId = sharedPreferences.getInt("id", 1);

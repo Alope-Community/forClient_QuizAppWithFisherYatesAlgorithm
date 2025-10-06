@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -34,6 +35,7 @@ import java.util.List;
 
 public class IndexQuiz extends AppCompatActivity {
 
+    String difficulty = "easy";
     List<Question> quizList = new ArrayList<>();
     LinearLayout quizContainer;
 
@@ -57,9 +59,32 @@ public class IndexQuiz extends AppCompatActivity {
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
-    public void getEasyQuiz(View v){
-        getQuestions("easy");
+    public void changeButtonColor(){
+        // Ambil tombol
+        AppCompatButton easyButton = findViewById(R.id.easyQuizButton);
+        AppCompatButton mediumButton = findViewById(R.id.mediumQuizButton);
+        AppCompatButton hardButton = findViewById(R.id.hardQuizButton);
+
+        // Reset semua tombol ke warna default
+        easyButton.setBackgroundColor(Color.parseColor("#a4c9ff"));
+        mediumButton.setBackgroundColor(Color.parseColor("#a4c9ff"));
+        hardButton.setBackgroundColor(Color.parseColor("#a4c9ff"));
+
+        // Set tombol aktif sesuai difficulty
+        switch (difficulty) {
+            case "easy":
+                easyButton.setBackgroundColor(Color.parseColor("#2196F3"));
+                break;
+            case "medium":
+                mediumButton.setBackgroundColor(Color.parseColor("#2196F3"));
+                break;
+            case "hard":
+                hardButton.setBackgroundColor(Color.parseColor("#2196F3"));
+                break;
+        }
     }
+
+    public void getEasyQuiz(View v){getQuestions("easy");}
 
     public void getMediumQuiz(View v){
         getQuestions("medium");
@@ -78,8 +103,12 @@ public class IndexQuiz extends AppCompatActivity {
             diff = "Sulit";
         }
 
+        this.difficulty= difficulty;
+
+        changeButtonColor();
+
         TextView tvTitle = findViewById(R.id.title);
-        tvTitle.setText("Data Nilai " + StringUtils.capitalize(diff));
+        tvTitle.setText("Data Soal " + StringUtils.capitalize(diff));
 
         QuizResource.getQuestion(difficulty, "admin", new QuizResource.ApiCallback() {
             @Override
@@ -229,14 +258,14 @@ public class IndexQuiz extends AppCompatActivity {
 
             // Tombol Update
             Button btnUpdate = new Button(this);
-            btnUpdate.setText("Update");
+            btnUpdate.setText("Edit");
             btnUpdate.setAllCaps(false);
             btnUpdate.setBackgroundColor(Color.parseColor("#2196F3"));
             btnUpdate.setTextColor(Color.WHITE);
 
             // Tombol Delete
             Button btnDelete = new Button(this);
-            btnDelete.setText("Delete");
+            btnDelete.setText("Hapus");
             btnDelete.setAllCaps(false);
             btnDelete.setBackgroundColor(Color.parseColor("#F44336"));
             btnDelete.setTextColor(Color.WHITE);

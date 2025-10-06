@@ -268,7 +268,7 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_button"
-                android:text="Save"
+                android:text="Simpan"
                 android:textColor="#000" />
         </LinearLayout>
     </ScrollView>
