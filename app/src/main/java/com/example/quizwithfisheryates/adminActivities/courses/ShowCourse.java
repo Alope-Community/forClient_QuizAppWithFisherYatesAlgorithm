@@ -23,7 +23,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.CourseResource;
+//import com.example.quizwithfisheryates._apiResources.CourseResource;
+import com.example.quizwithfisheryates._models.Course;
 import com.example.quizwithfisheryates.adminActivities.MainActivity;
 
 import org.json.JSONException;
@@ -140,7 +141,7 @@ public class ShowCourse extends AppCompatActivity {
 
 
     private void showCourseDetail(int id) {
-        CourseResource.showCourse(id, new CourseResource.ApiCallback() {
+        Course.showCourse(id, new Course.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {

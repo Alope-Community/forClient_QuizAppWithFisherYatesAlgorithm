@@ -14,10 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.AuthResource;
-import com.example.quizwithfisheryates._apiResources.UserResource;
-import com.example.quizwithfisheryates.adminActivities.quizzes.IndexQuiz;
-import com.example.quizwithfisheryates.adminActivities.quizzes.UpdateQuiz;
+import com.example.quizwithfisheryates._models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +67,7 @@ public class UpdateUserActivity extends AppCompatActivity {
             return;
         }
 
-        UserResource.updateUser(userId, name, password, new UserResource.ApiCallback() {
+        User.updateUser(userId, name, password, new User.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("UPDATE SUCCESS", response);

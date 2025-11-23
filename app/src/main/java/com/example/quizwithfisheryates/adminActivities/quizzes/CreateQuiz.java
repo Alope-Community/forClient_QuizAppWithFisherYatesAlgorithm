@@ -22,6 +22,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.QuizResource;
+import com.example.quizwithfisheryates._models.Option;
+import com.example.quizwithfisheryates._models.Question;
 import com.example.quizwithfisheryates.adminActivities.MainActivity;
 import com.example.quizwithfisheryates.adminActivities.courses.ShowCourse;
 
@@ -120,7 +122,7 @@ public class CreateQuiz extends AppCompatActivity {
         RadioButton selectedDifficulty = findViewById(selectedRadioDifficultyId);
         String finalDifficulty = selectedDifficulty.getText().toString().trim();
 
-        QuizResource.postQuestion(question, selectedImageUri, finalDifficulty, finalAnswer, CreateQuiz.this, new QuizResource.ApiCallback() {
+        Question.postQuestion(question, selectedImageUri, finalDifficulty, finalAnswer, CreateQuiz.this, new Question.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("CREATE_SUCCESS", response);
@@ -177,7 +179,7 @@ public class CreateQuiz extends AppCompatActivity {
     }
 
     private void insertOption(int questionId, String option) {
-        QuizResource.postOption(questionId, option, new QuizResource.ApiCallback() {
+        Option.postOption(questionId, option, new Option.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("CREATE_OPTION_SUCCESS", "Option berhasil ditambahkan");

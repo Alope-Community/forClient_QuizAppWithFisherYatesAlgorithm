@@ -2,7 +2,6 @@ package com.example.quizwithfisheryates.userActivities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,14 +10,13 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.ScoreResource;
+import com.example.quizwithfisheryates._models.Score;
 
 public class ScoreActivity extends AppCompatActivity {
 
@@ -56,7 +54,7 @@ public class ScoreActivity extends AppCompatActivity {
     }
 
     void submitScore(int accountID, int score){
-        ScoreResource.postScore(accountID, difficulty, score, new ScoreResource.ApiCallback() {
+        Score.postScore(accountID, difficulty, score, new Score.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("CREATE_SUCCESS", response);

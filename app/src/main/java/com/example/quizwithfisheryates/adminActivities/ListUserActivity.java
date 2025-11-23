@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
+import androidx.appcompat.widget.SearchView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -19,7 +19,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.UserResource;
+import com.example.quizwithfisheryates._models.User;
 import com.example.quizwithfisheryates.authActivities.RegisterActivity;
 
 import org.json.JSONArray;
@@ -29,6 +29,10 @@ import org.json.JSONObject;
 public class ListUserActivity extends AppCompatActivity {
 
     LinearLayout quizContainer;
+    SearchView searchUser;
+
+    JSONArray originalUsers = new JSONArray(); // data asli
+    JSONArray filteredUsers = new JSONArray(); // data hasil filter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +47,50 @@ public class ListUserActivity extends AppCompatActivity {
         });
 
         quizContainer = findViewById(R.id.quizContainer);
+        searchUser = findViewById(R.id.searchUser);
 
         fetchUserList("user");
 
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
+
+        // === FILTER REALTIME ===
+        searchUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterUsers(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterUsers(newText);
+                return true;
+            }
+        });
     }
 
     private void fetchUserList(String role) {
-        UserResource.getUser(role, new UserResource.ApiCallback() {
+        User.getUser(role, new User.ApiCallback() {
             @Override
             public void onSuccess(String response) {
-                runOnUiThread(() -> showUsers(response));
+                runOnUiThread(() -> {
+                    try {
+                        JSONObject json = new JSONObject(response);
+                        if (!json.getString("status").equals("success")) {
+                            Toast.makeText(ListUserActivity.this, "Status gagal", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        originalUsers = json.getJSONArray("data");
+                        filteredUsers = new JSONArray(originalUsers.toString());
+
+                        showUsers(filteredUsers);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(ListUserActivity.this, "JSON tidak valid", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -67,18 +104,39 @@ public class ListUserActivity extends AppCompatActivity {
         });
     }
 
-    private void showUsers(String response) {
+    /**
+     * ===========================
+     *      FILTER DATA USER
+     * ===========================
+     */
+    private void filterUsers(String keyword) {
+        keyword = keyword.toLowerCase().trim();
+
+        filteredUsers = new JSONArray();
+
+        for (int i = 0; i < originalUsers.length(); i++) {
+            try {
+                JSONObject user = originalUsers.getJSONObject(i);
+
+                String name = user.optString("name", "").toLowerCase();
+                String username = user.optString("username", "").toLowerCase();
+
+                if (name.contains(keyword) || username.contains(keyword)) {
+                    filteredUsers.put(user);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        showUsers(filteredUsers);
+    }
+
+    private void showUsers(JSONArray users) {
         quizContainer.removeAllViews();
 
         try {
-            JSONObject json = new JSONObject(response);
-            if (!json.getString("status").equals("success")) {
-                Toast.makeText(this, "Status gagal", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            JSONArray users = json.getJSONArray("data");
-
             for (int i = 0; i < users.length(); i++) {
                 JSONObject user = users.getJSONObject(i);
 
@@ -146,7 +204,7 @@ public class ListUserActivity extends AppCompatActivity {
                             .setTitle("Konfirmasi Hapus")
                             .setMessage("Apakah kamu yakin ingin menghapus user: " + name + "?")
                             .setPositiveButton("Hapus", (dialog, which) -> {
-                                UserResource.deleteUser(id, new UserResource.ApiCallback() {
+                                User.deleteUser(id, new User.ApiCallback() {
                                     @Override
                                     public void onSuccess(String response) {
                                         runOnUiThread(() -> {
@@ -190,9 +248,7 @@ public class ListUserActivity extends AppCompatActivity {
         }
     }
 
-
-
-    public void goToRegister(View view){
+    public void goToRegister(View view) {
         Intent intent = new Intent(ListUserActivity.this, RegisterActivity.class);
         startActivity(intent);
     }

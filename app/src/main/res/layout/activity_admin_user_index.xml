@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <!-- Header dengan tombol kembali -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,69 +46,23 @@
                     android:layout_marginStart="12dp" />
             </LinearLayout>
 
+            <!-- Search bar -->
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:queryHint="Cari nama atau username..."
+                android:iconifiedByDefault="false"
+                android:paddingBottom="12dp" />
+
             <!-- Container daftar user -->
             <LinearLayout
                 android:id="@+id/quizContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="15dp">
+                android:padding="15dp" />
 
-                <!-- Contoh satu user, nanti bisa di-generate lewat Java -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nama"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Username" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Password" />
-
-                <!-- Tombol aksi -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="12dp">
-
-                    <ImageButton
-                        android:id="@+id/btnUpdateUser"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        app:backgroundTint="#2193f0"
-                        android:background="#2193f0"
-                        android:src="@drawable/ic_edit"
-                        android:contentDescription="Update User"
-                        android:scaleType="centerInside"
-                        app:tint="#FFFFFF" />
-
-                    <ImageButton
-                        android:id="@+id/btnDeleteUser"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        app:backgroundTint="#F44336"
-                        android:background="#F44336"
-                        android:src="@drawable/ic_delete"
-                        android:contentDescription="Hapus User"
-                        android:scaleType="centerInside"
-                        app:tint="#FFFFFF" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#000000"
-                    android:layout_marginVertical="20dp" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

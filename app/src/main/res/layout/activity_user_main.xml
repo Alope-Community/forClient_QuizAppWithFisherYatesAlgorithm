@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Tingkat Soal : Mudah"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginTop="10dp"/>
@@ -40,10 +40,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Waktu: 60 detik"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:gravity="start"/>
+                android:gravity="center"/>
 
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="16dp">
             <TextView
                 android:id="@+id/currentQuestionNumber"
                 android:layout_width="0dp"
@@ -51,9 +61,11 @@
                 android:layout_weight="1"
                 android:text="Sisa Soal"
                 android:textStyle="bold"
-                android:textSize="14sp"
-                android:gravity="end"/>
+                android:textSize="20sp"
+                android:gravity="center"/>
         </LinearLayout>
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -74,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="170dp"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:gravity="center"
                 android:text="" />
         </RelativeLayout>

@@ -22,7 +22,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.CourseResource;
+//import com.example.quizwithfisheryates._apiResources.CourseResource;
+import com.example.quizwithfisheryates._models.Course;
 
 import org.json.JSONObject;
 
@@ -316,7 +317,7 @@ public class EditCourse extends AppCompatActivity {
     }
 
     private void loadCourse() {
-        CourseResource.showCourse(courseId, new CourseResource.ApiCallback() {
+        Course.showCourse(courseId, new Course.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 runOnUiThread(() -> {
@@ -363,7 +364,7 @@ public class EditCourse extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
         int accountID = sharedPreferences.getInt("id", 1);
 
-        CourseResource.updateCourse(courseId, title, description, body, accountID, selectedImageUri, selectedAudioUri, this, new CourseResource.ApiCallback() {
+        Course.updateCourse(courseId, title, description, body, accountID, selectedImageUri, selectedAudioUri, this, new Course.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 runOnUiThread(() -> {

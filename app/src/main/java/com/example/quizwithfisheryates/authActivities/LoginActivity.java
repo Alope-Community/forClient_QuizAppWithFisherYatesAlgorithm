@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -11,13 +12,14 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.AuthResource;
+import com.example.quizwithfisheryates._models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +28,10 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
+
+    EditText password;
+    AppCompatImageView toggleNisn;
+    boolean isPasswordVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,26 @@ public class LoginActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        password = findViewById(R.id.password);
+        toggleNisn = findViewById(R.id.toggleNisn);
+
+        toggleNisn.setOnClickListener(v -> {
+            if (isPasswordVisible) {
+                // HIDE PASSWORD
+                password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                toggleNisn.setImageResource(R.drawable.ic_eye); // icon mata biasa
+            } else {
+                // SHOW PASSWORD
+                password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                toggleNisn.setImageResource(R.drawable.ic_eye); // icon mata tertutup
+            }
+
+            // Keep cursor at end
+            password.setSelection(password.getText().length());
+
+            isPasswordVisible = !isPasswordVisible;
         });
     }
 
@@ -51,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setCancelable(false); // agar tidak bisa dibatalkan
         progressDialog.show(); // tampilkan loading
 
-        AuthResource.postLogin(user, pass, new AuthResource.ApiCallback() {
+        User.postLogin(user, pass, new User.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 progressDialog.dismiss(); // sembunyikan loading

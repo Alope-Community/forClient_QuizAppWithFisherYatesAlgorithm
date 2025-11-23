@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getQuestions(){
-        QuizResource.getQuestion(difficulty, "user", new QuizResource.ApiCallback() {
+        Question.getQuestion(difficulty, "user", new Question.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -336,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getOptions(int question_id){
-        QuizResource.getOption(question_id, new QuizResource.ApiCallback() {
+        Option.getOption(question_id, new Option.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {

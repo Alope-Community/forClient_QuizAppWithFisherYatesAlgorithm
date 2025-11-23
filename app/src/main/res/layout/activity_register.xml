@@ -14,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+        <!-- HEADER -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,53 +22,47 @@
             android:gravity="center_vertical"
             android:padding="24dp">
 
-            <!-- Tombol Kembali -->
+            <!-- Back -->
             <LinearLayout
+                android:id="@+id/backButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="start|center_vertical"
-                android:paddingBottom="8dp"
-                android:id="@+id/backButton">
+                android:paddingBottom="8dp">
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/ic_back"
-                    android:contentDescription="Kembali"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:padding="4dp"
-                    app:tint="@color/black" />
+                    app:tint="@color/black"/>
 
                 <TextView
                     android:text="Kembali"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
-                    android:textColor="#000000"/>
+                    android:textColor="#000"/>
             </LinearLayout>
 
-            <!-- Tombol Home -->
+            <!-- Home -->
             <LinearLayout
+                android:onClick="goToAdminMain"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="end|center_vertical"
-                android:paddingBottom="8dp"
-                android:onClick="goToAdminMain">
+                android:paddingBottom="8dp">
 
                 <ImageView
                     android:id="@+id/homeButton"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_home"
-                    android:contentDescription="Home"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:padding="4dp"
+                    android:src="@drawable/ic_home"
                     app:tint="@color/black" />
 
                 <TextView
@@ -75,23 +70,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
-                    android:textColor="#000000"/>
+                    android:textColor="#000"/>
             </LinearLayout>
         </LinearLayout>
 
+        <!-- MAIN CONTENT -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- IMAGE -->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:src="@drawable/register"
                 android:layout_gravity="center"
-                android:contentDescription="@string/app_name"
                 android:layout_marginTop="100dp"/>
 
+            <!-- TITLE -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,7 +98,7 @@
                 android:textColor="#000"
                 android:layout_gravity="center" />
 
-            <!--     Form Section       -->
+            <!-- FORM -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,107 +107,67 @@
                 android:layout_margin="20dp"
                 android:layout_marginTop="40dp"
                 android:padding="20dp">
+
+                <!-- FULL NAME -->
                 <EditText
                     android:id="@+id/name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
+                    android:layout_height="48dp"
                     android:padding="12dp"
+                    android:background="@android:drawable/edit_text"
                     android:hint="@string/hintName"
-                    android:inputType="text"
-                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:autofillHints="username"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray"/>
+                    android:layout_marginBottom="14dp"/>
 
-<!--                <EditText-->
-<!--                    android:id="@+id/username"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:minHeight="48dp"-->
-<!--                    android:padding="12dp"-->
-<!--                    android:hint="@string/hintUsername"-->
-<!--                    android:inputType="text"-->
-<!--                    android:layout_marginStart="20dp"-->
-<!--                    android:layout_marginEnd="20dp"-->
-<!--                    android:layout_marginBottom="10dp"-->
-<!--                    android:autofillHints="username"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textColorHint="@color/gray"/>-->
-
-
-                <EditText
-                    android:id="@+id/password"
+                <!-- NISN + HIDE SHOW -->
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:padding="12dp"
-                    android:hint="NISN"
-                    android:inputType="text"
+                    android:layout_height="48dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:autofillHints="password"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray"/>
+                    android:layout_marginBottom="20dp">
 
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="12dp"
+                        android:background="@android:drawable/edit_text"
+                        android:hint="NISN"
+                        android:inputType="textPassword"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/gray"/>
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/toggleNisn"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_eye"
+                        app:tint="@color/black"
+                        android:contentDescription="Toggle Eye"/>
+                </RelativeLayout>
+
+                <!-- BUTTON -->
                 <androidx.appcompat.widget.AppCompatButton
-                    style="@style/Widget.AppCompat.Button"
                     android:onClick="onRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
                     android:background="@drawable/rounded_button"
                     android:text="@string/buttonRegistrasi"
                     android:textColor="#000"
-                    android:textStyle="bold" />
-
-
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="20sp"-->
-<!--                    android:layout_marginBottom="10dp"-->
-<!--                    android:padding="20dp"-->
-<!--                    android:gravity="center">-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Have an Account?"-->
-<!--                        android:layout_marginRight="6dp"/>-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/accountLogin"-->
-<!--                        android:onClick="goToLogin"-->
-<!--                        android:textColor="#47afe2"-->
-<!--                        android:textStyle="bold"/>-->
-<!--                </LinearLayout>-->
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"/>
             </LinearLayout>
 
-            <!--        <TextView-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:text="@string/buttonBack"-->
-            <!--            android:textSize="13sp"-->
-            <!--            android:gravity="center"-->
-            <!--            android:padding="10dp"-->
-            <!--            android:textColor="@color/gray"-->
-            <!--            android:onClick="goToMainMenu"/>-->
         </LinearLayout>
 
-<!--        <ImageView-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:src="@drawable/bottom_shape"-->
-<!--            android:layout_gravity="bottom|end" />-->
     </FrameLayout>
 </ScrollView>

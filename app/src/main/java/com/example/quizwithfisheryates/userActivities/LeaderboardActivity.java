@@ -7,10 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,9 +21,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.MainActivity;
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.QuizResource;
-import com.example.quizwithfisheryates._apiResources.ScoreResource;
-import com.example.quizwithfisheryates._models.Question;
 import com.example.quizwithfisheryates._models.Score;
 
 import org.json.JSONArray;
@@ -108,7 +102,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
         int accountId = sharedPreferences.getInt("id", 1);
 
-        ScoreResource.getScore(difficulty, scoreType, "user", accountId, new ScoreResource.ApiCallback() {
+        Score.getScore(difficulty, scoreType, "user", accountId, new Score.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("LEADERBOARD_RESPONSE", response);

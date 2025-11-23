@@ -22,7 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.CourseResource;
+//import com.example.quizwithfisheryates._apiResources.CourseResource;
 import com.example.quizwithfisheryates._models.Course;
 import com.example.quizwithfisheryates.adminActivities.courses.EditCourse;
 import com.example.quizwithfisheryates.adminActivities.courses.IndexCourse;
@@ -56,7 +56,7 @@ public class CourseIndexActivity extends AppCompatActivity {
     }
 
     private void getCourses() {
-        CourseResource.getCourse(new CourseResource.ApiCallback() {
+        Course.getCourse(new Course.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {

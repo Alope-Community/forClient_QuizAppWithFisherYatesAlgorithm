@@ -22,7 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.CourseResource;
+//import com.example.quizwithfisheryates._apiResources.CourseResource;
 import com.example.quizwithfisheryates._models.Course;
 
 import org.json.JSONArray;
@@ -62,7 +62,7 @@ public class IndexCourse extends AppCompatActivity {
     }
 
     private void getCourses() {
-        CourseResource.getCourse(new CourseResource.ApiCallback() {
+        Course.getCourse(new Course.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("LEADERBOARD_RESPONSE", response);
@@ -205,7 +205,7 @@ public class IndexCourse extends AppCompatActivity {
                         .setTitle("Konfirmasi Hapus")
                         .setMessage("Yakin ingin menghapus materi ini?")
                         .setPositiveButton("Hapus", (dialog, which) -> {
-                            CourseResource.deleteCourse(item.getID(), new CourseResource.ApiCallback() {
+                            Course.deleteCourse(item.getID(), new Course.ApiCallback() {
                                 @Override
                                 public void onSuccess(String response) {
                                     runOnUiThread(() -> {

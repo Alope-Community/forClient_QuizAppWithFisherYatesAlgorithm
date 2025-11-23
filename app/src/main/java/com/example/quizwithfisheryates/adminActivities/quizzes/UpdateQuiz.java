@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.QuizResource;
+//import com.example.quizwithfisheryates._apiResources.QuizResource;
+import com.example.quizwithfisheryates._models.Option;
+import com.example.quizwithfisheryates._models.Question;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -151,7 +153,7 @@ public class UpdateQuiz extends AppCompatActivity {
         RadioButton selectedDifficulty = findViewById(selectedDifficultyId);
         String finalDifficulty = selectedDifficulty.getText().toString().trim();
 
-        QuizResource.updateQuestion(quizId, question, selectedImageUri, finalDifficulty, finalAnswer, this, new QuizResource.ApiCallback() {
+        Question.updateQuestion(quizId, question, selectedImageUri, finalDifficulty, finalAnswer, this, new Question.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -159,7 +161,7 @@ public class UpdateQuiz extends AppCompatActivity {
                     String message = json.getString("message");
 
                     // Update semua opsi
-                    QuizResource.updateOptions(quizId, optionA, optionB, optionC, optionD, new QuizResource.ApiCallback() {
+                    Option.updateOptions(quizId, optionA, optionB, optionC, optionD, new Option.ApiCallback() {
                         @Override
                         public void onSuccess(String response) {
                             runOnUiThread(() -> {

@@ -23,6 +23,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
 import com.example.quizwithfisheryates._apiResources.QuizResource;
+import com.example.quizwithfisheryates._models.Option;
 import com.example.quizwithfisheryates._models.Question;
 import com.example.quizwithfisheryates._utils.StringUtils;
 
@@ -110,7 +111,7 @@ public class IndexQuiz extends AppCompatActivity {
         TextView tvTitle = findViewById(R.id.title);
         tvTitle.setText("Data Soal " + StringUtils.capitalize(diff));
 
-        QuizResource.getQuestion(difficulty, "admin", new QuizResource.ApiCallback() {
+        Question.getQuestion(difficulty, "admin", new Question.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
@@ -294,7 +295,7 @@ public class IndexQuiz extends AppCompatActivity {
                         .setMessage("Apakah Anda yakin ingin menghapus soal ini?")
                         .setPositiveButton("Ya", (dialog, which) -> {
                             // Panggil API deleteQuestion
-                            QuizResource.deleteQuestion(quiz.getId(), new QuizResource.ApiCallback() {
+                            Question.deleteQuestion(quiz.getId(), new Question.ApiCallback() {
                                 @Override
                                 public void onSuccess(String response) {
                                     runOnUiThread(() -> {

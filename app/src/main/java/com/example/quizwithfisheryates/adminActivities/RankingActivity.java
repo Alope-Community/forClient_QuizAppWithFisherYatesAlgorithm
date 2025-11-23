@@ -19,7 +19,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quizwithfisheryates.R;
-import com.example.quizwithfisheryates._apiResources.ScoreResource;
 import com.example.quizwithfisheryates._models.Score;
 import com.example.quizwithfisheryates._utils.StringUtils;
 
@@ -112,7 +111,7 @@ public class RankingActivity extends AppCompatActivity {
         TextView tvTitle = findViewById(R.id.title);
         tvTitle.setText("Data Nilai " + StringUtils.capitalize(diff));
 
-        ScoreResource.getScore(difficulty, scoreType, "admin", 1, new ScoreResource.ApiCallback() {
+        Score.getScore(difficulty, scoreType, "admin", 1, new Score.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 Log.d("LEADERBOARD_RESPONSE", response);
@@ -237,7 +236,7 @@ public class RankingActivity extends AppCompatActivity {
     }
 
     public void exportRanking(View v){
-        ScoreResource.exportScore(RankingActivity.this, new ScoreResource.FileCallback() {
+        Score.exportScore(RankingActivity.this, new Score.FileCallback() {
             public void onSuccess(String filePath) {
                 runOnUiThread(() -> Toast.makeText(RankingActivity.this,
                         "Export berhasil disimpan: " + filePath,
