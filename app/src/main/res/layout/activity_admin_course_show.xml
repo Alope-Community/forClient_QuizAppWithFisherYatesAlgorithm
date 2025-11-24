@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
+        <!-- BUTTON BACK & HOME -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,14 +21,12 @@
             android:gravity="center_vertical"
             android:paddingBottom="8dp">
 
-            <!-- Tombol Kembali -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="start|center_vertical"
-                android:paddingBottom="8dp"
                 android:id="@+id/backButton">
 
                 <ImageView
@@ -35,8 +34,6 @@
                     android:layout_height="25dp"
                     android:src="@drawable/ic_back"
                     android:contentDescription="Kembali"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:padding="4dp"
                     app:tint="@color/black" />
 
@@ -48,14 +45,12 @@
                     android:textColor="#000000"/>
             </LinearLayout>
 
-            <!-- Tombol Home -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="end|center_vertical"
-                android:paddingBottom="8dp"
                 android:onClick="goToAdminMain">
 
                 <ImageView
@@ -63,10 +58,8 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/ic_home"
-                    android:contentDescription="Home"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:padding="4dp"
+                    android:contentDescription="Home"
                     app:tint="@color/black" />
 
                 <TextView
@@ -78,7 +71,7 @@
             </LinearLayout>
         </LinearLayout>
 
-
+        <!-- TITLE -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
@@ -86,9 +79,9 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#000"
-            android:layout_marginStart="12dp"
-            android:text=""/>
+            android:layout_marginStart="12dp" />
 
+        <!-- COVER -->
         <ImageView
             android:id="@+id/ivCover"
             android:layout_width="match_parent"
@@ -97,41 +90,44 @@
             android:scaleType="fitCenter"
             android:layout_marginBottom="16dp" />
 
+        <!-- DESCRIPTION -->
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#444444"
-            android:paddingBottom="16dp"/>
+            android:textColor="#444"
+            android:paddingBottom="16dp" />
 
+        <!-- VIDEO PLAYER -->
+        <WebView
+            android:id="@+id/webVideo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#000"
+            android:layout_marginBottom="20dp" />
+
+        <!-- TTS BUTTONS -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/txPlayTTS"
             android:onClick="playTextToSpeech"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Putar Suara"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
             android:background="@drawable/rounded_button"
             android:textColor="#000"
-            android:layout_marginBottom="20dp"/>
+            android:layout_margin="20dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/txStopTTS"
             android:onClick="stopTextToSpeech"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Stop Suara"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
             android:background="@drawable/rounded_button"
             android:textColor="#000"
-            android:layout_marginBottom="20dp"/>
+            android:layout_margin="20dp"/>
 
+        <!-- BODY HTML -->
         <WebView
             android:id="@+id/webBody"
             android:layout_width="match_parent"

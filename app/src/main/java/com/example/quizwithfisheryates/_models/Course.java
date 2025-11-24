@@ -250,6 +250,9 @@ public class Course {
                 writer.append(LINE_FEED).append(body).append(LINE_FEED);
                 writer.flush();
 
+
+                Log.d("TEST ACCOUNT ID", String.valueOf(account_id));
+
                 // Account ID
                 writer.append("--").append(boundary).append(LINE_FEED);
                 writer.append("Content-Disposition: form-data; name=\"account_id\"").append(LINE_FEED);

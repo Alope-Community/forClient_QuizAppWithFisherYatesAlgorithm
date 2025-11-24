@@ -23,7 +23,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.quizwithfisheryates.R;
-//import com.example.quizwithfisheryates._apiResources.CourseResource;
 import com.example.quizwithfisheryates._models.Course;
 import com.example.quizwithfisheryates.adminActivities.MainActivity;
 
@@ -33,18 +32,19 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 public class ShowCourse extends AppCompatActivity {
+
     TextView tvTitle, tvDescription;
-    WebView webBody;
+    WebView webBody, webVideo;
     ImageView ivCover;
 
     String bodyText;
-
     private String audioUrl;
+    private String videoUrl;
+
     private MediaPlayer mediaPlayer;
+    private TextToSpeech tts;
 
     AppCompatButton playTextToSpeech, stopTextToSpeech;
-
-    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,7 @@ public class ShowCourse extends AppCompatActivity {
         tvTitle = findViewById(R.id.tvTitle);
         tvDescription = findViewById(R.id.tvDescription);
         webBody = findViewById(R.id.webBody);
+        webVideo = findViewById(R.id.webVideo);  // <<< VIDEO BOX
         ivCover = findViewById(R.id.ivCover);
 
         playTextToSpeech = findViewById(R.id.txPlayTTS);
@@ -72,25 +73,25 @@ public class ShowCourse extends AppCompatActivity {
         showCourseDetail(courseId);
 
         findViewById(R.id.backButton).setOnClickListener(v -> {
-            tts.stop();
+            if (tts != null) tts.stop();
             finish();
         });
 
-        // Inisialisasi TTS
+        // TTS Init
         tts = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
-                // Set bahasa
-                int result = tts.setLanguage(new Locale("id", "ID")); // bahasa Indonesia
-
-                if (result == TextToSpeech.LANG_MISSING_DATA ||
-                        result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                int result = tts.setLanguage(new Locale("id", "ID"));
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
                     Log.e("TTS", "Bahasa tidak didukung");
-                }
             } else {
                 Log.e("TTS", "Inisialisasi gagal");
             }
         });
     }
+
+    // -----------------------------
+    // PLAY AUDIO / TTS
+    // -----------------------------
 
     public void playTextToSpeech(View view) {
         playTextToSpeech.setVisibility(View.GONE);
@@ -99,7 +100,6 @@ public class ShowCourse extends AppCompatActivity {
         if (audioUrl == null || audioUrl.isEmpty() || audioUrl.equals("null")) {
             tts.speak(bodyText, TextToSpeech.QUEUE_FLUSH, null, null);
         } else {
-            // Jika audio dari API ada → pakai MediaPlayer
             try {
                 if (mediaPlayer == null) {
                     mediaPlayer = new MediaPlayer();
@@ -127,85 +127,101 @@ public class ShowCourse extends AppCompatActivity {
         stopTextToSpeech.setVisibility(View.GONE);
 
         if (audioUrl == null || audioUrl.isEmpty() || audioUrl.equals("null")) {
-            // Stop TTS
-            if (tts != null) {
-                tts.stop();
-            }
+            if (tts != null) tts.stop();
         } else {
-            // Stop MediaPlayer
-            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                mediaPlayer.pause();
-            }
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) mediaPlayer.pause();
         }
     }
 
+    // -----------------------------
+    // LOAD COURSE DETAIL
+    // -----------------------------
 
     private void showCourseDetail(int id) {
+
         Course.showCourse(id, new Course.ApiCallback() {
             @Override
             public void onSuccess(String response) {
                 try {
                     JSONObject json = new JSONObject(response);
-                    String status = json.getString("status");
 
-                    if (status.equals("success")) {
-                        JSONObject obj = json.getJSONObject("data");
-
-                        int courseId = obj.getInt("id");
-                        String title = obj.getString("title");
-                        String description = obj.getString("description");
-                        String body = obj.getString("body");
-                        String cover = obj.optString("cover", null);
-                        String audio = obj.optString("audio", null);
-                        audioUrl = audio;
-
-                        // ubah HTML jadi plain text
-                        Spanned spanned = Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY);
-                        String plainText = spanned.toString();
-
-                        // pakai plainText untuk TTS
-                        bodyText = plainText;
-
-                        runOnUiThread(() -> {
-                            tvTitle.setText(title);
-                            tvDescription.setText(description);
-                            webBody.loadDataWithBaseURL(null, body, "text/html", "UTF-8", null);
-
-                            if (cover != null && !cover.isEmpty()) {
-                                Glide.with(ShowCourse.this)
-                                        .load(cover)
-                                        .into(ivCover);
-                            } else {
-                                ivCover.setVisibility(View.GONE); // Sembunyikan jika tidak ada gambar
-                            }
-                        });
-
-                    } else {
-                        showToast("Gagal mengambil detail materi");
+                    if (!json.getString("status").equals("success")) {
+                        showToast("Gagal mengambil detail");
+                        return;
                     }
+
+                    JSONObject obj = json.getJSONObject("data");
+
+                    String title = obj.getString("title");
+                    String description = obj.getString("description");
+                    String body = obj.getString("body");
+                    String cover = obj.optString("cover", null);
+                    audioUrl = obj.optString("audio", null);
+                    videoUrl = obj.optString("video", null); // <<< VIDEO URL
+
+                    Spanned spanned = Html.fromHtml(body, Html.FROM_HTML_MODE_LEGACY);
+                    bodyText = spanned.toString();
+
+                    runOnUiThread(() -> {
+                        tvTitle.setText(title);
+                        tvDescription.setText(description);
+                        webBody.loadDataWithBaseURL(null, body, "text/html", "UTF-8", null);
+
+                        if (cover != null && !cover.isEmpty()) {
+                            Glide.with(ShowCourse.this).load(cover).into(ivCover);
+                        } else {
+                            ivCover.setVisibility(View.GONE);
+                        }
+
+                        // ==== KONDISI VIDEO ====
+                        if (videoUrl != null && !videoUrl.isEmpty() && !videoUrl.equals("null")) {
+                            webVideo.setVisibility(View.VISIBLE);
+                            loadVideoPlayer(videoUrl);
+                        } else {
+                            webVideo.setVisibility(View.GONE);
+                        }
+                    });
+
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    showToast("Format data detail salah");
+                    showToast("Kesalahan format data");
                 }
             }
 
             @Override
             public void onError(Exception e) {
                 e.printStackTrace();
-                showToast("Terjadi kesalahan saat mengambil data");
+                showToast("Terjadi kesalahan");
             }
         });
     }
 
-    private void showToast(String message) {
-        runOnUiThread(() -> Toast.makeText(ShowCourse.this, message, Toast.LENGTH_SHORT).show());
+    // -----------------------------
+    // LOAD MP4 VIDEO
+    // -----------------------------
+
+    private void loadVideoPlayer(String url) {
+        webVideo.getSettings().setJavaScriptEnabled(true);
+        webVideo.getSettings().setDomStorageEnabled(true);
+
+        String html =
+                "<video width=\"100%\" height=\"220\" controls>" +
+                        "<source src=\"" + url + "\" type=\"video/mp4\">" +
+                        "Browser tidak mendukung video." +
+                        "</video>";
+
+        webVideo.loadData(html, "text/html", "UTF-8");
     }
 
-    public void goToAdminMain(View view){
-        tts.stop();
-        Intent intent = new Intent(ShowCourse.this, MainActivity.class);
-        startActivity(intent);
+    // -----------------------------
+    // HELPER
+    // -----------------------------
 
+    private void showToast(String msg) {
+        runOnUiThread(() -> Toast.makeText(ShowCourse.this, msg, Toast.LENGTH_SHORT).show());
+    }
+
+    public void goToAdminMain(View view) {
         if (tts != null) {
             tts.stop();
             tts.shutdown();
@@ -214,5 +230,7 @@ public class ShowCourse extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+
+        startActivity(new Intent(ShowCourse.this, MainActivity.class));
     }
 }
