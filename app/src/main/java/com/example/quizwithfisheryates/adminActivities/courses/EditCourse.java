@@ -1,9 +1,12 @@
 package com.example.quizwithfisheryates.adminActivities.courses;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +25,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quizwithfisheryates.R;
-//import com.example.quizwithfisheryates._apiResources.CourseResource;
 import com.example.quizwithfisheryates._models.Course;
 
 import org.json.JSONObject;
@@ -39,12 +41,20 @@ public class EditCourse extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PICK_IMAGE = 1001;
     private static final int REQUEST_CODE_PICK_AUDIO = 2002;
+    private static final int REQUEST_CODE_PICK_VIDEO = 3003;
+
     private Uri selectedImageUri;
     private Uri selectedAudioUri;
+    private Uri selectedVideoUri;
+
     private MediaPlayer mediaPlayer;
     private ImageView imagePreview;
     private Button buttonUploadImage;
     private Button buttonUploadVoice;
+
+    // Video Views
+    private ImageView videoThumbnail;
+    private Button buttonUploadVideo;
 
     // Audio Control Elements
     private LinearLayout audioControlPanel;
@@ -80,6 +90,10 @@ public class EditCourse extends AppCompatActivity {
         buttonUploadImage = findViewById(R.id.buttonUploadImage);
         buttonUploadVoice = findViewById(R.id.buttonUploadVoice);
 
+        // Video views (make sure these IDs exist in your layout)
+        videoThumbnail = findViewById(R.id.videoThumbnail);
+        buttonUploadVideo = findViewById(R.id.buttonUploadVideo);
+
         // Audio Control Views
         audioControlPanel = findViewById(R.id.audioControlPanel);
         audioFileName = findViewById(R.id.audioFileName);
@@ -98,6 +112,7 @@ public class EditCourse extends AppCompatActivity {
         findViewById(R.id.btnSubmitCourse).setOnClickListener(this::submitEdit);
         buttonUploadImage.setOnClickListener(v -> openImagePicker());
         buttonUploadVoice.setOnClickListener(v -> openAudioPicker());
+        buttonUploadVideo.setOnClickListener(v -> openVideoPicker());
 
         if (buttonPlayPause != null) {
             buttonPlayPause.setOnClickListener(v -> togglePlayPause());
@@ -130,16 +145,39 @@ public class EditCourse extends AppCompatActivity {
         }
     }
 
+    private void openVideoPicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("video/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        try {
+            startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_CODE_PICK_VIDEO);
+        } catch (Exception e) {
+            Log.e("VIDEO_PICKER", "Error opening video picker", e);
+            Toast.makeText(this, "Gagal membuka pemilih video", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
+    @SuppressWarnings("deprecation")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (resultCode == RESULT_OK && data != null && data.getData() != null) {
 
-        if (resultCode == RESULT_OK && data != null && data.getData() != null) {
-            if (requestCode == REQUEST_CODE_PICK_IMAGE) {
-                handleImageSelection(data.getData());
-            } else if (requestCode == REQUEST_CODE_PICK_AUDIO) {
-                handleAudioSelection(data.getData());
+                Uri uri = data.getData();
+
+                if (requestCode == REQUEST_CODE_PICK_IMAGE) {
+                    handleImageSelection(uri);
+
+                } else if (requestCode == REQUEST_CODE_PICK_AUDIO) {
+                    handleAudioSelection(uri);
+
+                } else if (requestCode == REQUEST_CODE_PICK_VIDEO) {
+                    handleVideoSelection(uri);
+                }
             }
+        } catch (Exception e) {
+            Log.e("ACTIVITY_RESULT", "Error in onActivityResult", e);
         }
     }
 
@@ -179,12 +217,49 @@ public class EditCourse extends AppCompatActivity {
         }
     }
 
+    private void handleVideoSelection(Uri videoUri) {
+        selectedVideoUri = videoUri;
+
+        try {
+            // Generate thumbnail using MediaMetadataRetriever (robust)
+            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+            retriever.setDataSource(this, videoUri);
+
+            Bitmap frame = retriever.getFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+            retriever.release();
+
+            if (frame != null) {
+                videoThumbnail.setImageBitmap(frame);
+                videoThumbnail.setVisibility(View.VISIBLE);
+            } else {
+                // fallback: try to load as image (may not work for all URIs)
+                Bitmap fallback = MediaStore.Images.Media.getBitmap(this.getContentResolver(), videoUri);
+                if (fallback != null) {
+                    videoThumbnail.setImageBitmap(fallback);
+                    videoThumbnail.setVisibility(View.VISIBLE);
+                } else {
+                    videoThumbnail.setVisibility(View.GONE);
+                }
+            }
+
+            // update button text
+            buttonUploadVideo.setText("Ganti Video");
+            Toast.makeText(this, "Video berhasil dipilih", Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            Log.e("VIDEO_SELECTION", "Error loading video thumbnail", e);
+            Toast.makeText(this, "Gagal memuat video", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void setupMediaPlayerListeners() {
+        if (mediaPlayer == null) return;
+
         mediaPlayer.setOnCompletionListener(mp -> {
             isPlaying = false;
-            buttonPlayPause.setText("▶ Play");
+            if (buttonPlayPause != null) buttonPlayPause.setText("▶ Play");
             stopProgressUpdater();
-            audioProgressBar.setProgress(0);
+            if (audioProgressBar != null) audioProgressBar.setProgress(0);
         });
 
         mediaPlayer.setOnErrorListener((mp, what, extra) -> {
@@ -200,8 +275,8 @@ public class EditCourse extends AppCompatActivity {
             audioControlPanel.setVisibility(View.VISIBLE);
             buttonUploadVoice.setText("Ganti Audio");
             isPlaying = false;
-            buttonPlayPause.setText("▶ Play");
-            audioProgressBar.setProgress(0);
+            if (buttonPlayPause != null) buttonPlayPause.setText("▶ Play");
+            if (audioProgressBar != null) audioProgressBar.setProgress(0);
         }
     }
 
@@ -217,18 +292,39 @@ public class EditCourse extends AppCompatActivity {
         if (audioFileName == null) return;
 
         String fileName = "Audio Selected";
-
-        // Try to get actual filename
         try {
-            String path = audioUri.getLastPathSegment();
-            if (path != null && path.contains("/")) {
-                fileName = path.substring(path.lastIndexOf("/") + 1);
-            }
+            String name = getFileNameFromUri(audioUri);
+            if (name != null && !name.isEmpty()) fileName = name;
         } catch (Exception e) {
             Log.w("AUDIO_FILENAME", "Could not extract filename", e);
         }
-
         audioFileName.setText(fileName);
+    }
+
+    private String getFileNameFromUri(Uri uri) {
+        String res = null;
+        if (uri == null) return null;
+
+        if ("content".equals(uri.getScheme())) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int idx = cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME);
+                    if (idx >= 0) res = cursor.getString(idx);
+                }
+            } finally {
+                if (cursor != null) cursor.close();
+            }
+        }
+
+        if (res == null) {
+            String path = uri.getPath();
+            if (path == null) return null;
+            int cut = path.lastIndexOf('/');
+            if (cut != -1) res = path.substring(cut + 1);
+        }
+
+        return res;
     }
 
     private void togglePlayPause() {
@@ -239,13 +335,13 @@ public class EditCourse extends AppCompatActivity {
                 // Pause
                 mediaPlayer.pause();
                 isPlaying = false;
-                buttonPlayPause.setText("▶ Play");
+                if (buttonPlayPause != null) buttonPlayPause.setText("▶ Play");
                 stopProgressUpdater();
             } else {
                 // Play
                 mediaPlayer.start();
                 isPlaying = true;
-                buttonPlayPause.setText("⏸ Pause");
+                if (buttonPlayPause != null) buttonPlayPause.setText("⏸ Pause");
                 startProgressUpdater();
             }
         } catch (Exception e) {
@@ -335,6 +431,12 @@ public class EditCourse extends AppCompatActivity {
                         etDescription.setText(description);
                         editor.setHtml(body);
 
+                        // If the server returns cover/audio/video URLs, you can load them:
+                        // String coverUrl = data.optString("cover_url", "");
+                        // String audioUrl = data.optString("audio_url", "");
+                        // String videoUrl = data.optString("video_url", "");
+                        // You may load thumbnail remotely if needed (Glide/Picasso)
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(EditCourse.this, "Gagal memuat data", Toast.LENGTH_SHORT).show();
@@ -364,21 +466,32 @@ public class EditCourse extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
         int accountID = sharedPreferences.getInt("id", 1);
 
-        Course.updateCourse(courseId, title, description, body, accountID, selectedImageUri, selectedAudioUri, this, new Course.ApiCallback() {
-            @Override
-            public void onSuccess(String response) {
-                runOnUiThread(() -> {
-                    Toast.makeText(EditCourse.this, "Materi berhasil diperbarui", Toast.LENGTH_SHORT).show();
-                    // finish(); // Uncomment if you want to close after success
-                });
-            }
+        ProgressDialog progress = new ProgressDialog(this);
+        progress.setMessage("Mengedit data...");
+        progress.setCancelable(false);
+        progress.show();
 
-            @Override
-            public void onError(Exception e) {
-                e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(EditCourse.this, "Gagal memperbarui materi", Toast.LENGTH_SHORT).show());
-            }
-        });
+        // Note: Course.updateCourse(...) is expected to have a signature that accepts video Uri as parameter.
+        Course.updateCourse(courseId, title, description, body, accountID,
+                selectedImageUri, selectedAudioUri, selectedVideoUri,
+                this, new Course.ApiCallback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        runOnUiThread(() -> {
+                            Toast.makeText(EditCourse.this, "Materi berhasil diperbarui", Toast.LENGTH_SHORT).show();
+                            // optionally finish()
+                            finish();
+                            progress.dismiss();
+                        });
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                        progress.dismiss();
+                        runOnUiThread(() -> Toast.makeText(EditCourse.this, "Gagal memperbarui materi", Toast.LENGTH_SHORT).show());
+                    }
+                });
     }
 
     @Override

@@ -185,6 +185,46 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <!-- ===========================
+     VIDEO UPLOAD SECTION
+     =========================== -->
+            <LinearLayout
+                android:id="@+id/videoSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+
+                <!-- Video Thumbnail Preview -->
+                <ImageView
+                    android:id="@+id/videoThumbnail"
+                    android:layout_width="230dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center"
+                    android:background="#000" />
+
+                <!-- Upload Video Button -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonUploadVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload Video"
+                    android:layout_marginTop="8dp"
+                    android:background="#f9a7a7"
+                    android:textColor="#FFFFFF"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:stateListAnimator="@null"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+
             <!-- Description -->
             <TextView
                 android:layout_width="wrap_content"
@@ -279,6 +319,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_button"
                 android:text="Simpan"
+                android:onClick="submitEdit"
                 android:textColor="#000" />
         </LinearLayout>
     </ScrollView>

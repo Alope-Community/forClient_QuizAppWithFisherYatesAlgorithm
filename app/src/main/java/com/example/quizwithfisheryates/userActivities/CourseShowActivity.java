@@ -34,12 +34,13 @@ import java.util.Locale;
 
 public class CourseShowActivity extends AppCompatActivity {
     TextView tvTitle, tvDescription;
-    WebView webBody;
+    WebView webBody, webVideo;
 
     ImageView ivCover;
 
     String bodyText;
-    String audioUrl; // <== simpan audio dari API
+    String audioUrl;
+    private String videoUrl;
 
     AppCompatButton playTextToSpeech, stopTextToSpeech;
 
@@ -62,6 +63,7 @@ public class CourseShowActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tvDescription);
         webBody = findViewById(R.id.webBody);
         ivCover = findViewById(R.id.ivCover);
+        webVideo = findViewById(R.id.webVideo);  // <<< VIDEO BOX
 
         playTextToSpeech = findViewById(R.id.txPlayTTS);
         stopTextToSpeech = findViewById(R.id.txStopTTS);
@@ -139,6 +141,23 @@ public class CourseShowActivity extends AppCompatActivity {
         }
     }
 
+    // -----------------------------
+    // LOAD MP4 VIDEO
+    // -----------------------------
+
+    private void loadVideoPlayer(String url) {
+        webVideo.getSettings().setJavaScriptEnabled(true);
+        webVideo.getSettings().setDomStorageEnabled(true);
+
+        String html =
+                "<video width=\"100%\" height=\"220\" controls>" +
+                        "<source src=\"" + url + "\" type=\"video/mp4\">" +
+                        "Browser tidak mendukung video." +
+                        "</video>";
+
+        webVideo.loadData(html, "text/html", "UTF-8");
+    }
+
     private void showCourseDetail(int id) {
         Course.showCourse(id, new Course.ApiCallback() {
             @Override
@@ -155,6 +174,7 @@ public class CourseShowActivity extends AppCompatActivity {
                         String body = obj.getString("body");
                         String cover = obj.optString("cover", null);
                         String audio = obj.optString("audio", null);
+                        videoUrl = obj.optString("video", null); // <<< VIDEO URL
 
                         audioUrl = audio; // simpan audio dari API
 
@@ -174,6 +194,14 @@ public class CourseShowActivity extends AppCompatActivity {
                                         .into(ivCover);
                             } else {
                                 ivCover.setVisibility(View.GONE);
+                            }
+
+                            // ==== KONDISI VIDEO ====
+                            if (videoUrl != null && !videoUrl.isEmpty() && !videoUrl.equals("null")) {
+                                webVideo.setVisibility(View.VISIBLE);
+                                loadVideoPlayer(videoUrl);
+                            } else {
+                                webVideo.setVisibility(View.GONE);
                             }
                         });
 

@@ -102,6 +102,14 @@
             android:textColor="#444444"
             android:paddingBottom="16dp"/>
 
+        <!-- VIDEO PLAYER -->
+        <WebView
+            android:id="@+id/webVideo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#000"
+            android:layout_marginBottom="20dp" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/txPlayTTS"
             android:onClick="playTextToSpeech"
