@@ -32,7 +32,7 @@ public class Option {
         new Thread(() -> {
             try {
                 // Buat URL dengan parameter GET
-                String baseUrl = "https://quiz.alope.id/options";
+                String baseUrl = "https://rizkypurnama.com/options";
                 String queryParams = "?question_id=" + URLEncoder.encode(Integer.toString(question_id), "UTF-8");
 
                 URL url = new URL(baseUrl + queryParams);
@@ -65,7 +65,7 @@ public class Option {
     public static void updateOptions(int question_id, String optionA, String optionB, String optionC, String optionD, ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("https://quiz.alope.id/update-options");
+                URL url = new URL("https://rizkypurnama.com/update-options");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
@@ -122,7 +122,7 @@ public class Option {
     public static void postOption(int question_id, String value, ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("https://quiz.alope.id/create-option");
+                URL url = new URL("https://rizkypurnama.com/create-option");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
@@ -159,7 +159,7 @@ public class Option {
     public static void deleteOption(int option_id, ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("https://quiz.alope.id/delete-option");
+                URL url = new URL("https://rizkypurnama.com/delete-option");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);

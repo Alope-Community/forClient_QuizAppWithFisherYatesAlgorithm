@@ -26,7 +26,7 @@ public class User {
     public static void postLogin(String username, String password, User.ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("https://quiz.alope.id/login");
+                URL url = new URL("https://rizkypurnama.com/login");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
@@ -60,7 +60,7 @@ public class User {
     public static void postRegister(String name, String password, User.ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("https://quiz.alope.id/register");
+                URL url = new URL("https://rizkypurnama.com/register");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
@@ -97,7 +97,7 @@ public class User {
         new Thread(() -> {
             try {
                 // Buat URL dengan parameter GET
-                String baseUrl = "https://quiz.alope.id/users";
+                String baseUrl = "https://rizkypurnama.com/users";
                 String queryParams = "?role=" + URLEncoder.encode(role, "UTF-8");
 
                 URL url = new URL(baseUrl + queryParams);
@@ -128,7 +128,7 @@ public class User {
     public static void updateUser(String id, String name, String password, User.ApiCallback callback) {
         new Thread(() -> {
             try {
-                String baseUrl = "https://quiz.alope.id/update-user";
+                String baseUrl = "https://rizkypurnama.com/update-user";
                 URL url = new URL(baseUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
@@ -177,7 +177,7 @@ public class User {
     public static void deleteUser(int userId, User.ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("https://quiz.alope.id/delete-user");
+                URL url = new URL("https://rizkypurnama.com/delete-user");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);

@@ -55,7 +55,7 @@ public class Question {
         new Thread(() -> {
             try {
                 // Buat URL dengan parameter GET
-                String baseUrl = "https://quiz.alope.id/questions";
+                String baseUrl = "https://rizkypurnama.com/questions";
                 String queryParams = "?difficulty=" + URLEncoder.encode(difficulty, "UTF-8") +
                         "&for=" + URLEncoder.encode(listFor, "UTF-8");
 
@@ -97,7 +97,7 @@ public class Question {
             String LINE_FEED = "\r\n";
 
             try {
-                URL url = new URL("https://quiz.alope.id/create-question");
+                URL url = new URL("https://rizkypurnama.com/create-question");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setUseCaches(false);
                 conn.setDoOutput(true); // untuk POST
@@ -202,7 +202,7 @@ public class Question {
             String LINE_FEED = "\r\n";
 
             try {
-                URL url = new URL("https://quiz.alope.id/update-question");
+                URL url = new URL("https://rizkypurnama.com/update-question");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setUseCaches(false);
                 conn.setDoOutput(true);
@@ -302,7 +302,7 @@ public class Question {
     public static void deleteQuestion(int id, ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("https://quiz.alope.id/delete-question");
+                URL url = new URL("https://rizkypurnama.com/delete-question");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");  // Biasanya DELETE tapi kadang API pakai POST untuk delete
                 conn.setDoOutput(true);

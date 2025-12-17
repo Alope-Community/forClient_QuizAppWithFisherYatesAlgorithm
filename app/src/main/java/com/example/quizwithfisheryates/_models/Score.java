@@ -50,7 +50,7 @@ public class Score {
         new Thread(() -> {
             try {
                 // Buat URL dengan parameter GET
-                String baseUrl = "https://quiz.alope.id/scores";
+                String baseUrl = "https://rizkypurnama.com/scores";
                 String queryParams = "?difficulty=" + URLEncoder.encode(difficulty, "UTF-8") +
                         "&type=" + URLEncoder.encode(scoreType, "UTF-8") +
                         "&forRole=" + URLEncoder.encode(forRole, "UTF-8") +
@@ -84,7 +84,7 @@ public class Score {
     public static void postScore(int accountId, String difficulty, int score, Score.ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("https://quiz.alope.id/create-score");
+                URL url = new URL("https://rizkypurnama.com/create-score");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
@@ -122,7 +122,7 @@ public class Score {
     public static void exportScore(Context context, Score.FileCallback callback) {
         new Thread(() -> {
             try {
-                String fileUrl = "https://quiz.alope.id/export-scores";
+                String fileUrl = "https://rizkypurnama.com/export-scores";
                 URL url = new URL(fileUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");

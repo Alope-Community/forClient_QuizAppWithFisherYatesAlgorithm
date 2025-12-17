@@ -55,7 +55,7 @@ public class Course {
         new Thread(() -> {
             try {
                 // Buat URL dengan parameter GET
-                String baseUrl = "https://quiz.alope.id/courses";
+                String baseUrl = "https://rizkypurnama.com/courses";
 
                 URL url = new URL(baseUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -86,7 +86,7 @@ public class Course {
         new Thread(() -> {
             try {
                 // Buat URL dengan parameter GET
-                String baseUrl = "https://quiz.alope.id/show-course";
+                String baseUrl = "https://rizkypurnama.com/show-course";
                 String queryParams = "?id=" + URLEncoder.encode(Integer.toString(id), "UTF-8");
 
                 URL url = new URL(baseUrl + queryParams);
@@ -123,7 +123,7 @@ public class Course {
 //    ) {
 //        new Thread(() -> {
 //            try {
-//                URL url = new URL("https://quiz.alope.id/create-course");
+//                URL url = new URL("https://rizkypurnama.com/create-course");
 //                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 //                conn.setRequestMethod("POST");
 //                conn.setDoOutput(true);
@@ -225,7 +225,7 @@ public class Course {
 //            String LINE_FEED = "\r\n";
 //
 //            try {
-//                URL url = new URL("https://quiz.alope.id/create-course");
+//                URL url = new URL("https://rizkypurnama.com/create-course");
 //                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 //                conn.setUseCaches(false);
 //                conn.setDoOutput(true);
@@ -414,7 +414,7 @@ public class Course {
             String LINE_FEED = "\r\n";
 
             try {
-                URL url = new URL("https://quiz.alope.id/create-course");
+                URL url = new URL("https://rizkypurnama.com/create-course");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                 conn.setUseCaches(false);
@@ -581,7 +581,7 @@ public class Course {
             String LINE_FEED = "\r\n";
 
             try {
-                URL url = new URL("https://quiz.alope.id/update-course");
+                URL url = new URL("https://rizkypurnama.com/update-course");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setUseCaches(false);
                 conn.setDoOutput(true);
@@ -707,7 +707,7 @@ public class Course {
 //            String LINE_FEED = "\r\n";
 //
 //            try {
-//                URL url = new URL("https://quiz.alope.id/update-course");
+//                URL url = new URL("https://rizkypurnama.com/update-course");
 //                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 //                conn.setUseCaches(false);
 //                conn.setDoOutput(true);
@@ -835,7 +835,7 @@ public class Course {
     public static void deleteCourse(int id, Course.ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("https://quiz.alope.id/delete-course");
+                URL url = new URL("https://rizkypurnama.com/delete-course");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
